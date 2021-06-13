@@ -8,26 +8,21 @@
     </div>
 
     <div id="nav">
-        <img :src="getLogo()" id="logo" alt="logo">
+        <img src="../../assets/logo.png" id="logo" alt="logo">
         <p class="page" v-for="(item, i) in page" :key="i"> {{ item }} <span class="bar"></span> </p>
     </div>
 
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "navbar",
-  data() {
+  setup() {
     return {
       info: [ "Retrait des produits sous 2H", "Trouver un point de retrait", "Suivis de commandes", "Panier", "S'identifier" ],
       page: [ "Espace Pare-douche","Espace Cloison et parois","Espace cheminée" ],
     }
-  },
-  methods: {
-    getLogo:  function(){
-      return require(`../../assets/logo.png`);
-    }, 
   },
 };
 </script>
