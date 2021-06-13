@@ -1,27 +1,55 @@
 <template>
   <div id="navbar">
 
-    <div id="info">
+    <!-- Landscape -->
+    <div v-if="winSize.width > winSize.height">
+
+      <div id="info">
         <input type="text" name="search" id="search" placeholder="Rechercher un produit" />
         <label for="search"></label>
-        <p class="click" v-for="(item, i) in info" :key="i">{{ item }}</p>
+        <p class="click" v-for="(info, i) in infos" :key="i">{{ info }}</p>
+      </div>
+
+      <div id="nav">
+        <img src="../../assets/logo.png" id="logo" alt="logo">
+        <p class="page" v-for="(page, i) in pages" :key="i"> {{ page }} <span class="bar"></span> </p>
+      </div>
+
     </div>
 
-    <div id="nav">
+    <!-- Mobile / portrait -->
+    <div v-else>
+      <div id="nav">
         <img src="../../assets/logo.png" id="logo" alt="logo">
-        <p class="page" v-for="(item, i) in page" :key="i"> {{ item }} <span class="bar"></span> </p>
+        <div id="links">
+          <div class="link" v-for="(page, i) in pages" :key="i"> {{page}} </div>
+          <div class="link" v-for="(info, i) in infos" :key="i"> {{info}} </div>
+        </div>
+      </div>
     </div>
+    
 
   </div>
 </template>
 
 <script lang="ts">
+import { reactive } from 'vue'
+
 export default {
   name: "navbar",
   setup() {
+    let winSize = reactive({ height: innerHeight, width: innerWidth });
+    const setWindowSize = () => {
+      winSize.height = innerHeight;
+      winSize.width = innerWidth;
+    }
+    setWindowSize()
+    window.addEventListener("resize", ()=> setWindowSize() );
+
     return {
-      info: [ "Retrait des produits sous 2H", "Trouver un point de retrait", "Suivis de commandes", "Panier", "S'identifier" ],
-      page: [ "Espace Pare-douche","Espace Cloison et parois","Espace cheminée" ],
+      winSize,
+      infos: [ "Retrait des produits sous 2H", "Trouver un point de retrait", "Suivis de commandes", "Panier", "S'identifier" ],
+      pages: [ "Pare-douche","Cloison et parois","Cheminée" ],
     }
   },
 };
@@ -89,12 +117,12 @@ export default {
     flex-direction: row;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
     #logo{
-        position: relative;
-        height: 50%;
-        top: 50%;
-        margin-left: 1%;
-        transform: translateY(-50%);
-        cursor: pointer;
+      position: relative;
+      height: 50%;
+      top: 50%;
+      margin-left: 1%;
+      transform: translateY(-50%);
+      cursor: pointer;
     }
     .page {
       justify-content: center;
@@ -128,22 +156,58 @@ export default {
     }
   }
 }
+
 @media screen and (orientation: portrait) {
-  #info {
-    font-size: 0.65em;
-  }
-  #search {
-    display: none;
-  }
-  #nav {
-    justify-content: space-evenly;
-    .page {
-      text-align: center;
-      margin: 0 !important;
-      font-size: 0.8em !important;
+#navbar {
+  height: 12vh;
+  #nav{
+    width: 100%;
+    height: 13vh;
+    flex-direction: column;
+    #logo{
+      position: relative;
+      top: 10%;
+      height: 30%;
+      left: 50%;
+      transform: translatex(-50%);
+      cursor: pointer;
+      width: 100%;
+      object-fit: contain;
+    }
+    #links{
+      position: relative;
+      top: 3vh;
+      height: 5vh;
+      display: flex;
+      flex-direction: row;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+      .link{
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        width: max-content;
+        margin: 0 3%;
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
     }
   }
 }
+
+@media only screen and (hover: none) and (pointer: coarse){
+#links{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar { display: none; }
+}
+
+}
+
+}
+
 .fade-delay-enter-active {
   transition: opacity 0.5s;
   transition-delay: 0.3s;
