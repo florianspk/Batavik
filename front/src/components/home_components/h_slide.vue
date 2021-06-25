@@ -35,22 +35,28 @@ export default {
     height: 33%;
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
-    transition: 0.5s;
     text-align: center;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
     user-select: none;
+    transition: 0.5s;
+  }
+  .btn {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 2%;
+    padding: 0 2%;
+    opacity: 0;
+    transition: 0.5s;
+  }
+  .btn-next{ right: 0;}
+}
+
+@media screen and (max-width: 720px) {
+  .slide{
+    .btn{ width: 5%; }
   }
 }
-.btn {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 2%;
-  padding: 0 2%;
-  opacity: 0;
-  transition: 0.5s;
-}
-.btn-next{ right: 0;}
 </style>

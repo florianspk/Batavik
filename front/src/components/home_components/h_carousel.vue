@@ -53,6 +53,10 @@ export default {
   overflow: hidden;
 }
 
+@media screen and (max-width: 720px) {
+  .carousel{ width: 100%; height: 30vh; margin: 2vh 0; }
+}
+
 .fade-enter-active { transition: opacity 1s; }
 .fade-enter { opacity: 0; }
 </style>

@@ -26,13 +26,11 @@ export default {
   color: var(--font-color-main);
 }
 
-.page {
-  margin-top: 12vh;
-}
-
 *{
   scrollbar-color: #eee transparent;
   scrollbar-width: thin;
+  margin: 0;
+  padding: 0;
 }
 
 /* Scrollbar style */
