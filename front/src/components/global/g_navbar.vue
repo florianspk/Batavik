@@ -69,7 +69,7 @@ export default {
     height: 100vh;
     width: 100vw;
     left: 0;
-    background: rgba(0, 0, 0, 0.198);
+    background: rgba(0, 0, 0, 0.19);
     z-index: 10;
   }
   #info {
