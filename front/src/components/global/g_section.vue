@@ -1,7 +1,11 @@
 <template>
   <div class="section">
     <h1 class="title"> {{title}} </h1>
-    <products />
+    <div class="product-list">
+      <products />
+      <products />
+      <products />
+    </div>
   </div>
 </template>
 
@@ -18,9 +22,10 @@ export default {
 <style scoped lang="scss">
 .section{
   display: flex;
-  width: 85vw;
+  width: 83vw;
   padding-top: 1%;
   margin: 2% auto 0 auto;
+  padding: 1%;
   flex-wrap: wrap;
   flex: 1 1 30%;
   flex-direction: column;
@@ -31,8 +36,15 @@ export default {
     flex: 1 1 70%;
     margin-left: 2%;
     margin-right: 2.2%;
+    margin-bottom: 1%;
     font-size: 2.5em;
     border-bottom: 0.3vh solid black;
+  }
+  .product-list{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
   }
 }
 
