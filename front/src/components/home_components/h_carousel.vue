@@ -54,7 +54,7 @@ export default {
 }
 
 @media screen and (max-width: 720px) {
-  .carousel{ width: 100%; height: 30vh; margin: 2vh 0; }
+  .carousel{ width: 100%; height: 40vh; margin: -0vh 0; }
 }
 
 .fade-enter-active { transition: opacity 1s; }

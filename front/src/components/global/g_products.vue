@@ -60,4 +60,12 @@ export default {
     }
   }
 }
+
+@media screen and (orientation: portrait) {
+  .product{
+    height: 400px;
+    width: 95%;
+    margin-bottom: 1vh;
+  }
+}
 </style>

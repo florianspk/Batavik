@@ -48,4 +48,12 @@ export default {
   }
 }
 
+@media screen and (orientation: portrait) {
+  .section{
+    margin-top: 3vh;
+    width: 90%;
+    .title{ font-size: 1.7em; margin-bottom: 2vh; }
+    .product-list { flex-direction: column; }
+  }
+}
 </style>
