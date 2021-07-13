@@ -1,6 +1,17 @@
 <template>
   <div class="footer">
-    <f-icon :icon="['fab', 'facebook']" class="logo"></f-icon>
+    <div class="infos">
+      <div class="info">CGU</div>
+      <div class="info">CGV</div>
+      <div class="info">Le groupe VERRE-TECH</div>
+      <div class="info">Assistance</div>
+    </div>
+
+    <div class="logos">
+      <f-icon :icon="['fab', 'facebook-square']" class="logo"></f-icon>
+      <f-icon :icon="['fab', 'twitter-square']" class="logo"></f-icon>
+      <f-icon :icon="['fab', 'linkedin']" class="logo"></f-icon>
+    </div>
   </div>
 </template>
 
@@ -16,10 +27,50 @@ export default {
   width: 100vw;
   height: 120px;
   margin-top: 5%;
+  padding: 1% 2%;
+  display: flex;
+  align-items: center;
   background: white;
   box-shadow: -5px -5px 10px rgb(0 0 0 / 15%);
-  .logo{
-    font-size: 2.5rem;
+  .infos{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    justify-content: space-evenly;
+    width: 35%;
+    .info{
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  }
+  .logos{
+    display: flex;
+    position: absolute;
+    right: 7%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 10%;
+    .logo{
+      font-size: 2.5rem;
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .footer{
+    flex-wrap: wrap;
+    justify-content: center;
+    .infos{
+      width: 100%;
+      .info{
+        font-size: 1rem;
+      }
+    }
+    .logos{
+      position: relative;
+      width: 55%;
+    }
   }
 }
 </style>

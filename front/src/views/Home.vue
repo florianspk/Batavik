@@ -2,6 +2,7 @@
   <div class="home-page">
     <carrousel />
     <section-product :title="'NOS MEILLEURS VENTES'" :type="'bestsellers'" />
+    <section-product :title="'NOS PRODUITS PHARES'" :type="'highlight'" />
   </div>
 </template>
 
