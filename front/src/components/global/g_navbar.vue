@@ -11,9 +11,9 @@
       </div>
 
       <div id="nav">
-        <img src="../../assets/logo.png" id="logo" alt="logo">
-        <p class="page" v-for="(page, i) in pages" :key="i"> 
-          {{ page }} <span class="bar"></span> 
+        <img src="../../assets/logo.png" id="logo" alt="logo"  @click="travel('/')">
+        <p class="page" v-for="(page, i) in pages" :key="i" @click="travel(page.path)"> 
+          {{ page.text }} <span class="bar"></span> 
         </p>
       </div>
 
@@ -24,7 +24,9 @@
       <div id="nav">
         <img src="../../assets/logo.png" id="logo" alt="logo">
         <div id="links">
-          <div class="link" v-for="(page, i) in pages" :key="i"> {{page}} </div>
+          <div class="link" v-for="(page, i) in pages" :key="i" @click="travel(page.path)"> 
+            {{page.text}} 
+          </div>
           <div class="link" v-for="(info, i) in infos" :key="i"> {{info}} </div>
         </div>
       </div>
@@ -33,7 +35,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { reactive } from 'vue';
 
 export default {
@@ -50,8 +52,13 @@ export default {
     return {
       winSize, 
       infos: ['Retrait des produits sous 2H', 'Trouver un point de retrait', 'Suivis de commandes', 'Panier', 'S\'identifier'], 
-      pages: ['Pare-douche', 'Cloison et parois', 'Cheminée'], 
+      pages: [{ text: 'Pare-douche', path: '/pare-douche' }, { text: 'Cloison et parois', path: '/cloison' }, { text: 'Cheminée', path: '/cheminee' }], 
     };
+  },
+  methods: {
+    travel(path) {
+      this.$router.push(path);
+    },
   },
 };
 </script>
