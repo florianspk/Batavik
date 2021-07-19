@@ -11,8 +11,8 @@
 <script>
 export default {
   name: 'slide',
-  props: ['content']
-}
+  props: ['content'],
+};
 </script>
 
 <style scoped lang="scss">

@@ -8,17 +8,17 @@
     </div>
 
     <div class="logos">
-      <f-icon :icon="['fab', 'facebook-square']" class="logo"></f-icon>
-      <f-icon :icon="['fab', 'twitter-square']" class="logo"></f-icon>
-      <f-icon :icon="['fab', 'linkedin']" class="logo"></f-icon>
+      <f-icon :icon="['fab', 'facebook-square']" class="logo" />
+      <f-icon :icon="['fab', 'twitter-square']" class="logo" />
+      <f-icon :icon="['fab', 'linkedin']" class="logo" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'v-footer'
-}
+  name: 'v-footer',
+};
 </script>
 
 <style scoped lang="scss">
@@ -31,7 +31,7 @@ export default {
   display: flex;
   align-items: center;
   background: white;
-  box-shadow: -5px -5px 10px rgb(0 0 0 / 15%);
+  box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.15);
   .infos{
     display: flex;
     flex-direction: row;

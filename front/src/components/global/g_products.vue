@@ -12,7 +12,7 @@
 <script>
 export default {
   name: 'product',
-}
+};
 </script>
 
 <style scoped lang="scss">

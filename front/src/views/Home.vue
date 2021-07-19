@@ -7,13 +7,13 @@
 </template>
 
 <script>
-import Carrousel from '../components/home_components/h_carousel.vue'
-import SectionProduct from '../components/global/g_section.vue'
+import Carrousel from '../components/home_components/h_carousel.vue';
+import SectionProduct from '../components/global/g_section.vue';
 
 export default {
   name: 'Home',
-  components: { Carrousel, SectionProduct }
-}
+  components: { Carrousel, SectionProduct },
+};
 </script>
 
 <style lang="scss" scoped>

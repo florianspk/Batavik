@@ -9,16 +9,16 @@
 </template>
 
 <script>
-import navbar from './components/global/g_navbar'
-import vFooter from './components/global/g_footer.vue'
+import navbar from './components/global/g_navbar.vue';
+import vFooter from './components/global/g_footer.vue';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     navbar,
-    vFooter
-  }
-}
+    vFooter,
+  },
+};
 </script>
 
 <style>

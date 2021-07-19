@@ -12,7 +12,9 @@
 
       <div id="nav">
         <img src="../../assets/logo.png" id="logo" alt="logo">
-        <p class="page" v-for="(page, i) in pages" :key="i"> {{ page }} <span class="bar"></span> </p>
+        <p class="page" v-for="(page, i) in pages" :key="i"> 
+          {{ page }} <span class="bar"></span> 
+        </p>
       </div>
 
     </div>
@@ -27,30 +29,29 @@
         </div>
       </div>
     </div>
-    
 
   </div>
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { reactive } from 'vue';
 
 export default {
-  name: "navbar",
+  name: 'navbar',
   setup() {
-    let winSize = reactive({ height: innerHeight, width: innerWidth });
+    const winSize = reactive({ height: window.innerHeight, width: window.innerWidth });
     const setWindowSize = () => {
-      winSize.height = innerHeight;
-      winSize.width = innerWidth;
-    }
-    setWindowSize()
-    window.addEventListener("resize", ()=> setWindowSize() );
+      winSize.height = window.innerHeight;
+      winSize.width = window.innerWidth;
+    };
+    setWindowSize();
+    window.addEventListener('resize', () => setWindowSize());
 
     return {
-      winSize,
-      infos: [ "Retrait des produits sous 2H", "Trouver un point de retrait", "Suivis de commandes", "Panier", "S'identifier" ],
-      pages: [ "Pare-douche","Cloison et parois","Cheminée" ],
-    }
+      winSize, 
+      infos: ['Retrait des produits sous 2H', 'Trouver un point de retrait', 'Suivis de commandes', 'Panier', 'S\'identifier'], 
+      pages: ['Pare-douche', 'Cloison et parois', 'Cheminée'], 
+    };
   },
 };
 </script>

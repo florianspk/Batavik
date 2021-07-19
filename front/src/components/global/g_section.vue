@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import Products from './g_products.vue'
+import Products from './g_products.vue';
 
 export default {
   name: 'section-product',
   props: ['title', 'type'],
-  components: { Products }
-}
+  components: { Products },
+};
 </script>
 
 <style scoped lang="scss">

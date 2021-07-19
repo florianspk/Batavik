@@ -15,31 +15,35 @@
 </template>
 
 <script>
-import Slide from './h_slide.vue'
+import Slide from './h_slide.vue';
 
 export default {
-  name: "carrousel",
+  name: 'carrousel',
   components: { Slide },
   data() {
     return {
       itemToShow: 1,
-    }
+    };
   },
   methods: {
     navigate(effect) {
-      if(this.itemToShow + effect <= this.nbSlide && this.itemToShow + effect !== 0 ) this.itemToShow = this.itemToShow + effect
-      else if(this.itemToShow == this.nbSlide) this.itemToShow = 1
-      else if(this.itemToShow + effect === 0) this.itemToShow = this.nbSlide 
-    }
+      if (this.itemToShow + effect <= this.nbSlide && this.itemToShow + effect !== 0) {
+        this.itemToShow += effect;
+      } else if (this.itemToShow === this.nbSlide) {
+        this.itemToShow = 1;
+      } else if (this.itemToShow + effect === 0) {
+        this.itemToShow = this.nbSlide;
+      }
+    },
   },
-  setup(){
-    const nbSlide = 5
+  setup() {
+    const nbSlide = 5;
 
     return {
       nbSlide,
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style scoped lang="scss">
