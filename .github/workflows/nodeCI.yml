@@ -17,6 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: ansible-lint
+        uses: ansible/ansible-lint-action@v4.1.0.post0
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
