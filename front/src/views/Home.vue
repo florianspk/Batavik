@@ -1,8 +1,8 @@
 <template>
   <div class="home-page">
     <carrousel />
-    <section-product :title="'NOS MEILLEURS VENTES'" :type="'bestsellers'" />
-    <section-product :title="'NOS PRODUITS PHARES'" :type="'highlight'" />
+    <section-product :nbProduct="6" :title="'NOS MEILLEURS VENTES'" :type="'bestsellers'" />
+    <section-product :nbProduct="6" :title="'NOS PRODUITS PHARES'" :type="'highlight'" />
   </div>
 </template>
 
