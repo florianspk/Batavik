@@ -8,7 +8,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/vue-fontawesome": "^3.0.0-4",
-    "@types/node": "^15.12.2"
+    "@types/node": "^15.12.2",
     "mocha": "^9.0.2"
   },
   "devDependencies": {
