@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../connect');
+const connection = require('../../connect');
 
 
 /* GET users listing. */

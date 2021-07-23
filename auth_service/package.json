@@ -14,7 +14,6 @@
     "fs-extra": "^9.1.0",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
-    "npm": "^7.11.1",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6"
   }
