@@ -4,7 +4,7 @@
     <div class="infos">
       <h1 class="title">Nom du produit {{index + 1}}</h1>
       <p class="descr">Description rapide</p>
-      <a href="" class="link">Voir plus</a>
+      <a href="/product/2" class="link">Voir plus</a>
     </div>
   </div>
 </template>

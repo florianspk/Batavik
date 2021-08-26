@@ -25,7 +25,7 @@ export default {
 .footer {
   position: relative;
   width: 100vw;
-  height: 120px;
+  height: 8vh;
   margin-top: 5%;
   padding: 1% 2%;
   display: flex;
