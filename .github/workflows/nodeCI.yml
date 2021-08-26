@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - run: npm i -g @vue/cli-*
       - run: npm i -g @vue/cli-service
       - run: npm i -g @vue/cli-plugin-babel
       - run: npm ci
