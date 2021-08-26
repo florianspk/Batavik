@@ -24,6 +24,7 @@ jobs:
       - run: npm i -g @vue/cli
       - run: npm i -g @vue/cli-service
       - run: npm i -g @vue/cli-plugin-babel
+      - run: npm i -g @vue/cli-plugin-e2e-cypress
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
