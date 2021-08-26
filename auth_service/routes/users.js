@@ -1,13 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const connection = require('../connect');
-
+var express = require('express');
+var router = express.Router();
 
 /* GET users listing. */
-router.get('/', (req,res,next)=> {
-  connection.query('SELECT * FROM User', (err,results,fields) => {
-      !err ?res.json(results) : res.json({err});
-  });
+router.get('/', function(req, res, next) {
+  res.json([{
+    _id: "4520ehjifc7df87",
+    name: "Julien",
+    mail: "j.kxxx@xxxx.fr",
+    address: "55 rue XXXX, 55025, XXX"
+  }]);
 });
 
 module.exports = router;
