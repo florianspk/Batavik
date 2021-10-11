@@ -21,5 +21,10 @@ app.use('/users', usersRouter);
 //app.use('/', require('./routes/comment.js'));
 require('./routes/comment.js')(app)
 
+const db = require("./models");
+db.sequelize.sync({ force: true })
+  .then(() => {
+    console.log("Drop and re-sync db.");
+  });
 
 module.exports = app;
