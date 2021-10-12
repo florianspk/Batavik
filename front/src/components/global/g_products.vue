@@ -2,7 +2,7 @@
   <div class="product">
     <div class="img"></div>
     <div class="infos">
-      <h1 class="title">Nom du produit</h1>
+      <h1 class="title">Nom du produit {{index + 1}}</h1>
       <p class="descr">Description rapide</p>
       <a href="" class="link">Voir plus</a>
     </div>
@@ -12,6 +12,7 @@
 <script>
 export default {
   name: 'product',
+  props: ['index'],
 };
 </script>
 

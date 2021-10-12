@@ -96,7 +96,7 @@ module.exports = [
       }, process.env)
     }
   },
-  
+
   {
     label: 'stat_service',
     description: 'Permet la gestion des statistiques du site (produit, visite)',
@@ -158,6 +158,18 @@ module.exports = [
         BDD_USERNAME: '',
         BDD_PASSWORD: ''
       }, process.env)
+    },
+  },
+
+  {
+    label: 'front',
+    description: 'Site web marchand de Verre-Tech',
+    url: 'http://localhost:8080',
+    spawnCmd: 'npm',
+    spawnArgs: ['run', 'serve'],
+    spawnOptions: {
+      cwd: `${path}/front`,
+      env: {}
     }
   },
 ]
