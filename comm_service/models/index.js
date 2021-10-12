@@ -19,7 +19,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 /*
 /* declaration */
-
+db.comment = require("./comment.js")(sequelize, Sequelize);
 //db.model2 = require("./model2.js")(sequelize, Sequelize);
 /* relation 
 db.model2.hasOne(db.model1, {foreignKey: "id"});
