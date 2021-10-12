@@ -26,7 +26,7 @@ module.exports = (app) => {
    *     description: recherche tous les commentaires d'u produit en fonction de son id
    *     
   */
-    router.get("/product/:idProduit", comment.findProductComment);
+    router.get("/product/:idProduct", comment.findProductComment);
   
   /**
    * @openapi

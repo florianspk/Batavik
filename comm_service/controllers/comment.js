@@ -24,9 +24,25 @@ exports.newComment = (req, res) => {
   };
 
 exports.findProductComment = (req, res) => {
-  res.status(200).send({
-    message: 'les commantaire du produit id ' + req.params.idProduit,
-  });
+
+  Comment.findAll({
+    attributes: ['text', 'note', 'idProduct', 'idUser'],
+    where: {
+        idProduct: req.params.idProduct
+      }
+  })
+    .then((user) => {
+      res.status(200).send({
+        content: user
+      });
+    })
+    .catch((err) => {
+      res.status(403).send({
+        message: 'Les commentaires sont introuvable',
+        erreur: err
+      });
+    }); 
+
   };
 
   
