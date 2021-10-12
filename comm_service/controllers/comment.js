@@ -55,13 +55,21 @@ exports.findOne = (req, res) => {
       }
   })
     .then((user) => {
-      res.status(200).send({
-        content: user
-      });
+      if(user != null || 0){
+        res.status(200).send({
+          content: user
+        });
+      }else{
+        res.status(200).send({
+          message: 'Commentaire introuvable',
+          content: null
+        });
+      }
+      
     })
     .catch((err) => {
       res.status(403).send({
-        message: 'Commentaire introuvable',
+        message: 'Une erreur est survenue',
         erreur: err
       });
     }); 
@@ -72,9 +80,32 @@ exports.findOne = (req, res) => {
 
 /* GET home page. */
 exports.removeOne = (req, res) => {
-  res.status(200).send({
-    message: 'supprime le commentaire ' + req.params.id,
-  });
+  
+  Comment.destroy({
+    where: {
+        id: req.params.id
+      }
+  })
+    .then((user) => {
+      if(user != 0){
+        res.status(200).send({
+          message: 'Commentaire supprimer',
+          e:user
+        });
+      }else{
+        res.status(403).send({
+          message: "Commentaire introuvable il n'a donc pas pus etre supprimé"
+        });
+      }
+      
+    })
+    .catch((err) => {
+      res.status(403).send({
+        message: "Une erreur est survenue",
+        erreur: err
+      });
+    }); 
+
   };
 
   
