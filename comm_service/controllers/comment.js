@@ -31,9 +31,26 @@ exports.findProductComment = (req, res) => {
 
   
 exports.findOne = (req, res) => {
-  res.status(200).send({
-    message: 'le commantaire d id ' + req.params.id,
-  });
+
+  Comment.findOne({
+    attributes: ['text', 'note', 'idProduct', 'idUser'],
+    where: {
+        id: req.params.id
+      }
+  })
+    .then((user) => {
+      res.status(200).send({
+        content: user
+      });
+    })
+    .catch((err) => {
+      res.status(403).send({
+        message: 'Commentaire introuvable',
+        erreur: err
+      });
+    }); 
+
+  
   };
 
 
