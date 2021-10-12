@@ -5,7 +5,7 @@ module.exports = (app) => {
   /**
    * @openapi
    * /api/comment:
-   *   get:
+   *   post:
    *     security:
    *       - jwt: []
    *     tags:
@@ -17,7 +17,7 @@ module.exports = (app) => {
 
   /**
    * @openapi
-   * /api/comments/:idProduit:
+   * /api/comment/product/:idProduit:
    *   get:
    *     security:
    *       - jwt: []
