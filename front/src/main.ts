@@ -13,6 +13,7 @@ import Port from './helpers/portList';
 import './styles/main.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'element-plus/dist/index.css';
 
 library.add(
   faTachometerAlt,

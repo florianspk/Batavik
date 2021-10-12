@@ -4,7 +4,10 @@ import Home from '../views/Home.vue';
 import Douche from '../views/Shower.vue';
 import Page404 from '../views/404.vue';
 import Product from '../views/Product.vue';
-import Admin from '../views/admin/Admin.vue';
+import Dashboard from '../views/admin/Dashboard.vue';
+import Users from '../views/admin/Users.vue';
+import Stocks from '../views/admin/Stocks.vue';
+import Shops from '../views/admin/Shops.vue';
 
 const routes = [
   {
@@ -24,8 +27,23 @@ const routes = [
   },
   {
     path: '/admin',
-    name: 'Admin',
-    component: Admin,
+    name: 'Dashboard',
+    component: Dashboard,
+  },
+  {
+    path: '/admin/clients',
+    name: 'Users',
+    component: Users,
+  },
+  {
+    path: '/admin/stocks',
+    name: 'Stocks',
+    component: Stocks,
+  },
+  {
+    path: '/admin/magasins',
+    name: 'Shops',
+    component: Shops,
   },
   {
     path: '/:pathMatch(.*)*',

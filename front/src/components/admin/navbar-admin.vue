@@ -9,16 +9,16 @@
       <ul class="list-unstyled components">
         <p>Administration</p>
         <li>
-          <a href="#"><f-icon :icon="'tachometer-alt'" style="margin-right: 10px"></f-icon>Tableau de bord</a>
+          <a href="/admin"><f-icon :icon="'tachometer-alt'" style="margin-right: 10px"></f-icon>Tableau de bord</a>
         </li>
         <li>
-          <a href="#"><f-icon :icon="'users'" style="margin-right: 10px"></f-icon>Clients</a>
+          <a href="/admin/clients"><f-icon :icon="'users'" style="margin-right: 10px"></f-icon>Clients</a>
         </li>
         <li>
-          <a href="#"><f-icon :icon="'boxes'" style="margin-right: 10px"></f-icon>Stocks</a>
+          <a href="/admin/stocks"><f-icon :icon="'boxes'" style="margin-right: 10px"></f-icon>Stocks</a>
         </li>
         <li>
-          <a href="#"><f-icon :icon="'store'" style="margin-right: 10px"></f-icon>Magasins</a>
+          <a href="/admin/magasins"><f-icon :icon="'store'" style="margin-right: 10px"></f-icon>Magasins</a>
         </li>
       </ul>
     </nav>
