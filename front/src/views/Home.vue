@@ -17,5 +17,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home-page{ margin-top: 10vh; padding-top: 4vh; min-height: 86vh; }
+.home-page{ margin-top: 0vh; padding-top: 4vh; min-height: 86vh; }
 </style>

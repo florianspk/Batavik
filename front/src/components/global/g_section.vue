@@ -20,7 +20,7 @@ export default {
 <style scoped lang="scss">
 .section{
   display: flex;
-  width: 83vw;
+  width: 85vw;
   margin: 1% auto 0 auto;
   padding: 1%;
   flex-wrap: wrap;
