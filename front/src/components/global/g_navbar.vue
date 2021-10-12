@@ -67,7 +67,7 @@ export default {
 #navbar {
   width: 100vw;
   height: 10vh;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 10;
@@ -82,7 +82,7 @@ export default {
   }
   #info {
     height: 2vh;
-    padding: 10px 0px;
+    padding: 20px 0px;
     margin-right: 50px;
     width: 98.5%;
     display: flex;
@@ -91,6 +91,7 @@ export default {
     #search {
       position: absolute;
       left: 9.5%;
+      top: 10px;
       border-radius: 2% 2% 2% 2% / 50% 50% 50% 50%;
       border: none;
       width: 25vw;
