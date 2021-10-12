@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTachometerAlt, faUsers, faBoxes, faStore, faBars,
+} from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faTwitterSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -10,9 +12,14 @@ import Port from './helpers/portList';
 
 import './styles/main.css';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 library.add(
-  faChevronLeft, 
-  faChevronRight,
+  faTachometerAlt,
+  faBars,
+  faStore,
+  faUsers,
+  faBoxes,
   faFacebookSquare,
   faTwitterSquare,
   faLinkedin,

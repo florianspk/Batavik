@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Douche from '../views/Shower.vue';
 import Page404 from '../views/404.vue';
-
 import Product from '../views/Product.vue';
+import Admin from '../views/admin/Admin.vue';
 
 const routes = [
   {
@@ -21,6 +21,11 @@ const routes = [
     path: '/product/{:id}',
     name: 'Product',
     component: Product,
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
   },
   {
     path: '/:pathMatch(.*)*',

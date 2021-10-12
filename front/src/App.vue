@@ -1,15 +1,17 @@
 <template>
   <div id="app">
 
-    <navbar />
+    <navbar v-if="isAdmin" />
+    <navbar-admin v-else />
     <router-view />
-    <v-footer />
+    <v-footer v-if="isAdmin"/>
 
   </div>
 </template>
 
 <script>
 import navbar from './components/global/g_navbar.vue';
+import navbarAdmin from './components/admin/navbar-admin.vue';
 import vFooter from './components/global/g_footer.vue';
 
 export default {
@@ -17,6 +19,13 @@ export default {
   components: {
     navbar,
     vFooter,
+    navbarAdmin,
+  },
+  computed: {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    isAdmin() {
+      return (this.$route.name !== 'Admin');
+    },
   },
 };
 </script>
