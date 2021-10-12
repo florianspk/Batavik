@@ -17,4 +17,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+const db = require("./models");
+db.sequelize.sync({ force: true })
+  .then(() => {
+    console.log("Drop and re-sync db.");
+  });
+
+
 module.exports = app;
