@@ -1,7 +1,11 @@
 //* Retrieve all data
-exports.findAll = (req, res) => {
+exports.newComment = (req, res) => {
+
+  // Read text, note, idProduct and idUser from request body
+  const { text, note, idProduct, idUser } = req.body;
+
   res.status(200).send({
-    message: 'tout les commentaires',
+    message: 'tout les commentaires ' + text + " " + note + " " + idProduct + " " + idUser,
   });
   };
 
@@ -11,29 +15,13 @@ exports.findProductComment = (req, res) => {
   });
   };
 
-  /**
- * @openapi
- * /users:
- *   get:
- *     security:
- *       - jwt: []
- *     tags:
- *       - RemoveOne
- *     description: Supprimer un commentaire
- *     responses:
- *       200:
- *         description: Operation summary
- *         content:
- *           application/json:
- *             schema:
- *               properties: 
-*                  message:
-*                    type: string
-*                  example:       # Sample data
-*                    message: modification accepter
- *       401:
- *         description: Not authenticated, you need to pass a Bearer in header
- */
+  
+exports.findOne = (req, res) => {
+  res.status(200).send({
+    message: 'les commantaire du produit id ' + req.params.id,
+  });
+  };
+
 
 /* GET home page. */
 exports.removeOne = (req, res) => {
