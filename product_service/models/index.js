@@ -1,29 +1,31 @@
-const dbConfig = require("../db/config.js");
-/* co */
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  port: dbConfig.PORT,
-  dialect: dbConfig.dialect,
-  operatorsAliases: 0,
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle,
-  },
-});
-/* */
-const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-/*
-/* declaration */
+'use strict';
 
-//db.model2 = require("./model2.js")(sequelize, Sequelize);
-/* relation 
-db.model2.hasOne(db.model1, {foreignKey: "id"});
-db.model1.belongsTo(db.model2, {foreignKey: "id"});
-*/
-/* export */
+const fs = require('fs');
+const path = require('path');
+const { Sequelize } = require('sequelize');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.js');
+const db = {};
+
+const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, config);
+
+fs.readdirSync(__dirname)
+  .filter(file => {
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+  })
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model;
+  });
+
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
 module.exports = db;

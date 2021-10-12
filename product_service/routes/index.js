@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 /**
  * @openapi
@@ -9,7 +9,7 @@ var router = express.Router();
  *       - jwt: []
  *     tags:
  *       - Users
- *     description: Get all users in database
+ *     description: Get all products in database
  *     responses:
  *       200:
  *         description: Operation summary
