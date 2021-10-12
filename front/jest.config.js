@@ -3,4 +3,7 @@ module.exports = {
   transform: {
     '^.+\\.vue$': 'vue-jest',
   },
+  "coverageReporters": ["text", "html"],
+  "collectCoverage": true,
+  "collectCoverageFrom": ['src/**/*.{ts,tsx,vue}'],
 };

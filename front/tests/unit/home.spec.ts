@@ -13,6 +13,6 @@ test('Verify what is displayed', () => {
 test('Verify displayed home category', () => {
   const wrapper = mount(Home);
   const section = wrapper.findAllComponents(SectionProduct);
-  expect(section[0].text()).toMatch('NOS MEILLEURS VENTES');
+  expect(section[0].text()).toMatch('NOS MEILLEURES VENTES');
   expect(section[1].text()).toMatch('NOS PRODUITS PHARES');
 });

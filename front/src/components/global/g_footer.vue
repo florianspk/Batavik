@@ -23,11 +23,11 @@ export default {
 
 <style scoped lang="scss">
 .footer {
-  position: relative;
+  position: absolute;
+  bottom: 0;
   width: 100vw;
-  height: 120px;
+  height: 10vh;
   margin-top: 5%;
-  padding: 1% 2%;
   display: flex;
   align-items: center;
   background: white;
@@ -39,7 +39,7 @@ export default {
     justify-content: space-evenly;
     width: 35%;
     .info{
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       cursor: pointer;
     }
   }
