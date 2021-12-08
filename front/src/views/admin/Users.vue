@@ -1,68 +1,61 @@
 <template>
-  <el-table :data="tableData" style="width: 100%">
-    <el-table-column label="Date" width="180">
-      <template #default="scope">
-        <i class="el-icon-time"></i>
-        <span style="margin-left: 10px">{{ scope.row.date }}</span>
-      </template>
-    </el-table-column>
-    <el-table-column label="Name" width="180">
-    </el-table-column>
-    <el-table-column label="Operations">
-      <template #default="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-        >Edit</el-button
-        >
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)"
-        >Delete</el-button
-        >
-      </template>
-    </el-table-column>
+  <el-table style="width: 100%">
+    <div v-for="user in users" :key="user.id">
+      <el-table-column label="name" width="180">
+          <span style="margin-left: 10px">{{ user.name }}</span>
+      </el-table-column>
+<!--      <el-table-column label="age" width="180">
+        <template #default="scope">
+          <span style="margin-left: 10px">{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="count" width="180">
+        <template #default="scope">
+          <span style="margin-left: 10px">{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Operations">
+        <template #default="scope">
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+          >Edit</el-button
+          >
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)"
+          >Delete</el-button
+          >
+        </template>
+      </el-table-column>-->
+    </div>
   </el-table>
 </template>
 
 <script>
-import { ElTable, ElTableColumn, ElButton } from 'element-plus';
+import { ElTable, ElTableColumn } from 'element-plus';
+
+import axios from 'axios';
 
 export default {
   name: 'Users',
-  components: { ElTable, ElTableColumn, ElButton },
+  components: { ElTable, ElTableColumn },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-04',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-      ],
+      users: [],
     };
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
+    async getUsers() {
+      try {
+        const users = await axios.get(
+          'https://jsonplaceholder.typicode.com/users',
+        );
+
+        this.users = users.data;
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };
