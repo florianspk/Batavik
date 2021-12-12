@@ -1,30 +1,27 @@
 
 module.exports = (sequelize, Sequelize) => {
-    const ProductCart = sequelize.define("productCart", {
+    const Cart = sequelize.define("cart", {
         id:{
             type: Sequelize.INTEGER(10),
             primaryKey: true,
             autoIncrement: true
         },
 
-        idProduct:{
-            type: Sequelize.INTEGER(),
+        validation:{
+            type: Sequelize.TINYINT(1),
             allowNull:false
         },
 
-        
-        unitPrice:{
+        cartPrice:{
             type: Sequelize.DECIMAL(10,2),
-            allowNull:true
+            allowNull:false
         },
 
-        quantity:{
-            type: Sequelize.INTEGER(),
+        idUser:{
+            type: Sequelize.INTEGER(10),
             allowNull:false
-        }
-
-        
+        },
     });
 
-    return ProductCart;
+    return Cart;
 };
