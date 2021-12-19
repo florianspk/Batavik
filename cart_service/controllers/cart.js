@@ -5,19 +5,24 @@ const productCart = db.productCart;
 //* Find a single with an id
 exports.findOne = (req, res) => {
     
-    productCart.findAll({
+    cart.findOne({
         include: [{
-                model: cart ,
-                attributes: [],
-                where: {
-                    validation : 0,
-                    idUser : req.body.idUser
-                }
+                model: productCart ,               
             }],
-        logging: true,
+          where: {
+            validation : 0,
+            idUser : req.body.idUser
+        }
       })
         .then((data) => {
-          res.send(data);
+          if(data == null ){
+            res.status(400).send({
+              message: "Panier introuvable",
+            });
+          }else{
+            res.send(data);
+          }
+          
         })
         .catch((err) => {
           res.status(500).send({

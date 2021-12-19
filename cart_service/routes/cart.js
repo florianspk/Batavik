@@ -3,13 +3,13 @@ module.exports = (app) => {
   
     var router = require("express").Router();
   
-    // Create a new
+    // find one 
     router.get("/", cart.findOne);
   
     // Create a new
     router.post("/", cart.addcart);
   
-    // Create a new
+    // cahnge quentiter or delete a row cart 
     router.post("/quantityProduct", cart.quantityProduct);
   
     /*
