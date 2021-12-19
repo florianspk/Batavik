@@ -7,7 +7,14 @@
       <div id="info">
         <input type="text" name="search" id="search" placeholder="Rechercher un produit" />
         <label for="search"></label>
-        <p class="click" v-for="(info, i) in infos" :key="i">{{ info }}</p>
+        <p 
+          class="click" 
+          v-for="(info, i) in infos" 
+          :key="i" 
+          @click="info == 'S\'identifier' ? loginForm = true : info == 'Panier' ? cart = true : '' "
+        >
+        {{ info }}
+        </p>
       </div>
 
       <div id="nav">
@@ -16,6 +23,16 @@
           {{ page.text }} <span class="bar"></span> 
         </p>
       </div>
+
+    <transition-group name="fade">
+      <login-form v-if="loginForm" />
+      <div class="black" v-if="loginForm" @click="loginForm = !loginForm" ></div>
+    </transition-group>
+
+    <transition-group name="fade">
+      <cart v-if="cart" />
+      <div class="black" v-if="cart" @click="cart = !cart" ></div>
+    </transition-group>
 
     </div>
 
@@ -37,9 +54,12 @@
 
 <script lang="js">
 import { reactive } from 'vue';
+import loginForm from './g_login_form.vue';
+import cart from './cart.vue';
 
 export default {
   name: 'navbar',
+  components: { loginForm, cart },
   setup() {
     const winSize = reactive({ height: window.innerHeight, width: window.innerWidth });
     const setWindowSize = () => {
@@ -55,6 +75,12 @@ export default {
       pages: [{ text: 'Pare-douche', path: '/pare-douche' }, { text: 'Cloison et parois', path: '/cloison' }, { text: 'Cheminée', path: '/cheminee' }], 
     };
   },
+  data() {
+    return {
+      loginForm: false,
+      cart: false,
+    };
+  },
   methods: {
     travel(path) {
       this.$router.push(path);
@@ -64,6 +90,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.black {
+  position: absolute; 
+  top: 0;
+  height: 100vh; 
+  width: 100vw; 
+  background: #000; 
+  z-index: 100;
+  opacity: 0.5;
+  transition-duration: 0.5s;
+}
+
 #navbar {
   width: 100vw;
   height: 10vh;
@@ -72,6 +109,7 @@ export default {
   left: 0;
   z-index: 10;
   background-color: #eee;
+  user-select: none;
   #bg {
     position: absolute;
     height: 100vh;
@@ -206,28 +244,16 @@ export default {
   }
 }
 
-@media only screen and (hover: none) and (pointer: coarse){
-#links{
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  &::-webkit-scrollbar { display: none; }
-}
+  @media only screen and (hover: none) and (pointer: coarse){
+    #links{
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+      &::-webkit-scrollbar { display: none; }
+    }
+  }
 
 }
 
-}
-
-.fade-delay-enter-active {
-  transition: opacity 0.5s;
-  transition-delay: 0.3s;
-}
-.fade-delay-leave-active {
-  transition: opacity 0.5s;
-  transition-delay: 0;
-}
-.fade-delay-enter, .fade-delay-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
