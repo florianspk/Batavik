@@ -32,10 +32,10 @@ db.model1.belongsTo(db.model2, {foreignKey: "id"});
 /* relation */
 
 db.productCart.belongsTo(db.order, {foreignKey: "id_order"});
-db.order.hasOne(db.productCart, {foreignKey: "id_order"});
+db.order.hasMany(db.productCart, {foreignKey: "id_order"});
 
 db.productCart.belongsTo(db.cart, {foreignKey: "id_cart"});
-db.cart.hasOne(db.productCart, {foreignKey: "id_cart"});
+db.cart.hasMany(db.productCart, {foreignKey: "id_cart"});
 
 
 /* export */
