@@ -2,7 +2,7 @@ module.exports = {
   HOST: "julienkeiff.fr",
   USER: "root",
   PORT: 3112,
-  PASSWORD: null,
+  PASSWORD: "null",
   DB: "Orders",
   dialect: "mysql",
   pool: {
