@@ -7,7 +7,7 @@ module.exports = {
         products.push({
           name: faker.commerce.productName(),
           price:faker.commerce.price(),
-          description : fake.lorem.paragraph(),
+          description : faker.lorem.paragraph(),
           note:  Math.floor(Math.random() * 10),
           image: faker.image.abstract() + '?_r=' + Math.floor(((new Date()).getTime() * Math.random()) + i),
           createdAt:new Date(),
