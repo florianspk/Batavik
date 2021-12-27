@@ -39,15 +39,31 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#title {
-  margin: 10vh 0;
-  font-size: 3rem;
+@media screen and (orientation: landscape) {
+  #title {
+    margin: 10vh 0;
+    font-size: 3rem;
+  }
+  #similaire {
+    #container-simi {
+      display: flex;
+      gap: 1%;
+    }
+  }
 }
-#similaire {
-  #container-simi {
-    display: flex;
-    gap: 1%;
-    justify-content: space-between;
+
+@media screen and (orientation: portrait) {
+  #title {
+    margin: 10vh 0;
+    font-size: 3rem;
+  }
+  #similaire {
+    #container-simi {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5%;
+    }
   }
 }
 </style>
