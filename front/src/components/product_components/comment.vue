@@ -69,42 +69,86 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.comm{
-  position: relative;
-  width: 80%;
-  height: 18vh;
-  background: #fff;
-  padding: 1%;
-  border-radius: 1.5%/ 10%;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 0;
-  .from{
-    font-size: 1.4em;
-    margin-bottom: 1%;
-  }
-  .message{
-    text-indent: 2%;
-    height: 50%;
-  }
-  .infos{
-    display: flex;
-    bottom: 0;
-    height: 20%;
-    align-items: center;
-    font-size: 1.1em;
-    .note{
-      width: 80%;
-      .star{
-        width: 3%;
-        margin-left: 1%;
+@media screen and (orientation: landscape) {
+  .comm{
+    position: relative;
+    width: 80%;
+    height: 18vh;
+    background: #fff;
+    padding: 1%;
+    border-radius: 1.5%/ 10%;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    .from{
+      font-size: 1.4em;
+      margin-bottom: 1%;
+    }
+    .message{
+      text-indent: 2%;
+      height: 50%;
+    }
+    .infos{
+      display: flex;
+      bottom: 0;
+      height: 20%;
+      align-items: center;
+      font-size: 1.1em;
+      .note{
+        width: 80%;
+        .star{
+          width: 3%;
+          margin-left: 1%;
+        }
+        .star .yellow{
+          fill: #d4e157;
+        }
       }
-      .star .yellow{
-        fill: #d4e157;
+      .date{
+        width: 20%;
+        justify-content: flex-end;
       }
     }
-    .date{
-      width: 20%;
-      justify-content: flex-end;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  .comm{
+    position: relative;
+    width: 100%;
+    height: 20vh;
+    background: #fff;
+    padding: 1%;
+    border-radius: 1.5%/ 10%;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    .from{
+      font-size: 1.4em;
+      margin-bottom: 1%;
+    }
+    .message{
+      text-indent: 2%;
+      height: 50%;
+    }
+    .infos{
+      display: flex;
+      bottom: 0;
+      height: 30%;
+      align-items: center;
+      .note{
+        width: 80%;
+        .star{
+          width: 7%;
+          margin-left: 1%;
+        }
+        .star .yellow{
+          fill: #d4e157;
+        }
+      }
+      .date{
+        width: 40%;
+        font-size: 1rem;
+        justify-content: flex-end;
+      }
     }
   }
 }

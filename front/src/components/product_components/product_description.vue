@@ -43,71 +43,142 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#product-description {
-  margin-top: 5vh;
-  height: 50vh;
-}
-#img-container {
-  width: 45%;
-  img {
-    width: 100%;
-  }
-}
-#info-container {
-  display: inline-block;
-  position: absolute;
-  top: 1%;
-  right: 2%;
-  width: 50%;
-  #style {
-    display: flex;
-    gap: 2%;
-    button {
-      display: inline-block;
-      border: dotted black 2px;
-      height: 7vh;
-      border-radius: 20% / 50%;
-      padding: 2%;
-      cursor: pointer;
-      transition-duration: 0.2s;
-      &:focus{
-        outline: none;
+@media screen and (orientation: landscape) {
+  #product-description {
+    margin-top: 5vh;
+    height: 50vh;
+    #img-container {
+      width: 45%;
+      img {
+        width: 100%;
       }
-    } 
-    button.active {
-      border: black 2px solid;
-      background: #d4e157;
     }
-  }
-}
-#price {
-  margin-top: 2vh;
-}
-.add{
-  button{
-    margin-top: 13%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 20vw;
-    height: 10vh;
-    border-radius: 15% / 50%;
-    border: black solid 2px;
-    transition-duration: 0.25s;
-    padding-left: 5%;
-    font-size: 1.1rem;
-    &:focus{
-      outline: none;
-    }
-    &:hover{
-      background: #d4e157;
-    }
-    svg{
+    #info-container {
+      display: inline-block;
       position: absolute;
-      right: 5%;
-      height: 50%;
-      width: 20%;
+      top: 1%;
+      right: 2%;
+      width: 50%;
+      #style {
+        display: flex;
+        gap: 2%;
+        button {
+          display: inline-block;
+          border: dotted black 2px;
+          height: 7vh;
+          border-radius: 20% / 50%;
+          padding: 2%;
+          cursor: pointer;
+          transition-duration: 0.2s;
+          &:focus{
+            outline: none;
+          }
+        } 
+        button.active {
+          border: black 2px solid;
+          background: #d4e157;
+        }
+      }
+      #price {
+        margin-top: 2vh;
+      }
+      .add{
+        button{
+          margin-top: 13%;
+          position: relative;
+          display: flex;
+          align-items: center;
+          width: 20vw;
+          height: 10vh;
+          border-radius: 15% / 50%;
+          border: black solid 2px;
+          transition-duration: 0.25s;
+          padding-left: 5%;
+          font-size: 1.1rem;
+          &:focus{
+            outline: none;
+          }
+          &:hover{
+            background: #d4e157;
+          }
+          svg{
+            position: absolute;
+            right: 5%;
+            height: 50%;
+            width: 20%;
+          }
+        }
+      }
     }
   }
 }
+
+@media screen and (orientation: portrait) {
+  #product-description {
+    margin-top: 10vh;
+    #img-container {
+      width: 100%;
+      height: 45%;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+    #info-container {
+      width: 100%;
+      #style {
+        display: flex;
+        gap: 2%;
+        button {
+          display: inline-block;
+          border: dotted black 2px;
+          height: 7vh;
+          border-radius: 20% / 50%;
+          padding: 2%;
+          cursor: pointer;
+          transition-duration: 0.2s;
+          &:focus{
+            outline: none;
+          }
+        } 
+        button.active {
+          border: black 2px solid;
+          background: #d4e157;
+        }
+      }
+      #price {
+        margin-top: 2vh;
+      }
+      .add{
+        button{
+          margin-top: 13%;
+          position: relative;
+          display: flex;
+          align-items: center;
+          width: 60vw;
+          height: 10vh;
+          border-radius: 15% / 50%;
+          border: black solid 2px;
+          transition-duration: 0.25s;
+          padding-left: 5%;
+          font-size: 1.1rem;
+          &:focus{
+            outline: none;
+          }
+          &:hover{
+            background: #d4e157;
+          }
+          svg{
+            position: absolute;
+            right: 5%;
+            height: 50%;
+            width: 20%;
+          }
+        }
+      }
+    }
+  }
+}
+
 </style>
