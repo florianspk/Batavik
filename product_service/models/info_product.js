@@ -3,25 +3,25 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class timeInformation extends Model {
+  class Info_product extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Info_product.belongsTo(models.Product)
     }
   };
-  timeInformation.init({
-    earlyMorningSchedule: DataTypes.DATE,
-    lateMorningSchedule: DataTypes.DATE,
-    earlyAfternoonSchedule: DataTypes.DATE,
-    lateAfternoonSchedule: DataTypes.DATE,
-    holiday: DataTypes.DATE
+  Info_product.init({
+    hauteur: DataTypes.FLOAT,
+    profondeur: DataTypes.FLOAT,
+    longueur: DataTypes.FLOAT,
+    couleur: DataTypes.STRING,
+    fk_product: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'timeInformation',
+    modelName: 'Info_product',
   });
-  return timeInformation;
+  return Info_product;
 };

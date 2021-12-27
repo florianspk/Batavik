@@ -1,27 +1,30 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('timeInformations', {
+    await queryInterface.createTable('Products', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      earlyMorningSchedule: {
-        type: Sequelize.DATE
+      name: {
+        type: Sequelize.STRING,
+        allowNull : false
       },
-      lateMorningSchedule: {
-        type: Sequelize.DATE
+      price: {
+        type: Sequelize.FLOAT,
+        allowNull : false
       },
-      earlyAfternoonSchedule: {
-        type: Sequelize.DATE
+      description: {
+        type: Sequelize.TEXT
       },
-      lateAfternoonSchedule: {
-        type: Sequelize.DATE
+      image: {
+        type: Sequelize.STRING,
+        allowNull : false
       },
-      holiday: {
-        type: Sequelize.DATE
+      note: {
+        type: Sequelize.FLOAT
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +37,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('timeInformations');
+    await queryInterface.dropTable('Products');
   }
 };
