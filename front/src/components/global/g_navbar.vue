@@ -38,14 +38,25 @@
 
     <!-- Mobile / portrait -->
     <div v-else>
-      <div id="nav">
+
+      <div id="header">
+        <div @click="openNavMobile" id="icon">
+          <img src="@/assets/icons/menu.svg" class="icon menu">
+        </div>
         <img src="../../assets/logo.png" id="logo" alt="logo">
+      </div>
+
+      <div id="nav" :class="mobileVisible ? 'open' : 'closed'">
         <div id="links">
+          <div class="link" @click="travel('/')"> 
+            Accueil 
+          </div>
           <div class="link" v-for="(page, i) in pages" :key="i" @click="travel(page.path)"> 
             {{page.text}} 
           </div>
           <div class="link" v-for="(info, i) in infos" :key="i"> {{info}} </div>
         </div>
+        <div id="black" :class="mobileVisible ? 'open' : 'closed'" @click="openNavMobile"></div>
       </div>
     </div>
 
@@ -53,7 +64,7 @@
 </template>
 
 <script lang="js">
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import loginForm from './g_login_form.vue';
 import cart from './cart.vue';
 
@@ -69,8 +80,16 @@ export default {
     setWindowSize();
     window.addEventListener('resize', () => setWindowSize());
 
+    const mobileVisible = ref(false);
+
+    function openNavMobile() {
+      mobileVisible.value = !mobileVisible.value;
+    }
+
     return {
+      mobileVisible,
       winSize, 
+      openNavMobile,
       infos: ['Retrait des produits sous 2H', 'Trouver un point de retrait', 'Suivis de commandes', 'Panier', 'S\'identifier'], 
       pages: [{ text: 'Pare-douche', path: '/pare-douche' }, { text: 'Cloison et parois', path: '/cloison' }, { text: 'Cheminée', path: '/cheminee' }], 
     };
@@ -206,38 +225,73 @@ export default {
 
 @media screen and (orientation: portrait) {
 #navbar {
-  height: 12vh;
-  #nav{
-    width: 100%;
-    height: 13vh;
-    flex-direction: column;
-    #logo{
-      position: relative;
-      top: 10%;
-      height: 30%;
-      left: 50%;
-      transform: translatex(-50%);
+  height: 6vh;
+  position: fixed;
+  left: 0vw;
+  background-color: white;
+  #header {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 6vh;
+    width: 100vw;
+    #logo {
       cursor: pointer;
-      width: 100%;
+      width: 50%;
+      margin: 0 5%;
+      height: max-content;
       object-fit: contain;
+    }
+    #icon {
+      width: 10vw;
+      .menu.icon {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+  #nav.open{
+    position: relative;
+    left: 0;
+  }
+  #nav{
+    position: relative;
+    top: 6vh;
+    left: -70vw;
+    width: 70vw;
+    height: 94vh;
+    flex-direction: column;
+    transition-duration: 0.5s;
+    #black.open {
+      left: 0vw;
+      transition-delay: 0.3s;
+    }
+    #black {
+      position: absolute;
+      left: -30vw;
+      top: 0;
+      height: 100vh;
+      width: 100vw;
+      opacity: 0.6;
+      background-color: black;
+      z-index: -1;
+      transition-duration: 0.5s;
     }
     #links{
       position: relative;
-      top: 3vh;
-      height: 5vh;
       display: flex;
-      flex-direction: row;
-      overflow-x: scroll;
-      overflow-y: hidden;
-      white-space: nowrap;
+      flex-direction: column;
       .link{
         position: relative;
-        height: 100%;
         display: flex;
         align-items: center;
         width: max-content;
-        margin: 0 3%;
-        font-size: 1.1rem;
+        margin: 2% 0;
+        padding: 0 3%;
+        font-size: 1.2rem;
         cursor: pointer;
       }
     }

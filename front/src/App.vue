@@ -41,7 +41,7 @@ body{
   color: var(--font-color-main);
   overflow-x: hidden;
   background: #eee;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 @media screen and (orientation: portrait) {
