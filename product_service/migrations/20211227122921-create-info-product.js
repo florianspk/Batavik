@@ -16,9 +16,6 @@ module.exports = {
                 type: Sequelize.FLOAT
             }, couleur: {
                 type: Sequelize.STRING
-            }, fk_product: {
-                allowNull : false,
-                type: Sequelize.INTEGER
             }, createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
