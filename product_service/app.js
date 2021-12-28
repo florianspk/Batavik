@@ -15,9 +15,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', productRoutes);
+app.use('/api/', productRoutes);
 
-app.use('/categ', categRoutes);
+app.use('/api/categ', categRoutes);
+
+// static Images Folder
+app.use('/uploads', express.static('./uploads'))
 
 
 const db = require("./models");

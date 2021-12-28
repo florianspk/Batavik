@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
 
     static getPagingData = (data, page, limit) => {
-      const { count: totalItems, rows: categories } = data;
+      const { count: totalItems, rows: categories} = data;
       const currentPage = page ? +page : 0;
       const totalPages = Math.ceil(totalItems / limit);
 

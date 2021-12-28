@@ -17,6 +17,7 @@ exports.getCategList = (req,res,next) => {
     });
 }
 
+
 exports.getProductCateg = (req, res, next) => {
     const { page, size } = req.query;
     const { limit, offset } = model.Product.getPagination(page, size);

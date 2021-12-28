@@ -20,7 +20,7 @@ const productController = require('../controllers/productController')
  *       500:
  *         description: An error occured when create a new product
  */
-//router.post('/product',productController.newProduct);
+router.post('/product',productController.upload,productController.newProduct);
 
 
 
@@ -61,6 +61,45 @@ router.get("/products",productController.getProducts);
  *         description: An error occured when get a product
  */
 router.get('/product/:productId',productController.getProduct);
+
+
+/**
+ * @openapi
+ * /product:
+ *   post:
+ *     tags:
+ *       - Products
+ *     description: Get one Product
+ *     responses:
+ *       200:
+ *         description: Operation summary
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ProductList'
+ *       500:
+ *         description: An error occured when get a product
+ */
+router.delete('/product/:productId',productController.delProduct);
+
+/**
+ * @openapi
+ * /product:
+ *   post:
+ *     tags:
+ *       - Products
+ *     description: Get one Product
+ *     responses:
+ *       200:
+ *         description: Operation summary
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ProductList'
+ *       500:
+ *         description: An error occured when get a product
+ */
+router.put('/product/:productId',productController.upload,productController.updateProduct);
 
 
 
