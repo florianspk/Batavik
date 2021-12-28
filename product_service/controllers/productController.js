@@ -14,8 +14,11 @@ exports.getProducts = (req, res, next) => {
         limit,
         offset,
         include: [{
-            model: model.Info_product,
+            model: model.Info_product ,
             attributes: ['hauteur', 'profondeur', 'longueur', 'couleur']
+        },{
+            model: model.Categorie_product,
+            attributes: ['id', 'name']
         }]
     }).then(result => {
         const response = model.Product.getPagingData(result, page, limit)
@@ -35,6 +38,9 @@ exports.getProduct = (req, res, next) => {
         include: [{
             model: model.Info_product,
             attributes: ['hauteur', 'profondeur', 'longueur', 'couleur']
+        },{
+            model: model.Categorie_product,
+            attributes: ['id', 'name']
         }]
     }).then(result => {
         res.status(200).json(result);
