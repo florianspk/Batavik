@@ -1,5 +1,6 @@
 'use strict';
 const faker = require('faker');
+faker.locale = "fr";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     let categs = ["Pare douche","Cloison/Parois","Cheminée"];
@@ -20,8 +21,8 @@ module.exports = {
     for (let i=0; i < 100; i++){
         products.push({
           name: faker.commerce.productName(),
-          price:faker.commerce.price(),
-          description : faker.lorem.paragraph(),
+          price:faker.commerce.price(1, 10000, 2),
+          description : faker.commerce.productDescription(),
           note:  Math.floor(Math.random() * 10),
           image: faker.image.abstract() + '?_r=' + Math.floor(((new Date()).getTime() * Math.random()) + i),
           CategorieProductID: faker.random.arrayElement(products_categ[0]).id,
@@ -36,18 +37,16 @@ module.exports = {
     let info_products = [];
     for (let i = 0; i < 100; i++){
       info_products.push({
-        hauteur : Math.random() * 100,
-        profondeur : Math.random() * 100,
-        longueur : Math.random() * 100,
+        hauteur : parseFloat(Math.random() * 100).toFixed(2),
+        profondeur : parseFloat(Math.random() * 100).toFixed(2),
+        longueur : parseFloat(Math.random() * 100).toFixed(2),
         couleur : faker.commerce.color(),
         ProductID: faker.random.arrayElement(products_id[0]).id,
         createdAt:new Date(),
         updatedAt:new Date(),
       })
     }
-
     await queryInterface.bulkInsert('Info_products',info_products, {});
-
   },
 
   down: async (queryInterface, Sequelize) => {
