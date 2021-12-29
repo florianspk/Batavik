@@ -13,7 +13,7 @@
 
     <div id="button">
       <button id="clear">Vider le panier</button>
-      <button id="validate">Voir le panier et passer la commande</button>
+      <button id="validate" @click="navigateToCartPage">Voir le panier et passer la commande</button>
     </div>
 
   </div>
@@ -49,12 +49,16 @@ export default {
     };
   },
   methods: {
-    calcCost: function calcCost() {
+    calcCost() {
       for (let i = 0; i < this.cartList.length; i++) {
         const product = this.cartList[i];
         this.cost += (product.price * product.qte);
       }
       this.cost = Math.round(this.cost * 100) / 100;
+    },
+    navigateToCartPage() {
+      this.$router.push('/cart');
+      this.$emit('close');
     },
   },
   mounted: function () {

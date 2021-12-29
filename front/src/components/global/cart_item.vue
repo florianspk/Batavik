@@ -28,6 +28,7 @@ export default {
     fontSize: String,
     background: Boolean,
     margin: Number,
+    forcedHeight: Number,
   },
   methods: {
     getImg: function (item) {
@@ -35,9 +36,12 @@ export default {
     },
   },
   mounted: function () {
-    this.$refs.cartItem.style.height = `${this.$refs.cartImg.clientWidth}px`;
+    if (this.forcedHeight) this.$refs.cartItem.style.height = `${this.forcedHeight}vh`;
+    else this.$refs.cartItem.style.height = `${this.$refs.cartImg.clientWidth}px`;
+
     this.$refs.cartItem.style.marginBottom = `${this.margin}px`;
-    this.$refs.cartItem.style.fontSize = this.fontSize;
+    this.$refs.cartItem.style.fontSize = `${this.fontSize}rem`;
+
     if (this.background) {
       this.$refs.cartItem.style.background = '#';
       this.$refs.cartItem.style.boxShadow = '#aaa 0.5vh 0.5vh 1vh';

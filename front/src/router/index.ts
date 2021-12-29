@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Douche from '../views/Shower.vue';
 import Page404 from '../views/404.vue';
 import Product from '../views/Product.vue';
+import Cart from '../views/Cart.vue';
 
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
     path: '/product/:id',
     name: 'Product',
     component: Product,
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
   },
   {
     path: '/:pathMatch(.*)*',
