@@ -5,6 +5,7 @@ import Douche from '../views/Shower.vue';
 import Page404 from '../views/404.vue';
 import Product from '../views/Product.vue';
 import Cart from '../views/Cart.vue';
+import User from '../views/User.vue';
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart,
+  },
+  {
+    path: '/user/:id',
+    name: 'User',
+    component: User,
   },
   {
     path: '/:pathMatch(.*)*',
