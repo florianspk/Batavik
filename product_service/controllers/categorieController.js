@@ -1,7 +1,6 @@
 const model = require('../models');
 
 exports.getCategList = (req,res,next) => {
-
     const { page, size } = req.query;
     const { limit, offset } = model.Categorie_product.getPagination(page, size);
     model.Categorie_product.findAndCountAll({
@@ -23,16 +22,19 @@ exports.getProductCateg = (req, res, next) => {
     const { limit, offset } = model.Product.getPagination(page, size);
     const categId = req.params.categId;
     model.Product.findAndCountAll({
-        where: {CategorieProductId: categId},
+        where: {categId: categId},
         limit,
         offset,
         attributes: ['id','name', 'price', 'description','image','note','createdAt','updatedAt'],
         include: [{
             model: model.Info_product,
-            attributes: ['hauteur', 'profondeur','longueur','couleur']
+            attributes: ['hauteur', 'profondeur','longueur','couleur'],
+            required: true
         },{
             model: model.Categorie_product,
-            attributes: ['id', 'name']
+            attributes: ['id', 'name'],
+            as: "categ",
+            required: true
         }]
     }).then(result => {
         const response  = model.Product.getPagingData(result, page, limit);

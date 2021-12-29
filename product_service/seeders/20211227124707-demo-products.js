@@ -25,7 +25,7 @@ module.exports = {
           description : faker.commerce.productDescription(),
           note:  Math.floor(Math.random() * 10),
           image: faker.image.abstract() + '?_r=' + Math.floor(((new Date()).getTime() * Math.random()) + i),
-          CategorieProductID: faker.random.arrayElement(products_categ[0]).id,
+          categId: faker.random.arrayElement(products_categ[0]).id,
           createdAt:new Date(),
           updatedAt:new Date(),
         })

@@ -26,8 +26,8 @@ router.post('/product',productController.upload,productController.newProduct);
 
 /**
  * @openapi
- * /product:
- *   post:
+ * /products:
+ *   get:
  *     tags:
  *       - Products
  *     description: get all product
@@ -45,8 +45,8 @@ router.get("/products",productController.getProducts);
 
 /**
  * @openapi
- * /product:
- *   post:
+ * /product/{productId}:
+ *   get:
  *     tags:
  *       - Products
  *     description: Get one Product
@@ -56,7 +56,7 @@ router.get("/products",productController.getProducts);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/definitions/ProductList'
+ *               $ref: '#/definitions/Product'
  *       500:
  *         description: An error occured when get a product
  */
@@ -85,10 +85,10 @@ router.delete('/product/:productId',productController.delProduct);
 /**
  * @openapi
  * /product:
- *   post:
+ *   patch:
  *     tags:
  *       - Products
- *     description: Get one Product
+ *     description: Modify a product
  *     responses:
  *       200:
  *         description: Operation summary
@@ -99,7 +99,7 @@ router.delete('/product/:productId',productController.delProduct);
  *       500:
  *         description: An error occured when get a product
  */
-router.put('/product/:productId',productController.upload,productController.updateProduct);
+router.patch('/product/:productId',productController.upload,productController.updateProduct);
 
 
 

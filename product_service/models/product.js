@@ -6,25 +6,33 @@ module.exports = (sequelize, DataTypes) => {
     class Product extends Model {
 
         static getPagingData = (data, page, limit) => {
-            const { count: totalItems, rows: products } = data;
+            const {count: totalItems, rows: products} = data;
             const currentPage = page ? +page : 0;
             const totalPages = Math.ceil(totalItems / limit);
 
-            return { totalItems, products, totalPages, currentPage };
+            return {totalItems, products, totalPages, currentPage};
         };
 
         static getPagination = (page, size) => {
-            const limit = size ? + size : 3;
+            const limit = size ? +size : 3;
             const offset = page ? page * limit : 0;
 
-            return { limit, offset };
+            return {limit, offset};
         };
 
         static associate(models) {
-            Product.hasMany(models.Info_product)
-            Product.belongsTo(models.Categorie_product)
+           Product.Info_product =  Product.hasMany(models.Info_product)
+           Product.Categorie_product =  Product.belongsTo(models.Categorie_product, {
+                foreignKey: {
+                    field: "categId",
+                    allowNull: false
+                },
+                onDelete: "cascade",
+                as : "categ"
+            })
         }
     }
+
     Product.init({
         name: {
             type: DataTypes.STRING,
