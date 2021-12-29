@@ -1,26 +1,30 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const productRoutes = require('./routes/product_routes');
+const categRoutes = require('./routes/categ_routes');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+app.use('/api/', productRoutes);
+
+app.use('/api/categ', categRoutes);
+
+// static Images Folder
+app.use('/uploads', express.static('./uploads'))
+
 
 const db = require("./models");
-db.sequelize.sync({ force: true })
-  .then(() => {
-    console.log("Drop and re-sync db.");
-  });
-
+db.sequelize.sync({ force: false})
+    .then(() => {
+        console.log("Drop and re-sync db.");
+    });
 module.exports = app;
