@@ -11,9 +11,9 @@
           class="click" 
           v-for="(info, i) in infos" 
           :key="i" 
-          @click="info == 'S\'identifier' ? loginForm = true : info == 'Panier' ? cart = true : '' "
+          @click="info.text == 'S\'identifier' ? loginForm = true : info.text == 'Panier' ? cart = true : '' "
         >
-        {{ info }}
+        {{ info.text }}
         </p>
       </div>
 
@@ -30,7 +30,7 @@
     </transition-group>
 
     <transition-group name="fade">
-      <cart v-if="cart" />
+      <cart v-if="cart" @close="cart = !cart" />
       <div class="black" v-if="cart" @click="cart = !cart" ></div>
     </transition-group>
 
@@ -54,7 +54,7 @@
           <div class="link" v-for="(page, i) in pages" :key="i" @click="travel(page.path)"> 
             {{page.text}} 
           </div>
-          <div class="link" v-for="(info, i) in infos" :key="i"> {{info}} </div>
+          <div class="link" v-for="(info, i) in infos" :key="i"> {{info.text}} </div>
         </div>
         <div id="black" :class="mobileVisible ? 'open' : 'closed'" @click="openNavMobile"></div>
       </div>
@@ -73,11 +73,14 @@ export default {
   components: { loginForm, cart },
   setup() {
     const winSize = reactive({ height: window.innerHeight, width: window.innerWidth });
+
     const setWindowSize = () => {
       winSize.height = window.innerHeight;
       winSize.width = window.innerWidth;
     };
+
     setWindowSize();
+    
     window.addEventListener('resize', () => setWindowSize());
 
     const mobileVisible = ref(false);
@@ -90,8 +93,18 @@ export default {
       mobileVisible,
       winSize, 
       openNavMobile,
-      infos: ['Retrait des produits sous 2H', 'Trouver un point de retrait', 'Suivis de commandes', 'Panier', 'S\'identifier'], 
-      pages: [{ text: 'Pare-douche', path: '/pare-douche' }, { text: 'Cloison et parois', path: '/cloison' }, { text: 'Cheminée', path: '/cheminee' }], 
+      infos: [
+        { text: 'Retrait des produits sous 2H', path: '/infos' }, 
+        { text: 'Trouver un point de retrait', path: '/sites' }, 
+        { text: 'Suivis de commandes', path: '/order' }, 
+        { text: 'Panier', path: '/cart' }, 
+        { text: 'S\'identifier', path: '/login' }, 
+      ], 
+      pages: [
+        { text: 'Pare-douche', path: '/pare-douche' },
+        { text: 'Cloison et parois', path: '/cloison' },
+        { text: 'Cheminée', path: '/cheminee' },
+      ], 
     };
   },
   data() {
@@ -117,7 +130,7 @@ export default {
   background: #000; 
   z-index: 100;
   opacity: 0.5;
-  transition-duration: 0.5s;
+  transition-duration: 0.2s;
 }
 
 #navbar {
@@ -278,7 +291,7 @@ export default {
       opacity: 0.6;
       background-color: black;
       z-index: -1;
-      transition-duration: 0.5s;
+      transition-duration: 0.2s;
     }
     #links{
       position: relative;
@@ -310,7 +323,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
