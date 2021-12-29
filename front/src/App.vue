@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+  <div id="app" class="">
 
-    <navbar />
+    <navbar v-if="isAdmin" />
     <router-view />
-    <v-footer />
+    <v-footer v-if="isAdmin" />
 
   </div>
 </template>
@@ -18,6 +18,11 @@ export default {
     navbar,
     vFooter,
   },
+  computed: {
+    isAdmin() {
+      return !(this.$route.name === 'Admin');
+    },
+  },
 };
 </script>
 
@@ -26,6 +31,9 @@ export default {
   margin: 0;
   padding: 0;
 }
+body{
+  min-height: 100vh;
+}
 #app {
   font-family: 'Roboto', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -33,7 +41,7 @@ export default {
   color: var(--font-color-main);
   overflow-x: hidden;
   background: #eee;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 @media screen and (orientation: portrait) {

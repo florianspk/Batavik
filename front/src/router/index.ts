@@ -3,8 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Douche from '../views/Shower.vue';
 import Page404 from '../views/404.vue';
-
 import Product from '../views/Product.vue';
+import Cart from '../views/Cart.vue';
+import User from '../views/User.vue';
 
 const routes = [
   {
@@ -18,9 +19,19 @@ const routes = [
     component: Douche,
   },
   {
-    path: '/product/{:id}',
+    path: '/product/:id',
     name: 'Product',
     component: Product,
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
+  },
+  {
+    path: '/user/:id',
+    name: 'User',
+    component: User,
   },
   {
     path: '/:pathMatch(.*)*',

@@ -1,17 +1,26 @@
 <template>
   <div id="product-page">
-    <div id="body">
-      dzdz
-    </div>
+    <product-description />
+    <same-product />
+    <comment-section />
   </div>
 </template>
 
 <script>
+import productDescription from '../components/product_components/product_description.vue';
+import sameProduct from '../components/product_components/same_product.vue';
+import commentSection from '../components/product_components/comment_section.vue';
 
 export default {
+  components: { productDescription, sameProduct, commentSection },
 };
 </script>
 
 <style scoped lang="scss">
-#body{ margin-top: 20vh}
+#product-page {
+  position: relative;
+  top: 20%;
+  margin: 0 5% 0 5%;
+  height: min-content;
+}
 </style>

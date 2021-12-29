@@ -27,7 +27,7 @@ export default {
     .infos {
       bottom: 0%;
       padding: 2%;
-      width: 96%;
+      width: 100%;
     }
   }
   .img {
