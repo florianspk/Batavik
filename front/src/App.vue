@@ -21,7 +21,6 @@
 <script>
 import navbar from './components/global/g_navbar.vue';
 import navbarAdmin from './components/admin/navbar-admin.vue';
-import breadcrumb from './components/admin/breadcrumb.vue';
 import vFooter from './components/global/g_footer.vue';
 
 export default {
@@ -30,7 +29,6 @@ export default {
     navbar,
     vFooter,
     navbarAdmin,
-    breadcrumb,
   },
   computed: {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
