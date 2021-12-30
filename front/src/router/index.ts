@@ -7,6 +7,7 @@ import Wall from '../views/Wall.vue';
 import Page404 from '../views/404.vue';
 import Product from '../views/Product.vue';
 import Cart from '../views/Cart.vue';
+import Login from '../views/Login.vue';
 import User from '../views/User.vue';
 
 const routes = [
@@ -39,6 +40,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart,
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
   },
   {
     path: '/user/:id',
