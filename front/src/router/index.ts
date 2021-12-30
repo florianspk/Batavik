@@ -11,6 +11,7 @@ import Users from '../views/admin/Users.vue';
 import Stocks from '../views/admin/Stocks.vue';
 import Shops from '../views/admin/Shops.vue';
 import Cart from '../views/Cart.vue';
+import Login from '../views/Login.vue';
 import User from '../views/User.vue';
 
 const routes = [
@@ -43,6 +44,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart,
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
   },
   {
     path: '/user/:id',
