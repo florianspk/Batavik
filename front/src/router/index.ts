@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import Home from '../views/Home.vue';
-import Douche from '../views/Shower.vue';
+import Shower from '../views/Shower.vue';
+import Fireplace from '../views/Fireplace.vue';
+import Wall from '../views/Wall.vue';
 import Page404 from '../views/404.vue';
 import Product from '../views/Product.vue';
 import Cart from '../views/Cart.vue';
@@ -15,8 +17,18 @@ const routes = [
   },
   {
     path: '/pare-douche',
-    name: 'Douche',
-    component: Douche,
+    name: 'Shower',
+    component: Shower,
+  },
+  {
+    path: '/cloison',
+    name: 'Wall',
+    component: Wall,
+  },
+  {
+    path: '/Cheminee',
+    name: 'Fireplace',
+    component: Fireplace,
   },
   {
     path: '/product/:id',
