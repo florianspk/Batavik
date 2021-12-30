@@ -22,13 +22,14 @@ export default {
   display: flex;
   width: 85vw;
   margin: 1% auto 0 auto;
-  padding: 1%;
+  padding: 2% 1%;
   flex-wrap: wrap;
   flex: 1 1 30%;
   flex-direction: row;
   justify-content: space-around;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
   background: #ffffff;
+  border-radius: 1rem;
   overflow: hidden;
   .title {
     flex: 1 1 70%;
@@ -53,6 +54,8 @@ export default {
   .section{
     margin-top: 3vh;
     width: 90%;
+    padding: 5% 1%;
+
     .title{ font-size: 1.7em; margin-bottom: 2vh; }
     .product-list { flex-direction: column; }
   }
