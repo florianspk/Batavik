@@ -1,6 +1,6 @@
 <template>
-  <div id="product-page">
-    <product-description />
+  <div id="product-page" v-if=dataLoaded>
+    <product-description :data="productData" />
     <same-product />
     <comment-section />
   </div>
@@ -13,6 +13,22 @@ import commentSection from '../components/product_components/comment_section.vue
 
 export default {
   components: { productDescription, sameProduct, commentSection },
+  data() {
+    return {
+      productData: null,
+      dataLoaded: false,
+    };
+  },
+  methods: {
+    async getProductInfo() {
+      const { data: product } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.$route.params.id}`);
+      this.productData = product;
+      this.dataLoaded = true;
+    },
+  },
+  mounted() {
+    this.getProductInfo();
+  },
 };
 </script>
 

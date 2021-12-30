@@ -2,7 +2,7 @@
   <div class="section">
     <h1 class="title" v-if="title"> {{title}} </h1>
     <div class="product-list">
-      <products v-for="(product, i) in nbProduct" :key="i" :index="i" />
+      <products v-for="(product, i) in products" :key="i" :index="i" :data="product" />
     </div>
   </div>
 </template>
@@ -12,7 +12,7 @@ import Products from './g_products.vue';
 
 export default {
   name: 'section-product',
-  props: ['title', 'type', 'nbProduct'],
+  props: ['title', 'type', 'nbProduct', 'products'],
   components: { Products },
 };
 </script>
