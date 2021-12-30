@@ -96,4 +96,25 @@ export default {
     }
   }
 }
+
+@media screen and (orientation: portrait) {
+  #paginator {
+    #page-list{
+      gap: 2%;
+      .page {
+        width: 5%;
+        font-size: 1.2rem;
+        text-align: center;
+      }
+    }
+    .btn {
+      height: 60%;
+      width: 10%;
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
 </style>
