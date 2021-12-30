@@ -37,7 +37,7 @@
     </div>
 
     <!-- Mobile / portrait -->
-    <div v-else>
+    <div v-else style="height: 100%">
 
       <div id="header">
         <div @click="openNavMobile" id="icon">
