@@ -35,6 +35,11 @@ export default {
       return require('../../assets/logo.png');
     },
   },
+  watch: {
+    fontSize: function () {
+      this.$refs.cartItem.style.fontSize = `${this.fontSize}rem`;
+    },
+  },
   mounted: function () {
     if (this.forcedHeight) this.$refs.cartItem.style.height = `${this.forcedHeight}vh`;
     else this.$refs.cartItem.style.height = `${this.$refs.cartImg.clientWidth}px`;

@@ -4,10 +4,10 @@
     <h1 id="title">Panier</h1>
 
     <div id="card-items">
-      <cart-item :data="item" fontSize="1.7" forcedHeight=10 />
-      <cart-item :data="item" fontSize="1.7" forcedHeight=10 />
-      <cart-item :data="item" fontSize="1.7" forcedHeight=10 />
-      <cart-item :data="item" fontSize="1.7" forcedHeight=10 />
+      <cart-item :data="item" :fontSize="itemFontSize" forcedHeight=10 />
+      <cart-item :data="item" :fontSize="itemFontSize" forcedHeight=10 />
+      <cart-item :data="item" :fontSize="itemFontSize" forcedHeight=10 />
+      <cart-item :data="item" :fontSize="itemFontSize" forcedHeight=10 />
     </div>
 
     <div id="total">
@@ -31,10 +31,17 @@ export default {
         price: 115.99,
       },
       totalPrice: 463.96,
+      itemFontSize: 1.7,
     };
   },
+  methods: {
+    setFontSize() {
+      this.itemFontSize = window.innerHeight > window.innerWidth ? 1.1 : 1.7;
+    },
+  },
   mounted() {
-    console.log('Cart mounted');
+    window.addEventListener('resize', () => this.setFontSize());
+    this.setFontSize();
     // TODO Ajouter les appels Axios
   },
 };
@@ -76,6 +83,12 @@ export default {
       black, 
       rgba(0, 0, 0, 0)
     ) 1 0 0 0;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  #cart-view {
+    margin-top: 8vh;
   }
 }
 </style>

@@ -54,7 +54,7 @@
           <div class="link" v-for="(page, i) in pages" :key="i" @click="travel(page.path)"> 
             {{page.text}} 
           </div>
-          <div class="link" v-for="(info, i) in infos" :key="i"> {{info.text}} </div>
+          <div class="link" v-for="(info, i) in infos" :key="i" @click="info.text == 'S\'identifier' ? travel('/login') : info.text == 'Panier' ? travel('/cart') : '' "> {{info.text}} </div>
         </div>
         <div id="black" :class="mobileVisible ? 'open' : 'closed'" @click="openNavMobile"></div>
       </div>
