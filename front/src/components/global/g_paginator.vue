@@ -34,7 +34,6 @@ export default {
     },
     setPageToDisplay() {
       this.effectivePages = this.totalPage < 25 ? this.totalPage : 25;
-      console.log(this.currentPage);
     },
   },
   watch: {
@@ -65,13 +64,13 @@ export default {
     align-items: center;
     width: 100%;
     height: 70%;
+    gap: 1%;
     .page {
       display: block;
       background: #fff;
-      margin: 0.5%;
-      padding: 0 1%;
       border-radius: 2rem;
       transition-duration: 0.2s;
+      padding: 0.5%;
       &:hover {
         background: #ccc;
         cursor: pointer;
