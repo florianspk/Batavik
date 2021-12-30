@@ -1,16 +1,12 @@
 <template>
   <div id="product-description">
     <div id="img-container">
-      <img :src="require(`../../assets/logo.png`)" alt="" />
+      <img :src="data.image" alt="" />
     </div>
 
     <div id="info-container">
-      <h1>Pare douche KRYSTAL™</h1>
-      <p id="descr">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores,
-        quod illum vel voluptatibus nostrum corrupti in ut, id, ipsum nulla eos
-        sed. Vel natus repellat nemo optio neque quasi eos?
-      </p>
+      <h1>{{data.name}}</h1>
+      <p id="descr"> {{data.description}} </p>
 
       <h2>Style du produit disponible</h2>
       <div id="style">
@@ -19,7 +15,7 @@
         <button :class="active === 3 ? 'active' : ''" @click="active = 3">150cm X 180cm - Style C</button>
       </div>
 
-      <h2 id="price">Prix : 135,22€</h2>
+      <h2 id="price">Prix : {{data.price}}€</h2>
 
       <div class="add">
         <button>
@@ -34,6 +30,7 @@
 <script>
 export default {
   name: 'description-product',
+  props: ['data'],
   data() {
     return {
       active: 1,
@@ -46,7 +43,7 @@ export default {
 @media screen and (orientation: landscape) {
   #product-description {
     margin-top: 5vh;
-    height: 50vh;
+    height: min-content;
     #img-container {
       width: 45%;
       img {

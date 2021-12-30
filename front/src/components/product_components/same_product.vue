@@ -2,9 +2,9 @@
   <div id="similaire">
     <h1 id="title">Nos produits similaires</h1>
     <div id="container-simi">
-      <gProduct class="product-item" :productInfo="product" :index="0" />
-      <gProduct class="product-item" :productInfo="product2" :index="1" />
-      <gProduct class="product-item" :productInfo="product" :index="2" />
+      <gProduct class="product-item" :data="product" :index="0" />
+      <gProduct class="product-item" :data="product2" :index="1" />
+      <gProduct class="product-item" :data="product" :index="2" />
     </div>
   </div>
 </template>
@@ -23,12 +23,12 @@ export default {
         name: 'Produit 2',
         id: 0,
         img: 'img2.jpg',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dictum turpis et.',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dictum turpis et.',
         price: '120€',
       },
       product2: {
         name: 'Produit 3',
-        id: 0,
+        id: 1,
         img: 'img3.jpg',
         desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dictum turpis et.',
         price: '350€',
@@ -41,7 +41,7 @@ export default {
 <style scoped lang="scss">
 @media screen and (orientation: landscape) {
   #title {
-    margin: 10vh 0;
+    margin: 2% 0 0 0;
     font-size: 3rem;
   }
   #similaire {
