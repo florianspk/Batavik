@@ -41,7 +41,7 @@ const routes = [
     component: Stocks,
   },
   {
-    path: '/admin/magasins',
+    path: '/admin/shops',
     name: 'Shops',
     component: Shops,
   },

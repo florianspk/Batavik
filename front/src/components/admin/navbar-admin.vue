@@ -9,16 +9,16 @@
       <ul class="list-unstyled components">
         <p>Administration</p>
         <li>
-          <a href="/admin"><f-icon :icon="'tachometer-alt'" style="margin-right: 10px"></f-icon>Tableau de bord</a>
+          <router-link to="/admin"><f-icon :icon="'tachometer-alt'" style="margin-right: 10px"></f-icon>Tableau de bord</router-link>
         </li>
         <li>
-          <a href="/admin/clients"><f-icon :icon="'users'" style="margin-right: 10px"></f-icon>Clients</a>
+          <router-link to="/admin/clients"><f-icon :icon="'users'" style="margin-right: 10px"></f-icon>Clients</router-link>
         </li>
         <li>
-          <a href="/admin/stocks"><f-icon :icon="'boxes'" style="margin-right: 10px"></f-icon>Stocks</a>
+          <router-link to="/admin/stocks"><f-icon :icon="'boxes'" style="margin-right: 10px"></f-icon>Stocks</router-link>
         </li>
         <li>
-          <a href="/admin/magasins"><f-icon :icon="'store'" style="margin-right: 10px"></f-icon>Magasins</a>
+          <router-link to="/admin/shops"><f-icon :icon="'store'" style="margin-right: 10px"></f-icon>Magasins</router-link>
         </li>
       </ul>
     </nav>
@@ -162,5 +162,9 @@ ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
   background: #4A96BD;
+}
+
+.router-link-active {
+  background-color: #4D6570;
 }
 </style>
