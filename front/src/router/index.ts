@@ -8,6 +8,8 @@ import Dashboard from '../views/admin/Dashboard.vue';
 import Users from '../views/admin/Users.vue';
 import Stocks from '../views/admin/Stocks.vue';
 import Shops from '../views/admin/Shops.vue';
+import Cart from '../views/Cart.vue';
+import User from '../views/User.vue';
 
 const routes = [
   {
@@ -21,9 +23,19 @@ const routes = [
     component: Douche,
   },
   {
-    path: '/product/{:id}',
+    path: '/product/:id',
     name: 'Product',
     component: Product,
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
+  },
+  {
+    path: '/user/:id',
+    name: 'User',
+    component: User,
   },
   {
     path: '/admin',

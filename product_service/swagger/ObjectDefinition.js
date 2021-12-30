@@ -1,4 +1,3 @@
-
 /**
  * @openapi
  * components:
@@ -8,20 +7,39 @@
  *    scheme: bearer
  *    bearerFormat: JWT
  * definitions:
- *  UsersList:
+ *  ProductList:
  *   type: array
- *   items: 
- *    $ref: '#/definitions/User'
- *  User:
+ *   items:
+ *    $ref: '#/definitions/Product'
+ *  Product:
  *   type: object
  *   properties:
- *    _id: 
- *     type: string    
+ *    _id:
+ *     type: integer
  *    name:
  *     type: string
- *    mail: 
- *     type: string    
- *    address:
+ *    price:
+ *     type: number
+ *    description:
  *     type: string
+ *    image:
+ *     type: string
+ *    note:
+ *     type: number
+ *    idCateg:
+ *     type: integer
+ *  Info_product:
+ *   type: object
+ *   properties:
+ *    _id:
+ *     type: integer
+ *    hauteur :
+ *     type: number
+ *    profondeur:
+ *     type: number
+ *    longueur:
+ *     type: number
+ *    couleur:
+ *     type: number
  */
 module.exports = {}

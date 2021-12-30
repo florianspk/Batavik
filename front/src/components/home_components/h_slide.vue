@@ -1,10 +1,10 @@
 <template>
-  <div class="slide">
+  <div class="slide bg-green">
     <div class="background"></div>
     <div class="banner"> {{content}} </div> 
 
-    <f-icon :icon="'chevron-left'" class="btn btn-prev" @click="$emit('back')"></f-icon>
-    <f-icon :icon="'chevron-right'" class="btn btn-next" @click="$emit('next')"></f-icon>
+    <img src="@/assets/icons/chevron-back.svg" class="btn btn-back" @click="$emit('back')">
+    <img src="@/assets/icons/chevron-forward.svg" class="btn btn-next" @click="$emit('next')">
   </div>
 </template>
 
@@ -22,7 +22,6 @@ export default {
   left: 0;
   height: 100%;
   width: 100%;
-  background: green;
   &:hover .banner {
     bottom: 0;
   }
@@ -42,12 +41,17 @@ export default {
     user-select: none;
     transition: 0.5s;
   }
+  .svg-container{
+    height: 100%;
+    width: 10%;
+    background: green;
+    overflow: hidden;
+  }
   .btn {
     position: absolute;
     top: 0;
     height: 100%;
-    width: 2%;
-    padding: 0 2%;
+    width: 7%;
     opacity: 0;
     transition: 0.5s;
   }

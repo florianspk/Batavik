@@ -34,5 +34,3 @@ app.mount('#app');
 // Define global var
 app.config.globalProperties.$env = process.env.NODE_ENV;
 app.config.globalProperties.$baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost' : 'https://julienkeiff.fr';
-
-console.log(Port.AUTH_SERVICE);
