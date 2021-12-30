@@ -23,16 +23,21 @@ export default {
   components: { ItemFilter, SectionProduct, paginator },
   data() {
     return {
+      // Pagination settings
       totalItems: 0,
       currentPage: 1,
       totalPage: 0,
       products: [],
       productLoaded: false,
+
+      // Filter settings
+      pageSize: 6,
+
     };
   },
   methods: {
     async getProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products`);
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/categ/1/products?size=${this.pageSize}&page=${this.currentPage}`);
       this.products = products.products;
       this.totalItems = products.totalItems;
       this.totalPage = products.totalPages;
@@ -41,15 +46,18 @@ export default {
     },
     changeCurentPage(page) {
       this.currentPage = page;
+      this.getProducts();
     },
     nextPage() {
       if (this.currentPage < this.totalPage) {
         this.currentPage++;
+        this.getProducts();
       }
     },
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
+        this.getProducts();
       }
     },
   },
