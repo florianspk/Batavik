@@ -1,10 +1,12 @@
 <template>
   <div class="product">
-    <div class="img"></div>
+    <div class="img">
+      <img :src="data.image" alt="">
+    </div>
     <div class="infos">
-      <h1 class="title">Nom du produit {{index + 1}}</h1>
-      <p class="descr">Description rapide</p>
-      <a href="/product/2" class="link">Voir plus</a>
+      <h1 class="title">{{data.name}}</h1>
+      <p class="descr">{{data.description}}</p>
+      <a :href="'/product/' + data.id" class="link">Voir plus</a>
     </div>
   </div>
 </template>
@@ -12,7 +14,7 @@
 <script>
 export default {
   name: 'product',
-  props: ['index'],
+  props: ['index', 'data'],
 };
 </script>
 
@@ -34,14 +36,18 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    background: yellow;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
   .infos {
     position: absolute;
     width: 100%;
     height: 33%;
     bottom: -33%;
-    background: red;
+    background: #eee;
     transition-duration: 0.5s;
     .title {
       text-align: center;
