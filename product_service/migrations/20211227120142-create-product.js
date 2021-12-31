@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull : false
       },
-      note: {
+      rate: {
         type: Sequelize.FLOAT
       },
       createdAt: {

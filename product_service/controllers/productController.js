@@ -10,23 +10,21 @@ const path = require('path');
 exports.getProducts = (req, res, next) => {
     const {page, size} = req.query;
     const {limit, offset} = Product.getPagination(page, size);
-    Product.findAndCountAll({
-        attributes: ['id', 'name', 'price', 'description', 'image', 'note', 'categId', 'createdAt', 'updatedAt'],
+    Product.findAll({
+        attributes: ['id', 'name', 'price', 'description', 'image', 'rate', 'categId', 'createdAt', 'updatedAt'],
         limit,
         offset,
         include: [{
             model: model.Info_product,
-            attributes: ['hauteur', 'profondeur', 'longueur', 'couleur'],
-            required: true
-        }, {
-            model: model.Categorie_product,
-            as: "categ",
-            attributes: ['id', 'name'],
-            required: true
+            attributes: ['height', 'depth', 'length', 'color'],
+            as:"info",
         }]
     }).then(result => {
-        const response = Product.getPagingData(result, page, limit)
-        res.status(200).json(response);
+        Product.count().then(count =>{
+            const response = Product.getPagingData(result, count, page, limit)
+            res.status(200).json(response);
+        })
+
     }).catch(error => {
         console.log(error)
         res.status(500).json(error);
@@ -40,16 +38,11 @@ exports.getProduct = (req, res, next) => {
         where: {
             id: idProduct
         },
-        attributes: ['name', 'price', 'description', 'image', 'note', 'categId', 'createdAt', 'updatedAt'],
+        attributes: ['name', 'price', 'description', 'image', 'rate', 'categId', 'createdAt', 'updatedAt'],
         include: [{
             model: model.Info_product,
-            attributes: ['hauteur', 'profondeur', 'longueur', 'couleur'],
-            required: true
-        }, {
-            model: model.Categorie_product,
-            as: "categ",
-            attributes: ['id', 'name'],
-            required: true
+            attributes: ['height', 'depth', 'length', 'color'],
+            as: "info"
         }]
     }).then(result => {
         res.status(200).json(result);
@@ -71,27 +64,25 @@ exports.newProduct = async (req, res, next) => {
         } else {
             name = req.body.name;
         }
-        console.log(typeof  req.body.price)
         if (typeof  req.body.price !== "string"){
-            res.status(405).json("Not a valid Name")
+            res.status(405).json("Not a valid price")
             return
         }else{
             price = req.body.price;
         }
-        if(req.body.description !== "string"){
-            res.status(405).json("Not a valid Name")
+        if(typeof req.body.description !== "string"){
+            res.status(405).json("Not a valid description")
             return
         }else{
             description = req.body.description
-
         }
-        let note = 0;
+        let rate = req.body.rate || 0;
         let image = req.file ? req.file.path : null;
         let idCateg = req.body.categId
-        let hauteur = req.body.hauteur ? req.body.hauteur : null;
-        let profondeur = req.body.profondeur ? req.body.profondeur : null;
-        let longueur = req.body.longueur ? req.body.longueur : null;
-        let couleur = req.body.couleur ? req.body.couleur : null;
+        let height = req.body.height ? req.body.height : null;
+        let depth = req.body.depth ? req.body.depth : null;
+        let length = req.body.length ? req.body.length : null;
+        let color = req.body.color ? req.body.color : null;
         let t;
         try {
             //Start transaction
@@ -102,7 +93,7 @@ exports.newProduct = async (req, res, next) => {
                 price: price,
                 description: description,
                 image: (image) ? image : null,
-                note: note,
+                rate: rate,
                 createdAt: Date.now(),
                 updatedAt: Date.now(),
                 categId: idCateg,
@@ -112,10 +103,10 @@ exports.newProduct = async (req, res, next) => {
             let prod_id = productResult.id
             //insert a record in info, but results will not be saved permanently
             const infoResult = await model.Info_product.create({
-                hauteur: hauteur,
-                profondeur: profondeur,
-                longueur: longueur,
-                couleur: couleur,
+                height: height,
+                depth: depth,
+                length: length,
+                color: color,
                 ProductId: prod_id,
                 createdAt: Date.now(),
                 updatedAt: Date.now()
@@ -152,7 +143,7 @@ exports.updateProduct = (req, res, next) => {
             let name = req.body.name ? req.body.name : product.getDataValue("name");
             let price = req.body.price ? req.body.price : product.getDataValue("price");
             let description = req.body.description ? req.body.description : product.getDataValue("description");
-            let note = req.body.note ? req.body.note : product.getDataValue("note");
+            let rate = req.body.rate ? req.body.rate : product.getDataValue("rate");
             let image = req.file ? req.file.path : product.getDataValue("file");
             if (product) {
                 product.update({
@@ -160,7 +151,7 @@ exports.updateProduct = (req, res, next) => {
                     price: price,
                     description: description,
                     image: image,
-                    note: note,
+                    rate: rate,
                     updatedAt: Date.now(),
                 }).then(result => {
                     res.status(200).json(result)
