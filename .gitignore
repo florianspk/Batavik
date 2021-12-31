@@ -6,3 +6,5 @@
 .nyc_output
 */config.js
 order_service/db/config.js
+
+*/.env
