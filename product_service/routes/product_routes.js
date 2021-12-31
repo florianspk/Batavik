@@ -5,7 +5,7 @@ const productController = require('../controllers/productController')
 
 /**
  * @openapi
- * /product:
+ * /api/product:
  *   post:
  *     tags:
  *       - Products
@@ -26,7 +26,7 @@ router.post('/product',productController.upload,productController.newProduct);
 
 /**
  * @openapi
- * /products:
+ * /api/products:
  *   get:
  *     tags:
  *       - Products
@@ -45,7 +45,7 @@ router.get("/products",productController.getProducts);
 
 /**
  * @openapi
- * /product/{productId}:
+ * /api/product/{productId}:
  *   get:
  *     tags:
  *       - Products
@@ -65,8 +65,8 @@ router.get('/product/:productId',productController.getProduct);
 
 /**
  * @openapi
- * /product:
- *   post:
+ * /api/product/{productId}:
+ *   delete:
  *     tags:
  *       - Products
  *     description: Get one Product
@@ -84,7 +84,7 @@ router.delete('/product/:productId',productController.delProduct);
 
 /**
  * @openapi
- * /product:
+ * /api/product/{productId}:
  *   patch:
  *     tags:
  *       - Products
@@ -101,6 +101,45 @@ router.delete('/product/:productId',productController.delProduct);
  */
 router.patch('/product/:productId',productController.upload,productController.updateProduct);
 
+
+/**
+ * @openapi
+ * /api/top/products:
+ *   get:
+ *     tags:
+ *       - Products
+ *     description: get top product
+ *     responses:
+ *       200:
+ *         description: Operation summary
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ProductList'
+ *       500:
+ *         description: An error occured when get top product
+ */
+router.get("/top/products",productController.bestProducts);
+
+
+/**
+ * @openapi
+ * /api/best/products:
+ *   get:
+ *     tags:
+ *       - Products
+ *     description: get best product
+ *     responses:
+ *       200:
+ *         description: Operation summary
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ProductList'
+ *       500:
+ *         description: An error occured when get best product
+ */
+router.get("/best/products",productController.topProducts);
 
 
 
