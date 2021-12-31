@@ -24,7 +24,7 @@
  *     type: string
  *    image:
  *     type: string
- *    note:
+ *    rate:
  *     type: number
  *    idCateg:
  *     type: integer
@@ -33,13 +33,13 @@
  *   properties:
  *    _id:
  *     type: integer
- *    hauteur :
+ *    height :
  *     type: number
- *    profondeur:
+ *    depth:
  *     type: number
- *    longueur:
+ *    length:
  *     type: number
- *    couleur:
+ *    color:
  *     type: number
  */
 module.exports = {}

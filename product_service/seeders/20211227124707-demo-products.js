@@ -23,7 +23,7 @@ module.exports = {
           name: faker.commerce.productName(),
           price:faker.commerce.price(1, 10000, 2),
           description : faker.commerce.productDescription(),
-          note:  Math.floor(Math.random() * 10),
+          rate:  Math.floor(Math.random() * 10),
           image: faker.image.abstract() + '?_r=' + Math.floor(((new Date()).getTime() * Math.random()) + i),
           categId: faker.random.arrayElement(products_categ[0]).id,
           createdAt:new Date(),
@@ -37,10 +37,10 @@ module.exports = {
     let info_products = [];
     for (let i = 0; i < 100; i++){
       info_products.push({
-        hauteur : parseFloat(Math.random() * 100).toFixed(2),
-        profondeur : parseFloat(Math.random() * 100).toFixed(2),
-        longueur : parseFloat(Math.random() * 100).toFixed(2),
-        couleur : faker.commerce.color(),
+        height : parseFloat(Math.random() * 100).toFixed(2),
+        depth : parseFloat(Math.random() * 100).toFixed(2),
+        length : parseFloat(Math.random() * 100).toFixed(2),
+        color : faker.commerce.color(),
         ProductID: faker.random.arrayElement(products_id[0]).id,
         createdAt:new Date(),
         updatedAt:new Date(),

@@ -8,13 +8,13 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            hauteur: {
+            height: {
                 type: Sequelize.FLOAT
-            }, profondeur: {
+            }, depth: {
                 type: Sequelize.FLOAT
-            }, longueur: {
+            }, length: {
                 type: Sequelize.FLOAT
-            }, couleur: {
+            }, color: {
                 type: Sequelize.STRING
             }, createdAt: {
                 allowNull: false,
