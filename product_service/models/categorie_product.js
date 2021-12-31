@@ -13,15 +13,15 @@ module.exports = (sequelize, DataTypes) => {
     static getPagingData = (data,count, page, limit) => {
       const totalItems = count
       const categories = data
-      const currentPage = page ? +page : 0;
-      const totalPages = Math.ceil(totalItems / limit)-1;
-
+      const currentPage = page ? +page : 1;
+      const totalPages = Math.ceil(totalItems / limit);
       return { totalItems, categories, totalPages, currentPage };
     };
 
     static getPagination = (page, size) => {
+      page = (page > 0)? page : 1;
       const limit = size ? + size : 3;
-      const offset = page ? page * limit : 0;
+      const offset = (page) ? (page * limit)-limit : 0;
 
       return { limit, offset };
     };

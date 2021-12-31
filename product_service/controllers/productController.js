@@ -1,7 +1,7 @@
 const model = require('../models');
 require('dotenv').config();
 const Product = model.Product;
-
+const Sequelize = require("sequelize")
 // Image upload
 const multer = require("multer")
 const path = require('path');
@@ -18,7 +18,7 @@ exports.getProducts = (req, res, next) => {
             model: model.Info_product,
             attributes: ['height', 'depth', 'length', 'color'],
             as:"info",
-        }]
+        }],
     }).then(result => {
         Product.count().then(count =>{
             const response = Product.getPagingData(result, count, page, limit)
@@ -194,3 +194,52 @@ exports.upload = multer({
     }
 }).single('image')
 
+exports.topProducts = (req, res, next) => {
+    const {page, size} = req.query;
+    const {limit, offset} = Product.getPagination(page, size);
+    Product.findAll({
+        attributes: ['id', 'name', 'price', 'description', 'image', 'rate', 'categId', 'createdAt', 'updatedAt'],
+        limit,
+        offset,
+        include: [{
+            model: model.Info_product,
+            attributes: ['height', 'depth', 'length', 'color'],
+            as:"info",
+        }],
+        order: Sequelize.literal('rand()')
+    }).then(result => {
+        Product.count().then(count =>{
+            const response = Product.getPagingData(result, count, page, limit)
+            res.status(200).json(response);
+        })
+
+    }).catch(error => {
+        console.log(error)
+        res.status(500).json(error);
+    });
+}
+
+exports.bestProducts = (req, res, next) => {
+    const {page, size} = req.query;
+    const {limit, offset} = Product.getPagination(page, size);
+    Product.findAll({
+        attributes: ['id', 'name', 'price', 'description', 'image', 'rate', 'categId', 'createdAt', 'updatedAt'],
+        limit,
+        offset,
+        include: [{
+            model: model.Info_product,
+            attributes: ['height', 'depth', 'length', 'color'],
+            as:"info",
+        }],
+        order: Sequelize.literal('rand()')
+    }).then(result => {
+        Product.count().then(count =>{
+            const response = Product.getPagingData(result, count, page, limit)
+            res.status(200).json(response);
+        })
+
+    }).catch(error => {
+        console.log(error)
+        res.status(500).json(error);
+    });
+}
