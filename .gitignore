@@ -8,3 +8,5 @@
 order_service/db/config.js
 
 */.env
+
+product_service/uploads/*
