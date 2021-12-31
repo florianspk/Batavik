@@ -3,7 +3,7 @@ const model = require('../models');
 exports.getCategList = (req, res, next) => {
     const {page, size} = req.query;
     const {limit, offset} = model.Categorie_product.getPagination(page, size);
-    model.Categorie_product.findAndCountAll({
+    model.Categorie_product.findAll({
         limit,
         offset,
         attributes: ['name', 'id'],
