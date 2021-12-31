@@ -3,17 +3,17 @@ const Info_Product = model.Info_product;
 
 exports.addInfo = (req, res, next) => {
     try {
-        let hauteur = req.body.hauteur ? req.body.hauteur : null;
-        let profondeur = req.body.profondeur ? req.body.profondeur : null;
-        let longueur = req.body.longueur ? req.body.longueur : null;
-        let couleur = req.body.couleur ? req.body.couleur : null;
+        let height = req.body.height ? req.body.height : null;
+        let depth = req.body.depth ? req.body.depth : null;
+        let length = req.body.length ? req.body.length : null;
+        let color = req.body.color ? req.body.color : null;
         let idProduct = req.body.idProduct ? req.body.idProduct : null;
         console.log(idProduct)
         Info_Product.create({
-            hauteur: hauteur,
-            profondeur: profondeur,
-            longueur: longueur,
-            couleur: couleur,
+            height: height,
+            depth: depth,
+            length: length,
+            color: color,
             ProductId: idProduct,
             createdAt: Date.now(),
             updatedAt: Date.now()
@@ -33,18 +33,18 @@ exports.updateInfo = (req, res, next) => {
         let idInfo = req.params.idInfo;
         Info_Product.findOne({where: {id: idInfo}})
             .then(info_product => {
-                let hauteur = req.body.hauteur ? req.body.hauteur : info_product.getDataValue("hauteur");
-                console.log(req.body.hauteur)
-                let profondeur = req.body.profondeur ? req.body.profondeur : info_product.getDataValue("profondeur");
-                let longueur = req.body.longueur ? req.body.longueur : info_product.getDataValue("longueur");
-                let couleur = req.body.couleur ? req.body.couleur : info_product.getDataValue("couleur");
+                let height = req.body.height ? req.body.height : info_product.getDataValue("height");
+                console.log(req.body.height)
+                let depth = req.body.depth ? req.body.depth : info_product.getDataValue("depth");
+                let length = req.body.length ? req.body.length : info_product.getDataValue("length");
+                let color = req.body.color ? req.body.color : info_product.getDataValue("color");
                 let productId = req.body.productId ? req.body.productId : info_product.getDataValue("productId");
                 if (info_product) {
                     info_product.update({
-                        hauteur: hauteur,
-                        profondeur: profondeur,
-                        longueur: longueur,
-                        couleur: couleur,
+                        height: height,
+                        depth: depth,
+                        length: length,
+                        color: color,
                         productId: productId,
                         updatedAt: Date.now(),
                     }).then(result => {
@@ -74,7 +74,7 @@ exports.getInfo = (req, res, next) => {
         },
         limit,
         offset,
-        attributes: ['id', 'hauteur', 'profondeur', 'longueur', 'couleur', 'createdAt', 'updatedAt'],
+        attributes: ['id', 'height', 'depth', 'length', 'color', 'createdAt', 'updatedAt'],
         }
     ).then(result => {
         const response = Info_Product.getPagingData(result, page, limit)

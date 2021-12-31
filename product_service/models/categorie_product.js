@@ -10,10 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
 
-    static getPagingData = (data, page, limit) => {
-      const { count: totalItems, rows: categories} = data;
+    static getPagingData = (data,count, page, limit) => {
+      const totalItems = count
+      const categories = data
       const currentPage = page ? +page : 0;
-      const totalPages = Math.ceil(totalItems / limit);
+      const totalPages = Math.ceil(totalItems / limit)-1;
 
       return { totalItems, categories, totalPages, currentPage };
     };
