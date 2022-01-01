@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFacebookSquare, faTwitterSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { DateTime } from 'luxon';
 import Axios from 'axios';
 
 import App from './App.vue';
@@ -28,3 +29,4 @@ app.config.globalProperties.$env = process.env.NODE_ENV;
 app.config.globalProperties.$baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost' : 'https://julienkeiff.fr';
 app.config.globalProperties.$port = Port;
 app.config.globalProperties.$axios = Axios;
+app.config.globalProperties.$date = DateTime;
