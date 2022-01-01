@@ -16,7 +16,7 @@
     <user-show :user="userToShow" @close="showVisible = false" />
   </el-dialog>
 
-  <el-dialog v-model="editVisible" title="Editer un utilisateur" width="60%">
+  <el-dialog v-model="editVisible" title="Éditer un utilisateur" width="60%">
     <user-form @close="editVisible = false" :edit="true" :user-to-edit="userToEdit" />
   </el-dialog>
 
@@ -29,8 +29,10 @@
     <el-table-column prop="phone" label="Téléphone"/>
     <el-table-column fixed="right" label="Actions">
       <template #default="scope">
-        <el-button type="info" size="small" @click.prevent="showUser(scope.$index)">Voir</el-button>
-        <el-button type="primary" size="small" @click.prevent="editUser(scope.$index)">Éditer</el-button>
+        <div style="display: flex;">
+          <el-button type="info" size="small" @click.prevent="showUser(scope.$index)">Voir</el-button>
+          <el-button type="primary" size="small" @click.prevent="editUser(scope.$index)">Éditer</el-button>
+        </div>
       </template>
     </el-table-column>
   </el-table>
@@ -96,16 +98,14 @@ export default {
         );
         this.users = users.data;
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     },
     handlerCurrentChange(val) {
       console.log(val);
     },
     showUser(userIndex) {
-      console.log(userIndex);
       this.userToShow = this.users[userIndex];
-      console.log(this.userToShow);
       this.showVisible = true;
     },
     editUser(userIndex) {

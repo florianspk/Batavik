@@ -6,7 +6,7 @@ import Page404 from '../views/404.vue';
 import Product from '../views/Product.vue';
 import Dashboard from '../views/admin/Dashboard.vue';
 import Users from '../views/admin/Users.vue';
-import Stocks from '../views/admin/Stocks.vue';
+import Products from '../views/admin/Products.vue';
 import Shops from '../views/admin/Shops.vue';
 import Cart from '../views/Cart.vue';
 import User from '../views/User.vue';
@@ -48,9 +48,9 @@ const routes = [
     component: Users,
   },
   {
-    path: '/admin/stocks',
-    name: 'Stocks',
-    component: Stocks,
+    path: '/admin/products',
+    name: 'Product',
+    component: Products,
   },
   {
     path: '/admin/shops',
