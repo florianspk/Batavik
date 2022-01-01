@@ -20,18 +20,19 @@
     <user-form @close="editVisible = false" :edit="true" :user-to-edit="userToEdit" />
   </el-dialog>
 
-  <el-table stripe style="width: 100%" :data="users">
-    <el-table-column prop="id" label="Id"/>
-    <el-table-column prop="name" label="Nom"/>
-    <el-table-column prop="username" label="Pseudo"/>
-    <el-table-column prop="email" label="Email"/>
-    <el-table-column prop="address.street" label="Adresse"/>
-    <el-table-column prop="phone" label="Téléphone"/>
+  <el-table stripe style="width: 99%" :data="users" highlight-current-row>
+    <el-table-column prop="id" label="Id" width="80%" sortable/>
+    <el-table-column prop="name" label="Nom" sortable/>
+    <el-table-column prop="username" label="Pseudo" sortable/>
+    <el-table-column prop="email" label="Email" sortable/>
+    <el-table-column prop="address.street" label="Adresse" sortable/>
+    <el-table-column prop="phone" label="Téléphone" sortable/>
     <el-table-column fixed="right" label="Actions">
       <template #default="scope">
         <div style="display: flex;">
           <el-button type="info" size="small" @click.prevent="showUser(scope.$index)">Voir</el-button>
           <el-button type="primary" size="small" @click.prevent="editUser(scope.$index)">Éditer</el-button>
+          <el-button type="danger" size="small" @click.prevent="deleteUser(scope.$index)">Supprimer</el-button>
         </div>
       </template>
     </el-table-column>
@@ -111,6 +112,9 @@ export default {
     editUser(userIndex) {
       this.userToEdit = this.users[userIndex];
       this.editVisible = true;
+    },
+    deleteUser(userIndex) {
+      this.users.splice(userIndex, 1);
     },
   },
   mounted() {

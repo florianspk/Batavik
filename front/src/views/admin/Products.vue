@@ -20,23 +20,23 @@
     <product-form @close="editVisible = false" :edit="true" :product-to-edit="productToEdit" />
   </el-dialog>
 
-  <el-table stripe style="width: 100%" :data="products">
-    <el-table-column prop="id" label="Id"/>
+  <el-table stripe style="width: 100%" :data="products" highlight-current-row>
+    <el-table-column prop="id" label="Id" sortable/>
     <el-table-column prop="image" label="Image">
       <template #default="scope">
         <el-image :src="scope.row.image" :fit="fit"/>
       </template>
     </el-table-column>
-    <el-table-column prop="name" label="Nom"/>
-    <el-table-column prop="price" label="Prix (€)"/>
+    <el-table-column prop="name" label="Nom" sortable/>
+    <el-table-column prop="price" label="Prix (€)" sortable/>
     <el-table-column prop="description" label="Description"/>
-    <el-table-column prop="note" label="Note"/>
-    <el-table-column prop="createdAt" label="Créé le">
+    <el-table-column prop="note" label="Note" sortable/>
+    <el-table-column prop="createdAt" label="Créé le" sortable>
       <template #default="scope">
         {{ formatDate(scope.row.createdAt) }}
       </template>
     </el-table-column>
-    <el-table-column prop="updatedAt" label="Mis à jour le">
+    <el-table-column prop="updatedAt" label="Mis à jour le" sortable>
       <template #default="scope">
         {{ formatDate(scope.row.updatedAt) }}
       </template>
@@ -46,6 +46,7 @@
         <div style="display: flex;">
           <el-button type="info" size="small" @click.prevent="showProduct(scope.$index)">Voir</el-button>
           <el-button type="primary" size="small" @click.prevent="editProduct(scope.$index)">Éditer</el-button>
+          <el-button type="danger" size="small" @click.prevent="deleteProduct(scope.$index)">Supprimer</el-button>
         </div>
       </template>
     </el-table-column>
@@ -126,6 +127,9 @@ export default {
     editProduct(productIndex) {
       this.productToEdit = this.products[productIndex];
       this.editVisible = true;
+    },
+    deleteProduct(productIndex) {
+      this.products.splice(productIndex, 1);
     },
     formatDate(dateToFormat) {
       const date = this.$date.fromISO(dateToFormat, { locale: 'fr-FR' });
