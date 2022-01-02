@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       page = (page > 0)? page : 1;
       const limit = size ? + size : 3;
       const offset = (page) ? (page * limit)-limit : 0;
-
       return { limit, offset };
     };
 
