@@ -1,30 +1,56 @@
 <template>
   <div class="product">
     <div class="img">
-      <img :src="data.image" alt="">
+      <img :src="data.image" alt="" :class="loadImage ? 'hide' : ''"  @load="loadImage = false" @error="loadImage = false">
+      <spinner v-if="loadImage" class="center"></spinner>
     </div>
     <div class="infos">
       <h1 class="title">{{data.name}}</h1>
       <p class="descr">{{data.description}}</p>
-      <a :href="'/product/' + data.id" class="link">Voir plus</a>
+      <a :href="'/product/' + data.id" class="link">
+        Voir plus 
+        <span>
+          <img src="@/assets/icons/chevron-forward.svg">
+        </span>
+      </a>
     </div>
   </div>
 </template>
 
 <script>
+import spinner from './spinner.vue';
+
 export default {
   name: 'product',
   props: ['index', 'data'],
+  components: { spinner },
+  data() {
+    return {
+      loadImage: false,
+    };
+  },
+  watch: {
+    data() {
+      this.loadImage = true;
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
+.hide {
+  display: none;
+}
+.center{
+  margin: 50%;
+  transform: translate(-60%, -60%);
+}
 .product {
   position: relative;
   height: 550px;
   width: 30%;
-  background: red;
   overflow: hidden;
+  background: #ccc;
   &:hover{
     .infos {
       bottom: 0%;
@@ -45,14 +71,15 @@ export default {
   .infos {
     position: absolute;
     width: 100%;
-    height: 33%;
-    bottom: -33%;
+    height: 40%;
+    bottom: -40%;
     background: #eee;
     transition-duration: 0.5s;
     .title {
       text-align: center;
       border-bottom: 0.3vh solid black;
       margin-bottom: 2%;
+      font-size: 2rem;
     }
     .descr {
       text-align: center;
@@ -64,6 +91,11 @@ export default {
       text-align: center;
       text-decoration: none;
       color: black;
+      font-size: 1.1rem;
+      font-weight: bold;
+      img {
+        width: 7%
+      }
     }
   }
 }

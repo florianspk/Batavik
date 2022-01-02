@@ -55,24 +55,25 @@ const routes = [
     name: 'User',
     component: User,
   },
+  // Admin routes
   {
     path: '/admin',
-    name: 'Dashboard',
+    name: 'Dashboard_admin',
     component: Dashboard,
   },
   {
     path: '/admin/clients',
-    name: 'Users',
+    name: 'Users_admin',
     component: Users,
   },
   {
     path: '/admin/products',
-    name: 'Product',
+    name: 'Product_admin',
     component: Products,
   },
   {
     path: '/admin/shops',
-    name: 'Shops',
+    name: 'Shops_admin',
     component: Shops,
   },
   {
