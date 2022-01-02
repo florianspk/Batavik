@@ -10,9 +10,7 @@
 
       <h2>Style du produit disponible</h2>
       <div id="style">
-        <button :class="active === 1 ? 'active' : ''" @click="active = 1">123cm X 150cm - Style A</button>
-        <button :class="active === 2 ? 'active' : ''" @click="active = 2">123cm X 150cm - Style B</button>
-        <button :class="active === 3 ? 'active' : ''" @click="active = 3">150cm X 180cm - Style C</button>
+        <button v-for="(style, i) in infos" :key="i" :class="active === i ? 'active' : ''" @click="active = i">{{style.height}}cm X {{style.depth}}cm - Style {{style.color}}</button>
       </div>
 
       <h2 id="price">Prix : {{data.price}}€</h2>
@@ -34,7 +32,11 @@ export default {
   data() {
     return {
       active: 1,
+      infos: [],
     };
+  },
+  mounted() {
+    this.infos = this.data.info;
   },
 };
 </script>
@@ -63,7 +65,7 @@ export default {
           display: inline-block;
           border: dotted black 2px;
           height: 7vh;
-          border-radius: 20% / 50%;
+          border-radius: 2rem;
           padding: 2%;
           cursor: pointer;
           transition-duration: 0.2s;

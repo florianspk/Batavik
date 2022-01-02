@@ -1,7 +1,7 @@
 <template>
   <div id="product-page" v-if=dataLoaded>
     <product-description :data="productData" />
-    <same-product />
+    <same-product :products="simiProduct" v-if="simiProduct.length >= 1" />
     <comment-section />
   </div>
   
@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       productData: null,
+      simiProduct: [],
       dataLoaded: false,
     };
   },
@@ -35,11 +36,15 @@ export default {
       const { data: product } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.$route.params.id}`);
       this.productData = product;
       if (product != null) this.dataLoaded = true;
-      console.log(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.$route.params.id}`, product);
+    },
+    async getSimilaire() {
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/best/products/`);
+      this.simiProduct = products.products;
     },
   },
   mounted() {
     this.getProductInfo();
+    this.getSimilaire();
   },
 };
 </script>

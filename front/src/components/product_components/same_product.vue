@@ -2,9 +2,7 @@
   <div id="similaire">
     <h1 id="title">Nos produits similaires</h1>
     <div id="container-simi">
-      <gProduct class="product-item" :data="product" :index="0" />
-      <gProduct class="product-item" :data="product2" :index="1" />
-      <gProduct class="product-item" :data="product" :index="2" />
+      <gProduct class="product-item" v-for="(product, i) in products" :key="i" :data="product" :index="0" />
     </div>
   </div>
 </template>
@@ -14,26 +12,9 @@ import gProduct from '../global/g_products.vue';
 
 export default {
   name: 'similaire',
+  props: ['products'],
   components: {
     gProduct,
-  },
-  data() {
-    return {
-      product: {
-        name: 'Produit 2',
-        id: 0,
-        img: 'img2.jpg',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dictum turpis et.',
-        price: '120€',
-      },
-      product2: {
-        name: 'Produit 3',
-        id: 1,
-        img: 'img3.jpg',
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dictum turpis et.',
-        price: '350€',
-      },
-    };
   },
 };
 </script>
@@ -51,6 +32,7 @@ export default {
     margin: 2% 0;
     #container-simi {
       display: flex;
+      justify-content: space-between;
       gap: 1%;
     }
   }
