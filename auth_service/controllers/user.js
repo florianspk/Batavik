@@ -54,9 +54,7 @@ exports.getUsers = async (req, res) => {
     }
 }
 
-exports.logout = async () => {
 
-}
 
 
 // Upload my Image for a Product

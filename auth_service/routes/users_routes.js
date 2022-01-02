@@ -5,6 +5,7 @@ const Auth = require("../middleware/auth")
 let multer = require('multer');
 let mu = multer();
 
+
 router.post('/login', mu.fields([]),userController.signIn );
 
 router.post('/register', userController.upload, userController.signUp );
@@ -12,5 +13,13 @@ router.post('/register', userController.upload, userController.signUp );
 router.get('/users', Auth.validateToken, userController.getUsers);
 
 router.get('/validateToken', Auth.validateToken);
+
+router.get('/update/{:idUser}');
+
+router.get('/update/{:idUser}');
+
+router.get('/disable/{:idUser}');
+
+
 
 module.exports = router;
