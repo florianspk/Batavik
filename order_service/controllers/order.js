@@ -56,7 +56,12 @@ exports.validateOrder = (req, res) => {
         var totalPrices = 0;
         //listProduct = JSON.parse(req.body.productList);
         order.create({ 
-            orderToken: "orderToken",
+            orderToken: strRandom({
+                includeUpperCase: true,
+                includeNumbers: true,
+                length: 150,
+                startsWithLowerCase: true
+              }),
             orderPrice: 0.00,
             tradeInformation: "tradeInformation",
             deadLineOrder: Date.now()
@@ -128,4 +133,29 @@ exports.validateOrder = (req, res) => {
     
   };
 
-  
+  function strRandom(o) {
+    var a = 10,
+        b = 'abcdefghijklmnopqrstuvwxyz',
+        c = '',
+        d = 0,
+        e = ''+b;
+    if (o) {
+      if (o.startsWithLowerCase) {
+        c = b[Math.floor(Math.random() * b.length)];
+        d = 1;
+      }
+      if (o.length) {
+        a = o.length;
+      }
+      if (o.includeUpperCase) {
+        e += b.toUpperCase();
+      }
+      if (o.includeNumbers) {
+        e += '1234567890';
+      }
+    }
+    for (; d < a; d++) {
+      c += e[Math.floor(Math.random() * e.length)];
+    }
+    return c;
+  }
