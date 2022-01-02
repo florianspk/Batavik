@@ -45,6 +45,10 @@ export default {
     font-size: 3rem;
   }
   #similaire {
+    background: #fff;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem 2rem 2rem;
+    margin: 2% 0;
     #container-simi {
       display: flex;
       gap: 1%;
