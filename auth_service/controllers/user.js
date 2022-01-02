@@ -8,14 +8,14 @@ const multer = require("multer")
 const path = require('path');
 
 exports.signUp = async (req, res) => {
-    const {firstname, username, email, password: plainTextPassword} = req.body;
+    const {firstname,lastname, email, password: plainTextPassword} = req.body;
     const image = req.file.path
     const enabled = 1
     //Then we have to hashed the password so no one can see it from database.
     const password = await bcrypt.hash(plainTextPassword, 10)
     const user = await db.User.create({
         firstname,
-        username,
+        lastname,
         email,
         password,
         image,
@@ -32,7 +32,7 @@ exports.signIn = async (req, res) => {
     const {email, password} = req.body;
     const user = await db.User.findOne({where: {email: email}})
     if (!user) {
-        return res.status(401).json({status: 'error', error: 'Invalid username/password'})
+        return res.status(401).json({status: 'error', error: 'Invalid email/password'})
     }
     if (await bcrypt.compare(password, user.password)) {
         const payload = {id: user.id, username: user.email};
@@ -41,7 +41,7 @@ exports.signIn = async (req, res) => {
         const token = jwt.sign(payload, secret, options)
         return res.status(200).json({status: 'ok', "message": "User signin successful", token})
     }
-    return res.status(401).json({"status": "error", "message": "Invalid Username/Password"})
+    return res.status(401).json({"status": "error", "message": "Invalid email/Password"})
 }
 exports.getUsers = async (req, res) => {
     try {
