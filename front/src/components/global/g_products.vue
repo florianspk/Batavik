@@ -105,6 +105,13 @@ export default {
     height: 400px;
     width: 95%;
     margin-bottom: 1vh;
+    .infos {
+      height: 45%;
+      bottom: -45%;
+      .title { font-size: 1.5rem; }
+      .descr { font-size: 1rem; }
+      .link { font-size: 1rem; }
+    }
   }
 }
 </style>

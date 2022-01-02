@@ -81,6 +81,13 @@ export default {
 @media screen and (max-width: 720px) {
   .slide{
     .btn{ width: 5%; }
+    .banner { bottom: 0%; }
+    .btn {
+      opacity: 1;
+      width: 20%;
+    }
+    .btn-next{ right: -3%; }
+    .btn-back{ left: -3%; }
   }
 }
 </style>

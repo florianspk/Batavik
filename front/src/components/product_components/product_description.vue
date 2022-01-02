@@ -56,10 +56,15 @@ export default {
   #product-description {
     margin-top: 5vh;
     height: min-content;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
     #img-container {
       width: 45%;
       img {
         width: 100%;
+        border-radius: 2rem;
       }
     }
     #info-container {
@@ -147,17 +152,28 @@ export default {
 @media screen and (orientation: portrait) {
   #product-description {
     margin-top: 10vh;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 2rem;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
     #img-container {
       width: 100%;
       height: 45%;
       img {
         height: 100%;
         width: 100%;
+        border-radius: 2rem;
         object-fit: cover;
       }
     }
     #info-container {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      p { text-align: center; }
+      #qte-zone { display: flex; flex-direction: column; justify-content: center; align-items: center;}
       #style {
         display: flex;
         gap: 2%;
@@ -187,9 +203,9 @@ export default {
           position: relative;
           display: flex;
           align-items: center;
-          width: 60vw;
+          width: 80vw;
           height: 10vh;
-          border-radius: 15% / 50%;
+          border-radius: 2rem;
           border: black solid 2px;
           transition-duration: 0.25s;
           padding-left: 5%;
