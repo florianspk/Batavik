@@ -10,7 +10,6 @@ const productController = require('../controllers/productController')
  *     tags:
  *       - Products
  *     description: Create new Product
- *     summary: Add a new pet
  *     requestBody:
  *       required: true
  *       content:
@@ -103,20 +102,6 @@ router.get("/products",productController.getProducts);
  *           type: integer
  *         required: true
  *         description: Id to reference product
- *       - in: query
- *         name : page
- *         schema:
- *           type: integer
- *           default: 1
- *         required: false
- *         description: The number of page
- *       - in: query
- *         name : size
- *         schema:
- *           type: integer
- *           default: 3
- *         required: false
- *         description: The number of items to skip before starting to collect the result set
  *     responses:
  *       200:
  *         description: Operation summary
@@ -136,7 +121,7 @@ router.get('/product/:productId',productController.getProduct);
  *   delete:
  *     tags:
  *       - Products
- *     description: Get one Product
+ *     description: Delete one Product
  *     parameters:
  *       - in: path
  *         name: productId
