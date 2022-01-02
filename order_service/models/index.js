@@ -27,6 +27,7 @@ db.Sequelize = Sequelize;
 db.cart = require("./cart.js")(sequelize, Sequelize);
 db.order = require("./order.js")(sequelize, Sequelize);
 db.productCart = require("./productCart.js")(sequelize, Sequelize);
+db.status = require("./status.js")(sequelize, Sequelize);
 
 /* relation */
 
@@ -35,6 +36,9 @@ db.order.hasMany(db.productCart, {foreignKey: "id_order"});//
 
 db.productCart.belongsTo(db.cart, {foreignKey: "id_cart"});//
 db.cart.hasMany(db.productCart, {foreignKey: "id_cart"});
+
+db.order.belongsToMany(db.status, { through: 'history_status' });
+db.status.belongsToMany(db.order, { through: 'history_status' });
 
 module.exports = db;
 

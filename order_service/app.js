@@ -16,7 +16,7 @@ const db = require("./models");
 /* routes */
 require('./routes/order.js')(app)
 
-db.sequelize.sync({ force: false })
+db.sequelize.sync({ force: true })
   .then(() => {
     console.log("Drop and re-sync db.");
   });
