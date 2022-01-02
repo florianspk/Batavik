@@ -7,9 +7,7 @@ let mu = multer();
 
 router.post('/login', mu.fields([]),userController.signIn );
 
-
 router.post('/register', userController.upload, userController.signUp );
-
 
 router.get('/users', Auth.validateToken, userController.getUsers);
 
