@@ -4,6 +4,7 @@ const db = require("../models");
 const cart = db.cart;
 const productCart = db.productCart;
 const order = db.order;
+const historystatus = db.historystatus;
 
 //* Find a single with an id
 exports.findAll = (req, res) => {
@@ -66,6 +67,11 @@ exports.validateOrder = (req, res) => {
             tradeInformation: "tradeInformation",
             deadLineOrder: new Date(new Date().getTime()+(10*24*60*60*1000))
         }).then(async(order) => {
+
+            historystatus.create({
+                id_status : 1,
+                id_order : order.id
+            })
 
             const orderPromises = req.body.productList.map(async element => {
                 productcart = await productCart.findOne({
