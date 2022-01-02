@@ -6,6 +6,7 @@ const productRoutes = require('./routes/product_routes');
 const categRoutes = require('./routes/categ_routes');
 const infoRoutes = require('./routes/info_routes');
 const cors = require('cors');
+const bodyParser = require('body-parser')
 
 const corsOptions = {
     origin: process.env.ORIGIN_ALLOWED || "http://localhost:8080",
@@ -20,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(bodyParser.json())
 
 app.use('/api/', productRoutes);
 
