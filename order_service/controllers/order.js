@@ -64,7 +64,7 @@ exports.validateOrder = (req, res) => {
               }),
             orderPrice: 0.00,
             tradeInformation: "tradeInformation",
-            deadLineOrder: Date.now()
+            deadLineOrder: new Date(new Date().getTime()+(10*24*60*60*1000))
         }).then(async(order) => {
 
             const orderPromises = req.body.productList.map(async element => {
