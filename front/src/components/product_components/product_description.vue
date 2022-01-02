@@ -8,9 +8,18 @@
       <h1>{{data.name}}</h1>
       <p id="descr"> {{data.description}} </p>
 
-      <h2>Style du produit disponible</h2>
-      <div id="style">
-        <button v-for="(style, i) in infos" :key="i" :class="active === i ? 'active' : ''" @click="active = i">{{style.height}}cm X {{style.depth}}cm - Style {{style.color}}</button>
+      <div id="styles" v-if="infos.length >= 1">
+        <h2>Style du produit disponible</h2>
+        <div id="style">
+          <button v-for="(style, i) in infos" :key="i" :class="active === i ? 'active' : ''" @click="active = i">{{style.height}}cm X {{style.depth}}cm - Style {{style.color}}</button>
+        </div>
+      </div>
+
+      <div id="qte-zone">
+        <h2>Quantitée</h2>
+        <select name="qte" id="qte">
+          <option v-for="i in maxqte" :key="i" :value="i">{{i}}</option>
+        </select>
       </div>
 
       <h2 id="price">Prix : {{data.price}}€</h2>
@@ -32,6 +41,7 @@ export default {
   data() {
     return {
       active: 1,
+      maxqte: 10,
       infos: [],
     };
   },
@@ -58,6 +68,28 @@ export default {
       top: 1%;
       right: 2%;
       width: 50%;
+      #qte-zone{
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        display: flex;
+        #qte {
+          width: 10%;
+          margin-left: 2vh;
+          border-radius: 2rem;
+          border:#a1a1a1 1px solid;
+          padding: 0.5% 2%;
+          option {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            border:#a1a1a1 1px solid;
+            border-radius: 2rem;
+            box-sizing: border-box;
+          }
+        }
+      }
       #style {
         display: flex;
         gap: 2%;
@@ -83,7 +115,7 @@ export default {
       }
       .add{
         button{
-          margin-top: 13%;
+          margin-top: 8%;
           position: relative;
           display: flex;
           align-items: center;
