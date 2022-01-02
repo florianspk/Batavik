@@ -1,5 +1,6 @@
 const { create } = require("domain");
 const { findOne } = require("../../cart_service/controllers/cart");
+const { Op } = require("sequelize");
 const db = require("../models");
 const cart = db.cart;
 const productCart = db.productCart;
@@ -19,8 +20,10 @@ exports.findAll = (req, res) => {
         order.findAll({
             include:[{
                 model: productCart,
+                required: true,
                 include: [{
                     model: cart ,
+                    required: true,
                     attributes: [],
                     where: {
                         validation : 1,
@@ -77,6 +80,7 @@ exports.validateOrder = (req, res) => {
                 productcart = await productCart.findOne({
                     include: [{
                             model: cart ,
+                            required: true,
                             attributes: [],
                             where: {
                                 validation : 0,
@@ -91,7 +95,8 @@ exports.validateOrder = (req, res) => {
                     totalPrices += element["price"] * productcart.quantity;
 
                     await productcart.update({
-                        unitPrice: element["price"]
+                        unitPrice: element["price"],
+                        id_order: order.id
                     })
                     productcart.save();
                 }else{
@@ -137,6 +142,143 @@ exports.validateOrder = (req, res) => {
         });
     }
     
+  };
+
+  //* Find a single with an id
+exports.cancel = (req, res) => {
+    try{
+        if( typeof req.body.idUser === 'undefined' && typeof req.params.id === 'undefined' ){
+          throw new Error("Il manque des informations dans notre requete");
+        }
+          
+        if( isNaN(parseInt(req.body.idUser)) && isNaN(parseInt(req.params.id)) ){
+            throw new Error("Une des valeurs envoyé n'est pas valide");
+        }
+        order.findByPk(req.params.id, 
+            {
+                include: [{
+                    model: productCart,
+                    required: true,
+                    include: [{
+                        model: cart ,
+                        required: true,
+                        attributes: [],
+                        where: {
+                            validation : 1,
+                            idUser : req.body.idUser
+                        }
+                    }]
+                 },
+                 {
+                    model: historystatus,
+                     required: true,
+                     limit: 1,
+                     order: [ [ 'createdAt', 'DESC' ]]
+                 }]
+            })
+        .then((order) => {
+            if(order && order.historystatuses[0].id_status != 2){
+                historystatus.create({
+                    id_status : 4,
+                    id_order : order.id
+                }).then((data) =>{
+                    res.send({
+                        message: "le statut de la comande à changé"
+                      });
+                })
+                .catch((err) => {
+                    res.status(400).send({
+                        message: err.message || "Some error occurred while retrieving .",
+                    });
+                    });
+            }else{
+                res.status(400).send({
+                    message: "Commande introuvable ou fini",
+                });
+            }
+            
+
+                
+        })
+        .catch((err) => {
+        res.status(400).send({
+            message: err.message || "Some error occurred while retrieving .",
+        });
+        });
+    }catch (error) {
+        res.status(400).send({
+          message: error.message
+        });
+      }
+  };
+
+  exports.return = (req, res) => {
+    try{
+        if( typeof req.body.idUser === 'undefined' && typeof req.params.id === 'undefined' ){
+          throw new Error("Il manque des informations dans notre requete");
+        }
+          
+        if( isNaN(parseInt(req.body.idUser)) && isNaN(parseInt(req.params.id)) ){
+            throw new Error("Une des valeurs envoyé n'est pas valide");
+        }
+        order.findByPk(req.params.id, 
+            {
+                include: [
+                    {
+                    model: productCart,
+                    required: true,
+                    include: [{
+                        model: cart ,
+                        required: true,
+                        attributes: [],
+                        where: {
+                            validation : 1,
+                            idUser : req.body.idUser
+                        }
+                    }]
+                 },
+                 {
+                    model: historystatus,
+                     required: true,
+                     limit: 1,
+                     order: [ [ 'createdAt', 'DESC' ]]
+                 }
+            ]
+            })
+        .then((order) => {
+
+            if(order && order.historystatuses[0].id_status != 2){
+                historystatus.create({
+                    id_status : 3,
+                    id_order : order.id
+                }).then((data) =>{
+                    res.send({
+                        message: "le statut de la comande à changé"
+                    });
+                })
+                .catch((err) => {
+                    res.status(400).send({
+                        message: err.message || "Some error occurred while retrieving .",
+                    });
+                    });
+            }else{
+                res.status(400).send({
+                    message: "Commande introuvable ou fini",
+                });
+            }
+
+                
+        })
+        .catch((err) => {
+        res.status(400).send({
+            message: err.message || "Some error occurred while retrieving .",
+        });
+        });
+    }catch (error) {
+        res.status(400).send({
+          message: error.message
+        });
+      }
   };
 
   function strRandom(o) {

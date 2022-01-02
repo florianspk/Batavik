@@ -7,6 +7,10 @@ module.exports = (app) => {
     router.get("/all", order.findAll);
   
     router.post("/validate", order.validateOrder)
+    
+    router.post("/cancel/:id", order.cancel)
+
+    router.post("/return/:id", order.return)
   
     /*
     // Retrieve all
