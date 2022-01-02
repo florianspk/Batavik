@@ -10,6 +10,37 @@ const productController = require('../controllers/productController')
  *     tags:
  *       - Products
  *     description: Create new Product
+ *     summary: Add a new pet
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               description:
+ *                 type: string
+ *               image:
+ *                 type: file
+ *               categId:
+ *                 type: integer
+ *               height:
+ *                 type: number
+ *               depth:
+ *                 type: number
+ *               length:
+ *                 type: number
+ *               color:
+ *                 type: string
+ *             required:
+ *               - name
+ *               - price
+ *               - description
+ *               - categId
  *     responses:
  *       200:
  *         description: Operation summary
@@ -30,7 +61,22 @@ router.post('/product',productController.upload,productController.newProduct);
  *   get:
  *     tags:
  *       - Products
- *     description: get all product
+ *     description: Get all product
+ *     parameters:
+ *       - in: query
+ *         name : page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         required: false
+ *         description: The number of page
+ *       - in: query
+ *         name : size
+ *         schema:
+ *           type: integer
+ *           default: 3
+ *         required: false
+ *         description: The number of items to skip before starting to collect the result set
  *     responses:
  *       200:
  *         description: Operation summary
@@ -50,6 +96,27 @@ router.get("/products",productController.getProducts);
  *     tags:
  *       - Products
  *     description: Get one Product
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Id to reference product
+ *       - in: query
+ *         name : page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         required: false
+ *         description: The number of page
+ *       - in: query
+ *         name : size
+ *         schema:
+ *           type: integer
+ *           default: 3
+ *         required: false
+ *         description: The number of items to skip before starting to collect the result set
  *     responses:
  *       200:
  *         description: Operation summary
@@ -70,15 +137,22 @@ router.get('/product/:productId',productController.getProduct);
  *     tags:
  *       - Products
  *     description: Get one Product
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Id to reference product
  *     responses:
  *       200:
  *         description: Operation summary
  *         content:
  *           application/json:
- *             schema:
- *               $ref: '#/definitions/ProductList'
+ *            schema:
+ *              type: integer
  *       500:
- *         description: An error occured when get a product
+ *         description: An error occured when delete a product
  */
 router.delete('/product/:productId',productController.delProduct);
 
@@ -89,6 +163,35 @@ router.delete('/product/:productId',productController.delProduct);
  *     tags:
  *       - Products
  *     description: Modify a product
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Id to reference product
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               description:
+ *                 type: string
+ *               image:
+ *                 type: file
+ *               categId:
+ *                 type: integer
+ *             required:
+ *               - name
+ *               - price
+ *               - description
+ *               - categId
  *     responses:
  *       200:
  *         description: Operation summary
@@ -97,7 +200,7 @@ router.delete('/product/:productId',productController.delProduct);
  *             schema:
  *               $ref: '#/definitions/ProductList'
  *       500:
- *         description: An error occured when get a product
+ *         description: An error occured when update a product
  */
 router.patch('/product/:productId',productController.upload,productController.updateProduct);
 
@@ -109,6 +212,21 @@ router.patch('/product/:productId',productController.upload,productController.up
  *     tags:
  *       - Products
  *     description: get top product
+ *     parameters:
+ *       - in: query
+ *         name : page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         required: false
+ *         description: The number of page
+ *       - in: query
+ *         name : size
+ *         schema:
+ *           type: integer
+ *           default: 3
+ *         required: false
+ *         description: The number of items to skip before starting to collect the result set
  *     responses:
  *       200:
  *         description: Operation summary
@@ -129,6 +247,21 @@ router.get("/top/products",productController.bestProducts);
  *     tags:
  *       - Products
  *     description: get best product
+ *     parameters:
+ *       - in: query
+ *         name : page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         required: false
+ *         description: The number of page
+ *       - in: query
+ *         name : size
+ *         schema:
+ *           type: integer
+ *           default: 3
+ *         required: false
+ *         description: The number of items to skip before starting to collect the result set
  *     responses:
  *       200:
  *         description: Operation summary
