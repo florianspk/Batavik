@@ -1,15 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const infoController = require('../controllers/infoProductController')
-
+let multer = require('multer');
+let mu = multer();
 /**
  * @openapi
- * /api/info:
+ * /api/info/product/{idProduct}:
  *   post:
  *     tags:
  *       - Info Product
  *     description: Create new info for a product
  *     summary: Add a new info product
+ *     parameters:
+ *       - in: path
+ *         name: idProduct
+ *         schema:
+ *           type: integer
+ *         description: id of Product to add info
  *     requestBody:
  *       required: true
  *       content:
@@ -17,8 +24,6 @@ const infoController = require('../controllers/infoProductController')
  *           schema:
  *             type: object
  *             properties:
- *               idProduct:
- *                 type: integer
  *               height:
  *                 type: number
  *               depth:
@@ -39,7 +44,7 @@ const infoController = require('../controllers/infoProductController')
  *       500:
  *         description: An error occured when create a new information product
  */
-router.post('/',infoController.addInfo);
+router.post('/product/:idProduct', mu.fields([]),infoController.addInfo);
 
 /**
  * @openapi

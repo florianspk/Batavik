@@ -7,7 +7,7 @@ exports.addInfo = (req, res, next) => {
         let depth = req.body.depth ? req.body.depth : null;
         let length = req.body.length ? req.body.length : null;
         let color = req.body.color ? req.body.color : null;
-        let idProduct = req.body.idProduct ? req.body.idProduct : null;
+        let idProduct = req.params.idProduct ? req.params.idProduct : null;
         console.log(idProduct)
         Info_Product.create({
             height: height,

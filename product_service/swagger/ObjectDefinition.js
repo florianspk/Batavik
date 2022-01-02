@@ -10,11 +10,29 @@
  *  ProductList:
  *   type: array
  *   items:
- *    $ref: '#/definitions/Product'
+ *     type: object
+ *     properties:
+ *      totalLines:
+ *       type: integer
+ *      products:
+ *       $ref: '#/definitions/Product'
+ *      totalPages:
+ *       type: integer
+ *      currentPage:
+ *       type: integer
  *  CategorieList:
  *   type: array
  *   items:
- *    $ref: '#/definitions/Categorie_product'
+ *     type: object
+ *     properties:
+ *      totalLines:
+ *       type: integer
+ *      products:
+ *       $ref: '#/definitions/Categorie_product'
+ *      totalPages:
+ *       type: integer
+ *      currentPage:
+ *       type: integer
  *  Product:
  *   type: object
  *   properties:

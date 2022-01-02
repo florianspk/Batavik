@@ -192,7 +192,7 @@ router.patch('/product/:productId',productController.upload,productController.up
 
 /**
  * @openapi
- * /api/top/products:
+ * /api/products/top:
  *   get:
  *     tags:
  *       - Products
@@ -222,12 +222,12 @@ router.patch('/product/:productId',productController.upload,productController.up
  *       500:
  *         description: An error occured when get top product
  */
-router.get("/top/products",productController.bestProducts);
+router.get("/products/top",productController.topProducts);
 
 
 /**
  * @openapi
- * /api/best/products:
+ * /api/products/best:
  *   get:
  *     tags:
  *       - Products
@@ -257,8 +257,7 @@ router.get("/top/products",productController.bestProducts);
  *       500:
  *         description: An error occured when get best product
  */
-router.get("/best/products",productController.topProducts);
-
+router.get("/products/best",productController.bestProducts);
 
 
 
