@@ -64,5 +64,6 @@
  *     type: string
  *    updateAt:
  *     type: string
+ *
  */
 module.exports = {}
