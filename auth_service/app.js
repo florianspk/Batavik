@@ -10,7 +10,7 @@ const corsOptions = {
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
-var app = express();
+const app = express();
 
 app.use(cors(corsOptions))
 app.use(logger('dev'));
@@ -18,11 +18,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 
 app.use('/api',userRoutes)
 
+// static Images Folder
+app.use('/uploads', express.static('./uploads'))
 
 const db = require("./models");
 
