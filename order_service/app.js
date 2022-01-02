@@ -11,15 +11,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 const db = require("./models");
 
 /* routes */
 require('./routes/order.js')(app)
 
-db.sequelize.sync({ force: true })
+db.sequelize.sync({ force: false })
   .then(() => {
     console.log("Drop and re-sync db.");
   });
 
-  
+
 module.exports = app;
