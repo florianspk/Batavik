@@ -8,29 +8,29 @@
     <el-button type="primary" @click="formVisible = true">Créer</el-button>
   </div>
 
-  <el-dialog v-model="formVisible" title="Créer un produit" width="60%">
-    <product-form @close="formVisible = false" />
+  <el-dialog v-model="formVisible" title="Créer un produit" width="60">
+    <product-form @close="formVisible = false"/>
   </el-dialog>
 
-  <el-dialog v-model="showVisible" title="Voir un produit" width="60%">
-    <product-show :product="productToShow" @close="showVisible = false" />
+  <el-dialog v-model="showVisible" title="Voir un produit" width="60">
+    <product-show :product="productToShow" @close="showVisible = false"/>
   </el-dialog>
 
-  <el-dialog v-model="editVisible" title="Éditer un produit" width="60%">
-    <product-form @close="editVisible = false" :edit="true" :product-to-edit="productToEdit" />
+  <el-dialog v-model="editVisible" title="Éditer un produit" width="60">
+    <product-form @close="editVisible = false" :edit="true" :product-to-edit="productToEdit"/>
   </el-dialog>
 
   <el-table stripe style="width: 100%" :data="products" highlight-current-row>
-    <el-table-column prop="id" label="Id" sortable/>
+    <el-table-column prop="id" label="Id" width="80" sortable/>
     <el-table-column prop="image" label="Image">
       <template #default="scope">
         <el-image :src="scope.row.image" :fit="fit"/>
       </template>
     </el-table-column>
     <el-table-column prop="name" label="Nom" sortable/>
-    <el-table-column prop="price" label="Prix (€)" sortable/>
+    <el-table-column prop="price" label="Prix (€)" width="80" sortable/>
     <el-table-column prop="description" label="Description"/>
-    <el-table-column prop="note" label="Note" sortable/>
+    <el-table-column prop="note" label="Note" width="80" sortable/>
     <el-table-column prop="createdAt" label="Créé le" sortable>
       <template #default="scope">
         {{ formatDate(scope.row.createdAt) }}
@@ -43,10 +43,16 @@
     </el-table-column>
     <el-table-column fixed="right" label="Actions">
       <template #default="scope">
-        <div style="display: flex;">
-          <el-button type="info" size="small" @click.prevent="showProduct(scope.$index)">Voir</el-button>
-          <el-button type="primary" size="small" @click.prevent="editProduct(scope.$index)">Éditer</el-button>
-          <el-button type="danger" size="small" @click.prevent="deleteProduct(scope.$index)">Supprimer</el-button>
+        <div style="display: flex">
+          <el-button type="info" size="small" @click.prevent="showProduct(scope.$index)">
+            <f-icon :icon="'eye'"></f-icon>
+          </el-button>
+          <el-button type="primary" size="small" @click.prevent="editProduct(scope.$index)">
+            <f-icon :icon="'pen'"></f-icon>
+          </el-button>
+          <el-button type="danger" size="small" @click.prevent="deleteProduct(scope.$index)">
+            <f-icon :icon="'trash'"></f-icon>
+          </el-button>
         </div>
       </template>
     </el-table-column>
@@ -69,8 +75,8 @@ import {
   ElDialog,
   ElImage,
 } from 'element-plus';
-import { ref } from 'vue';
 
+import { ref } from 'vue';
 import productForm from '../../components/admin/Product/form.vue';
 import productShow from '../../components/admin/Product/show.vue';
 

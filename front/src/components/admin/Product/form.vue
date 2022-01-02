@@ -9,15 +9,18 @@
     <el-form-item label="Description">
       <el-input v-model="product.description" type="textarea"></el-input>
     </el-form-item>
-    <el-form-item label="Note">
-      <el-input v-model.number="product.note"></el-input>
+<!--    <el-form-item label="Hauteur">
+      <el-input-number v-model="product.info.height"></el-input-number>
     </el-form-item>
-    <el-form-item label="Créé le">
-      <el-input v-model="product.createdAt"></el-input>
+    <el-form-item label="Profondeur">
+      <el-input-number v-model="product.info.depth"></el-input-number>
     </el-form-item>
-    <el-form-item label="Mis à jour le">
-      <el-input v-model="product.updatedAt"></el-input>
+    <el-form-item label="Largeur">
+      <el-input-number v-model="product.info.length"></el-input-number>
     </el-form-item>
+    <el-form-item label="Couleur">
+      <el-input v-model="product.info.color"></el-input>
+    </el-form-item>-->
     <el-form-item>
       <span class="dialog-footer" style="display: flex;justify-content: flex-end;">
         <el-button @click="close">Annuler</el-button>
@@ -46,18 +49,29 @@ export default {
     return {
       product: {
         name: '',
-        price: '',
+        price: 0,
         description: '',
-        note: '',
-        createdAt: '',
-        updatedAt: '',
+        // image: null,
+        categId: 1,
+        // info: {
+        //   height: 0,
+        //   depth: 0,
+        //   length: 0,
+        //   color: '',
+        // },
       },
     };
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if (!this.edit) {
         console.log('create :', this.product);
+        console.log(JSON.stringify(this.product));
+        const product = await this.$axios.post(
+          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product`,
+          this.product,
+        );
+        console.log(product);
       } else {
         console.log('edit :', this.product);
       }

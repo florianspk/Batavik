@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faTachometerAlt, faUsers, faBoxes, faStore, faBars,
+  faTachometerAlt, faUsers, faBoxes, faStore, faBars, faEye, faPen, faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faTwitterSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -23,6 +23,9 @@ library.add(
   faStore,
   faUsers,
   faBoxes,
+  faEye,
+  faPen,
+  faTrash,
   faFacebookSquare,
   faTwitterSquare,
   faLinkedin,
