@@ -5,10 +5,10 @@
     </div>
     
     <div id="page-list">
-      <div class="page" v-for="index in effectivePages" :key="index" :class="index == currentPage ? 'active' : ''">
-        <span v-if="index == 24 && totalPage > 25" @click="showCutomPage">...</span>
-        <span v-else-if="index == 25 && totalPage > 25" @click="$emit('change-page', totalPage)">{{totalPage}}</span>
-        <span v-else @click="$emit('change-page', index)">{{index}}</span>
+      <div class="page" v-for="index in effectivePages" :key="index" :class="index == currentPage ? 'active' : ''" @click="clickHandler(index)">
+        <span v-if="index == 24 && totalPage > 25">...</span>
+        <span v-else-if="index == 25 && totalPage > 25">{{totalPage}}</span>
+        <span v-else>{{index}}</span>
       </div>
     </div>
 
@@ -34,6 +34,11 @@ export default {
     },
     setPageToDisplay() {
       this.effectivePages = this.totalPage < 25 ? this.totalPage : 25;
+    },
+    clickHandler(index) {
+      if (index === 24 && this.totalPage > 25) this.showCutomPage();
+      else if (index === 25 && this.totalPage > 25) this.$emit('change-page', this.totalPage);
+      else this.$emit('change-page', index);
     },
   },
   watch: {
