@@ -1,11 +1,12 @@
 <template>
   <div class="carousel">
-    <div v-for="i in nbSlide" :key="i" class="slide-container">
+    <div v-for="(slide, i) in slides" :key="i" class="slide-container">
     <transition tag="div" name="fade" class="slides-group">
       <slide 
-        :content="'slide ' + i" 
-        :key="i" 
-        v-if="itemToShow == i" 
+        :content="slide.name"
+        :image="slide.image"
+        :key="i+1" 
+        v-if="itemToShow == i+1" 
         @back="navigate(-1)"
         @next="navigate(1)"
       />
@@ -23,25 +24,27 @@ export default {
   data() {
     return {
       itemToShow: 1,
+      nbSlide: 5,
+      slides: [],
     };
   },
   methods: {
     navigate(effect) {
-      if (this.itemToShow + effect <= this.nbSlide && this.itemToShow + effect !== 0) {
+      if ((this.itemToShow + effect <= this.nbSlide) && (this.itemToShow + effect !== 0)) {
         this.itemToShow += effect;
       } else if (this.itemToShow === this.nbSlide) {
         this.itemToShow = 1;
       } else if (this.itemToShow + effect === 0) {
-        this.itemToShow = this.nbSlide;
+        this.itemToShow = this.nbSlide - 1;
       }
     },
+    async getSlidesProducts() {
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/best/products?size=${this.nbSlide}`);
+      this.slides = products.products;
+    },
   },
-  setup() {
-    const nbSlide = 5;
-
-    return {
-      nbSlide,
-    };
+  mounted() {
+    this.getSlidesProducts();
   },
 };
 </script>
@@ -52,9 +55,9 @@ export default {
   width: 85vw;
   height: 50vh;
   margin: auto;
-  background: red;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
   overflow: hidden;
+  border-radius: 2rem;
 }
 
 @media screen and (max-width: 720px) {
