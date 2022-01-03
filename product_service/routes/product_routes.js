@@ -86,7 +86,7 @@ router.post('/product',[auth.validateToken, productController.upload],productCon
  *       500:
  *         description: An error occured when get all product
  */
-router.get("/products",auth.validateToken,productController.getProducts);
+router.get("/products",productController.getProducts);
 
 /**
  * @openapi
@@ -139,7 +139,7 @@ router.get('/product/:productId',productController.getProduct);
  *       500:
  *         description: An error occured when delete a product
  */
-router.delete('/product/:productId',productController.delProduct);
+router.delete('/product/:productId',auth.validateToken,productController.delProduct);
 
 /**
  * @openapi
@@ -187,7 +187,7 @@ router.delete('/product/:productId',productController.delProduct);
  *       500:
  *         description: An error occured when update a product
  */
-router.patch('/product/:productId',productController.upload,productController.updateProduct);
+router.patch('/product/:productId',auth.validateToken,productController.upload,productController.updateProduct);
 
 
 /**
