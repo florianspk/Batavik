@@ -147,6 +147,38 @@ exports.removeOne = (req, res) => {
 
   };
 
+
+  exports.findUserComment = (req, res) => {
+    try{
+      if( typeof req.params.idUser === 'undefined' ){
+        throw new Error("Il manque des informations dans notre requete");
+      }
+        
+      if( isNaN(parseInt(req.params.idUser)) ){
+          throw new Error("Une des valeurs envoyé n'est pas valide");
+      }
+      Comment.findAll({
+        attributes: ['text', 'note', 'idProduct', 'idUser'],
+        where: {
+          idUser: req.params.idUser
+          }
+      })
+        .then((user) => {
+          res.status(200).send({
+            content: user
+          });
+        })
+        .catch((err) => {
+          throw new Error('Les commentaires sont introuvable');
+        }); 
+      }catch(error){
+        res.status(400).send({
+          message: error.message
+        });
+      }
+  
+    };
+
   
 
 

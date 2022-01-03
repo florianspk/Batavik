@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./routes/comment.js')(app)
 
 const db = require("./models");
-db.sequelize.sync({ force: true })
+db.sequelize.sync({ force: false })
   .then(() => {
     console.log("Drop and re-sync db.");
   });

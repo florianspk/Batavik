@@ -53,6 +53,19 @@ module.exports = (app) => {
    *     
   */
     router.delete("/:id", comment.removeOne)
+
+  /**
+   * @openapi
+   * /api/comment/user/:idUser:
+   *   get:
+   *     security:
+   *       - jwt: []
+   *     tags:
+   *       - comment
+   *     description: recherche tous les commentaires d'un utilisteur en fonction de son id
+   *     
+  */
+    router.get("/user/:idUser", comment.findUserComment);
    
     app.use("/api/comment", router);
 
