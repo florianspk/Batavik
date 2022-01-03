@@ -12,8 +12,29 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - order
-   *     description: recherche le panier non valider d'un utilisateur avec son id (idUser)
-   *     
+   *     description: searches for the invalid basket of a user with his id
+   *     parameters:
+   *       - in: body
+   *         name : body
+   *         
+   *         schema: 
+   *           $ref: '#/definitions/test' 
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/test'  
+   * @openapi        
+   * definitions:
+   *  test:
+   *    type: objet   
+   *    required:
+   *     - idUser
+   *    properties:
+   *     idUser:
+   *       type: integer   
   */ 
     router.get("/", cart.findOne);
   
@@ -26,9 +47,24 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - order
-   *     description: recherche le panier non valider d'un utilisateur, si il n'existe pas il le creer, en suite il creer un produitCard avec l'id du panier, avec l'id du produit et avec la quantiter
-   *     
-  */ 
+   *     description: search for a user's unvalidated basket, if it does not exist, create it, then create a product Card with the basket id, with the product id and with the quantity
+   *     parameters:
+   *       - in: body
+   *         name : body
+   *         schema: 
+   *           type: objet
+   *           required:
+   *             - idUser
+   *             - idProduct
+   *             - quantity
+   *           properties:
+   *            idUser:
+   *              type: integer 
+   *            idProduct:     
+   *              type: integer 
+   *            quantity:     
+   *              type: integer 
+    */ 
     router.post("/", cart.addcart);
   
     // cahnge quentiter or delete a row cart 
@@ -40,16 +76,27 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - order
-   *     description: Change la quantiter d'un produit dans produit cart si la quantiter est => 0 on supprime la ligne du produit cart
-   *     
+   *     description: Change the quantity of a product in product cart if the quantity is => 0 we delete the line of the product cart
+   *     parameters:
+   *       - in: body
+   *         name : body
+   *         schema: 
+   *           type: objet
+   *           required:
+   *             - idUser
+   *             - idProduct
+   *             - quantity
+   *           properties:
+   *            idUser:
+   *              type: integer 
+   *            idProduct:     
+   *              type: integer 
+   *            quantity:     
+   *              type: integer 
+
   */ 
     router.post("/quantityProduct", cart.quantityProduct);
   
-    /*
-    // Retrieve all
-    router.get("/", cart.findOne);
-  */
-
     app.use("/api/cart", router);
    
   };
