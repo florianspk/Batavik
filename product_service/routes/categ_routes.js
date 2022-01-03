@@ -35,7 +35,7 @@ const categorieController = require('../controllers/categorieController')
  *       500:
  *         description: An error occured when get the name and id for all categories
  */
-router.get('/list', categorieController.getCategList);
+router.get('/list',categorieController.getCategList);
 
 
 /**

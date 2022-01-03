@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController')
-
-
+const auth = require("../middlewares/auth")
+let multer = require('multer');
+let mu = multer();
 /**
  * @openapi
  * /api/product:
@@ -50,7 +51,7 @@ const productController = require('../controllers/productController')
  *       500:
  *         description: An error occured when create a new product
  */
-router.post('/product',productController.upload,productController.newProduct);
+router.post('/product',[auth.validateToken, productController.upload],productController.newProduct);
 
 
 
@@ -139,7 +140,7 @@ router.get('/product/:productId',productController.getProduct);
  *       500:
  *         description: An error occured when delete a product
  */
-router.delete('/product/:productId',productController.delProduct);
+router.delete('/product/:productId',auth.validateToken,productController.delProduct);
 
 /**
  * @openapi
@@ -187,7 +188,7 @@ router.delete('/product/:productId',productController.delProduct);
  *       500:
  *         description: An error occured when update a product
  */
-router.patch('/product/:productId',productController.upload,productController.updateProduct);
+router.patch('/product/:productId',auth.validateToken,productController.upload,productController.updateProduct);
 
 
 /**
@@ -260,5 +261,6 @@ router.get("/products/top",productController.topProducts);
 router.get("/products/best",productController.bestProducts);
 
 
+router.get("/products/search",mu.fields([]),productController.searchProduct)
 
 module.exports = router;
