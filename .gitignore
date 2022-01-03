@@ -4,6 +4,11 @@
 
 
 .nyc_output
+
+cart_service/.env
+comm_service/.env
+order_service/.env
+
 */config.js
 order_service/db/config.js
 
@@ -11,3 +16,4 @@ order_service/db/config.js
 
 product_service/uploads/*
 auth_service/uploads/*
+
