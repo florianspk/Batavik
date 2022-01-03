@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController')
-
+const auth = require("../middlewares/auth")
 
 /**
  * @openapi
@@ -50,7 +50,7 @@ const productController = require('../controllers/productController')
  *       500:
  *         description: An error occured when create a new product
  */
-router.post('/product',productController.upload,productController.newProduct);
+router.post('/product',[auth.validateToken, productController.upload],productController.newProduct);
 
 
 
@@ -86,7 +86,7 @@ router.post('/product',productController.upload,productController.newProduct);
  *       500:
  *         description: An error occured when get all product
  */
-router.get("/products",productController.getProducts);
+router.get("/products",auth.validateToken,productController.getProducts);
 
 /**
  * @openapi
