@@ -37,7 +37,13 @@ export default {
     margin-right: 2.2%;
     margin-bottom: 1%;
     font-size: 2.5em;
-    border-bottom: 0.3vh solid black;
+    border-width: 1px;
+    border-style: solid;
+    border-image: linear-gradient(
+      to right, 
+      black, 
+      rgba(0, 0, 0, 0)
+    ) 0 0 1 0;
   }
   .product-list{
     display: flex;

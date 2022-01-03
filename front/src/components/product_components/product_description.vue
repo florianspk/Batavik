@@ -40,7 +40,7 @@ export default {
   props: ['data'],
   data() {
     return {
-      active: 1,
+      active: 0,
       maxqte: 10,
       infos: [],
     };
