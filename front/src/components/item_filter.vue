@@ -9,7 +9,7 @@
       <input type="text" name="search" placeholder="Ex: douche">
     </div>  
 
-    <div class="block">
+    <div class="block bg-red">
       <label for="price">Prix</label>
       <div>
         <input class="input-number" type="number" name="price" placeholder="0 €"> 

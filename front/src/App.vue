@@ -1,15 +1,26 @@
 <template>
   <div id="app">
 
-    <navbar />
-    <router-view />
-    <v-footer />
+    <div id="admin" v-if="isAdmin" class="col">
+      <navbar-admin/>
+      <div class="col mt-5">
+        <breadcrumb/>
+        <router-view class="mt-5"/>
+      </div>
+    </div>
+
+    <div id="user" v-else>
+      <navbar/>
+      <router-view/>
+      <v-footer/>
+    </div>
 
   </div>
 </template>
 
 <script>
 import navbar from './components/global/g_navbar.vue';
+import navbarAdmin from './components/admin/navbar-admin.vue';
 import vFooter from './components/global/g_footer.vue';
 
 export default {
@@ -17,15 +28,23 @@ export default {
   components: {
     navbar,
     vFooter,
+    navbarAdmin,
+  },
+  computed: {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    isAdmin() {
+      return (this.$route.path.includes('/admin'));
+    },
   },
 };
 </script>
 
 <style>
-*{
+* {
   margin: 0;
   padding: 0;
 }
+
 #app {
   font-family: 'Roboto', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -37,7 +56,7 @@ export default {
 }
 
 @media screen and (orientation: portrait) {
-  *{
+  * {
     scrollbar-color: #eee transparent;
     scrollbar-width: thin;
   }
@@ -48,6 +67,7 @@ export default {
     height: 8px;
     background-color: transparent;
   }
+
   *::-webkit-scrollbar-thumb {
     background-color: #eee;
     border-radius: 2rem;
@@ -59,5 +79,9 @@ export default {
   *::-webkit-scrollbar-thumb:hover {
     background-color: #ccc;
   }
+}
+
+#admin {
+  display: flex;
 }
 </style>
