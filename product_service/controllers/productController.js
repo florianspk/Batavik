@@ -6,6 +6,7 @@ const Sequelize = require("sequelize")
 const multer = require("multer")
 const path = require('path');
 
+//TODO Gerer les statuts d'erreur et passer chaque champs dans un try catch
 
 exports.getProducts = (req, res, next) => {
     const {page, size} = req.query;
@@ -17,10 +18,10 @@ exports.getProducts = (req, res, next) => {
         include: [{
             model: model.Info_product,
             attributes: ['height', 'depth', 'length', 'color'],
-            as:"info",
+            as: "info",
         }],
     }).then(result => {
-        Product.count().then(count =>{
+        Product.count().then(count => {
             const response = Product.getPagingData(result, count, page, limit)
             res.status(200).json(response);
         })
@@ -56,23 +57,20 @@ exports.getProduct = (req, res, next) => {
 exports.newProduct = async (req, res, next) => {
     let Info_product = model.InfoProduct;
     try {
-        let name,price,description;
+        let name, price, description;
         if (typeof req.body.name !== "string") {
             res.status(405).json("Not a valid Name")
             return
         } else {
             name = req.body.name;
         }
-        if (typeof  req.body.price !== "string"){
-            res.status(405).json("Not a valid price")
-            return
-        }else{
-            price = req.body.price;
-        }
-        if(typeof req.body.description !== "string"){
+
+        price = req.body.price;
+
+        if (typeof req.body.description !== "string") {
             res.status(405).json("Not a valid description")
             return
-        }else{
+        } else {
             description = req.body.description
         }
         let rate = req.body.rate || 0;
@@ -96,7 +94,7 @@ exports.newProduct = async (req, res, next) => {
                 createdAt: Date.now(),
                 updatedAt: Date.now(),
                 categId: idCateg,
-            },{
+            }, {
                 transaction: t
             });
             let prod_id = productResult.id
@@ -109,12 +107,13 @@ exports.newProduct = async (req, res, next) => {
                 ProductId: prod_id,
                 createdAt: Date.now(),
                 updatedAt: Date.now()
-            },{
+            }, {
                 transaction: t
             })
             await t.commit();
-            res.status(200).json(productResult);
-        }catch (exception){
+            //TODO rendre le retour jolie
+            res.status(200).json({product: productResult, info: infoResult});
+        } catch (exception) {
             t.rollback();
             res.status(400).json(exception.message);
         }
@@ -135,10 +134,16 @@ exports.delProduct = (req, res, next) => {
     })
 }
 
-exports.updateProduct = (req, res, next) => {
+exports.updateProduct = async (req, res, next) => {
     let idProduct = req.params.productId;
-    Product.findOne({where: {id: idProduct}})
-        .then(product => {
+    let t;
+    try {
+
+        t = await model.sequelize.transaction();
+
+        const userUpdate = await Product.findOne({
+            where: {id: idProduct}
+        }).then(product => {
             let name = req.body.name ? req.body.name : product.getDataValue("name");
             let price = req.body.price ? req.body.price : product.getDataValue("price");
             let description = req.body.description ? req.body.description : product.getDataValue("description");
@@ -152,17 +157,37 @@ exports.updateProduct = (req, res, next) => {
                     image: image,
                     rate: rate,
                     updatedAt: Date.now(),
-                }).then(result => {
-                    res.status(200).json(result)
-                }).catch(error => {
-                    console.log(error)
-                    res.status(405).json("An error occured when update product")
+                }, {
+                    transaction: t
                 })
             }
-        }).catch(error => {
-        res.status(401).json("The Product not exist")
+        })
+        const infoUpdate = await model.Info_product.findOne({where: {productId: idProduct}}).then(info_product => {
+            let height = req.body.height ? req.body.height : info_product.getDataValue("height");
+            let depth = req.body.depth ? req.body.depth : info_product.getDataValue("depth");
+            let length = req.body.length ? req.body.length : info_product.getDataValue("length");
+            let color = req.body.color ? req.body.color : info_product.getDataValue("color");
+            if (info_product) {
+                info_product.update({
+                    height: height,
+                    depth: depth,
+                    length: length,
+                    color: color,
+                    updatedAt: Date.now()
+                }, {
+                    transaction: t
+                })
+            }
+        })
+        await t.commit()
+        //TODO a modifier plus tard et ressortir le produit avec ses infos
+        res.status(200).json({"status": "success", "message": "The Product was been modified"})
+    } catch (e) {
+        t.rollback();
+        return res.status(400).json(e.message)
+    }
 
-    })
+
 }
 
 // Upload my Image for a Product
@@ -203,11 +228,11 @@ exports.topProducts = (req, res, next) => {
         include: [{
             model: model.Info_product,
             attributes: ['height', 'depth', 'length', 'color'],
-            as:"info",
+            as: "info",
         }],
         order: Sequelize.literal('rand()')
     }).then(result => {
-        Product.count().then(count =>{
+        Product.count().then(count => {
             const response = Product.getPagingData(result, count, page, limit)
             res.status(200).json(response);
         })
@@ -228,11 +253,11 @@ exports.bestProducts = (req, res, next) => {
         include: [{
             model: model.Info_product,
             attributes: ['height', 'depth', 'length', 'color'],
-            as:"info",
+            as: "info",
         }],
         order: Sequelize.literal('rand()')
     }).then(result => {
-        Product.count().then(count =>{
+        Product.count().then(count => {
             const response = Product.getPagingData(result, count, page, limit)
             res.status(200).json(response);
         })
@@ -241,4 +266,40 @@ exports.bestProducts = (req, res, next) => {
         console.log(error)
         res.status(500).json(error);
     });
+}
+
+exports.searchProduct = (req, res, next) => {
+    const name = req.body.name ? req.body.name : "";
+    const minprice = req.body.minprice ? req.body.minprice : 0;
+    //TODO trouver une solution pour le max price
+    const maxprice = req.body.maxprice ? req.body.maxprice : 9999999999999999999999999999;
+    console.log(maxprice)
+    const {page, size} = req.query;
+    const {limit, offset} = Product.getPagination(page, size);
+    Product.findAll({
+        limit,
+        offset,
+        where: {
+            [Sequelize.Op.and]: [
+                {name: {[Sequelize.Op.like]: `%${name}%`}},
+                {price: {[Sequelize.Op.between]: [minprice,maxprice]}},
+            ]
+        },
+        include: [{
+            model: model.Info_product,
+            attributes: ['height', 'depth', 'length', 'color'],
+            as: "info",
+        }]
+    }).then(result => {
+        Product.count({
+            where: {name: {[Sequelize.Op.like]: `%${name}%`},}
+        }).then(count => {
+            const response = Product.getPagingData(result, count, page, limit)
+            res.status(200).json(response);
+        }).catch(error => {
+            res.status(400).json(error);
+        })
+    }).catch(error => {
+        res.status(400).json(error);
+    })
 }

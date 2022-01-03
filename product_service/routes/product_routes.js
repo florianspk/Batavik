@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController')
 const auth = require("../middlewares/auth")
-
+let multer = require('multer');
+let mu = multer();
 /**
  * @openapi
  * /api/product:
@@ -260,5 +261,6 @@ router.get("/products/top",productController.topProducts);
 router.get("/products/best",productController.bestProducts);
 
 
+router.get("/products/search",mu.fields([]),productController.searchProduct)
 
 module.exports = router;
