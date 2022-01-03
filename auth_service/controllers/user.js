@@ -36,10 +36,15 @@ exports.signIn = async (req, res) => {
     }
     if (await bcrypt.compare(password, userVal.password)) {
         const payload = {id: userVal.id, email: userVal.email};
-        const options = {expiresIn: '2d'};
+        const options = {expiresIn: '1d'};
         const secret = JWT_SECRET;
         const token = jwt.sign(payload, secret, options)
         const user = await db.User.findOne({where: {email: email}, attributes: ['firstname','lastname','email','enabled','image']})
+        const userUpdate = await db.User.findOne({where:{email}}).then(resultuser =>{
+            resultuser.update({
+                lastLogin: Date.now()
+            })
+        })
         return res.status(200).json({user, token})
     }
     return res.status(401).json({"status": "error", "message": "Invalid email/Password"})
@@ -54,7 +59,17 @@ exports.getUsers = async (req, res) => {
     }
 }
 
-
+exports.getCurrentUser = async (req,res,next) => {
+    const id = req.decoded.id
+    db.User.findOne({
+        where: {id},
+        attributes: {exclude: ["password"]}
+    }).then(result =>{
+        res.status(200).json(result);
+    }).catch(error=>{
+        res.status(500).json(error.message)
+    })
+}
 
 
 // Upload my Image for a Product
