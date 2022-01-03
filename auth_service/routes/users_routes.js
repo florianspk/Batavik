@@ -10,17 +10,9 @@ router.post('/login', mu.fields([]),userController.signIn );
 
 router.post('/register', userController.upload, userController.signUp );
 
-router.get('/users', Auth.validateToken, userController.getUsers);
-
 router.get('/validateToken', Auth.validateToken);
 
 router.get('/user', Auth.validateToken, userController.getCurrentUser)
-
-// router.get('/update/{:idUser}');
-//
-// router.get('/update/{:idUser}');
-//
-// router.get('/disable/{:idUser}');
 
 
 
