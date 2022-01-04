@@ -1,41 +1,49 @@
-const dbConfig = require("../db/config.js");
+const fs = require('fs');
+const path = require('path');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const dbConfig = require(__dirname + '/../config/config.js')[env];
+const db = {};
 /* co */
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  port: dbConfig.PORT,
+const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
+  host: dbConfig.host,
+  port: dbConfig.port,
   dialect: dbConfig.dialect,
   operatorsAliases: 0,
   pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle,
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
   },
 });
 /* */
-const db = {};
-db.Sequelize = Sequelize;
+
+
 db.sequelize = sequelize;
-/*
-/* declaration */
+db.Sequelize = Sequelize;
+
 db.cart = require("./cart.js")(sequelize, Sequelize);
 db.order = require("./order.js")(sequelize, Sequelize);
 db.productCart = require("./productCart.js")(sequelize, Sequelize);
-
-//db.model2 = require("./model2.js")(sequelize, Sequelize);
-/* relation 
-db.model2.hasOne(db.model1, {foreignKey: "id"});
-db.model1.belongsTo(db.model2, {foreignKey: "id"});
-*/
+db.status = require("./status.js")(sequelize, Sequelize);
+db.historystatus = require("./historystatus.js")(sequelize, Sequelize);
 
 /* relation */
 
-db.productCart.belongsTo(db.order, {foreignKey: "id_order"});
-db.order.hasMany(db.productCart, {foreignKey: "id_order"});
+db.productCart.belongsTo(db.order, {foreignKey: "id_order"});//
+db.order.hasMany(db.productCart, {foreignKey: "id_order"});//
 
-db.productCart.belongsTo(db.cart, {foreignKey: "id_cart"});
+db.productCart.belongsTo(db.cart, {foreignKey: "id_cart"});//
 db.cart.hasMany(db.productCart, {foreignKey: "id_cart"});
 
-/* export */
+db.historystatus.belongsTo(db.order, {foreignKey: "id_order"});//
+db.order.hasMany(db.historystatus, {foreignKey: "id_order"});
+
+db.historystatus.belongsTo(db.status, {foreignKey: "id_status"});//
+db.status.hasMany(db.historystatus, {foreignKey: "id_status"});
+
 module.exports = db;
+
+

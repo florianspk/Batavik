@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 const db = require("./models");
 
 /* routes */
@@ -21,5 +22,5 @@ db.sequelize.sync({ force: false })
     console.log("Drop and re-sync db.");
   });
 
-  
+
 module.exports = app;

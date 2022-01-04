@@ -3,40 +3,29 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class cart extends Model {
+  class status extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      cart.productCart = cart.hasMany(models.productCart)
+      // define association here
     }
   };
-  cart.init({
-    id: {
+  status.init({
+    id:{
       type: DataTypes.INTEGER(10),
       primaryKey: true,
       autoIncrement: true
     },
-
-    validation:{
-        type: DataTypes.TINYINT(1),
-        allowNull:false
-    },
-
-    cartPrice:{
-        type: DataTypes.DECIMAL(10,2),
-        allowNull:false
-    },
-
-    idUser:{
-        type: DataTypes.INTEGER(10),
-        allowNull:false
-    }
+    status:{
+      type: DataTypes.STRING(50),
+      allowNull:false
+  },
   }, {
     sequelize,
-    modelName: 'cart',
+    modelName: 'status',
   });
-  return cart;
+  return status;
 };

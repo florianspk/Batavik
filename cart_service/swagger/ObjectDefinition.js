@@ -12,16 +12,13 @@
  *   type: array
  *   items: 
  *    $ref: '#/definitions/User'
- *  User:
+ *  Order:
  *   type: object
  *   properties:
- *    _id: 
- *     type: string    
- *    name:
- *     type: string
- *    mail: 
- *     type: string    
- *    address:
- *     type: string
+ *    id: 
+ *     type: integer    
+ *    idUser:
+ *     type: integer
+
  */
 module.exports = {}

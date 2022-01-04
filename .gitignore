@@ -6,6 +6,11 @@
 .nyc_output
 
 cart_service/.env
+order_service/.env
+comm_service/.env
+
+
+cart_service/.env
 comm_service/.env
 order_service/.env
 
