@@ -7,7 +7,14 @@
       <div id="info">
         <input type="text" name="search" id="search" placeholder="Rechercher un produit" />
         <label for="search"></label>
-        <p class="click" v-for="(info, i) in infos" :key="i">{{ info }}</p>
+        <p 
+          class="click" 
+          v-for="(info, i) in infos" 
+          :key="i" 
+          @click="info.text == 'S\'identifier' ? loginForm = true : info.text == 'Panier' ? cart = true : '' "
+        >
+        {{ info.text }}
+        </p>
       </div>
 
       <div id="nav">
@@ -17,18 +24,39 @@
         </p>
       </div>
 
+    <transition-group name="fade">
+      <login-form v-if="loginForm" />
+      <div class="black" v-if="loginForm" @click="loginForm = !loginForm" ></div>
+    </transition-group>
+
+    <transition-group name="fade">
+      <cart v-if="cart" @close="cart = !cart" />
+      <div class="black" v-if="cart" @click="cart = !cart" ></div>
+    </transition-group>
+
     </div>
 
     <!-- Mobile / portrait -->
-    <div v-else>
-      <div id="nav">
+    <div v-else style="height: 100%">
+
+      <div id="header">
+        <div @click="openNavMobile" id="icon">
+          <img src="@/assets/icons/menu.svg" class="icon menu">
+        </div>
         <img src="../../assets/logo.png" id="logo" alt="logo">
+      </div>
+
+      <div id="nav" :class="mobileVisible ? 'open' : 'closed'">
         <div id="links">
+          <div class="link" @click="travel('/')"> 
+            Accueil 
+          </div>
           <div class="link" v-for="(page, i) in pages" :key="i" @click="travel(page.path)"> 
             {{page.text}} 
           </div>
-          <div class="link" v-for="(info, i) in infos" :key="i"> {{info}} </div>
+          <div class="link" v-for="(info, i) in infos" :key="i" @click="info.text == 'S\'identifier' ? travel('/login') : info.text == 'Panier' ? travel('/cart') : '' "> {{info.text}} </div>
         </div>
+        <div id="black" :class="mobileVisible ? 'open' : 'closed'" @click="openNavMobile"></div>
       </div>
     </div>
 
@@ -36,23 +64,53 @@
 </template>
 
 <script lang="js">
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+import loginForm from './g_login_form.vue';
+import cart from './cart.vue';
 
 export default {
   name: 'navbar',
+  components: { loginForm, cart },
   setup() {
     const winSize = reactive({ height: window.innerHeight, width: window.innerWidth });
+
     const setWindowSize = () => {
       winSize.height = window.innerHeight;
       winSize.width = window.innerWidth;
     };
+
     setWindowSize();
+    
     window.addEventListener('resize', () => setWindowSize());
 
+    const mobileVisible = ref(false);
+
+    function openNavMobile() {
+      mobileVisible.value = !mobileVisible.value;
+    }
+
     return {
+      mobileVisible,
       winSize, 
-      infos: ['Retrait des produits sous 2H', 'Trouver un point de retrait', 'Suivis de commandes', 'Panier', 'S\'identifier'], 
-      pages: [{ text: 'Pare-douche', path: '/pare-douche' }, { text: 'Cloison et parois', path: '/cloison' }, { text: 'Cheminée', path: '/cheminee' }], 
+      openNavMobile,
+      infos: [
+        { text: 'Retrait des produits sous 2H', path: '/infos' }, 
+        { text: 'Trouver un point de retrait', path: '/sites' }, 
+        { text: 'Suivis de commandes', path: '/order' }, 
+        { text: 'Panier', path: '/cart' }, 
+        { text: 'S\'identifier', path: '/login' }, 
+      ], 
+      pages: [
+        { text: 'Pare-douche', path: '/pare-douche' },
+        { text: 'Cloison et parois', path: '/cloison' },
+        { text: 'Cheminée', path: '/cheminee' },
+      ], 
+    };
+  },
+  data() {
+    return {
+      loginForm: false,
+      cart: false,
     };
   },
   methods: {
@@ -64,14 +122,26 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.black {
+  position: absolute; 
+  top: 0;
+  height: 100vh; 
+  width: 100vw; 
+  background: #000; 
+  z-index: 100;
+  opacity: 0.5;
+  transition-duration: 0.2s;
+}
+
 #navbar {
   width: 100vw;
   height: 10vh;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 10;
   background-color: #eee;
+  user-select: none;
   #bg {
     position: absolute;
     height: 100vh;
@@ -82,7 +152,7 @@ export default {
   }
   #info {
     height: 2vh;
-    padding: 10px 0px;
+    padding: 20px 0px;
     margin-right: 50px;
     width: 98.5%;
     display: flex;
@@ -91,6 +161,7 @@ export default {
     #search {
       position: absolute;
       left: 9.5%;
+      top: 10px;
       border-radius: 2% 2% 2% 2% / 50% 50% 50% 50%;
       border: none;
       width: 25vw;
@@ -167,69 +238,92 @@ export default {
 
 @media screen and (orientation: portrait) {
 #navbar {
-  height: 12vh;
-  #nav{
-    width: 100%;
-    height: 13vh;
-    flex-direction: column;
-    #logo{
-      position: relative;
-      top: 10%;
-      height: 30%;
-      left: 50%;
-      transform: translatex(-50%);
+  height: 6vh;
+  position: fixed;
+  left: 0vw;
+  background-color: white;
+  #header {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 6vh;
+    width: 100vw;
+    #logo {
       cursor: pointer;
-      width: 100%;
+      width: 50%;
+      margin: 0 5%;
+      height: max-content;
       object-fit: contain;
+    }
+    #icon {
+      width: 10vw;
+      .menu.icon {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+  #nav.open{
+    position: relative;
+    left: 0;
+  }
+  #nav{
+    position: relative;
+    top: 6vh;
+    left: -70vw;
+    width: 70vw;
+    height: 94vh;
+    flex-direction: column;
+    transition-duration: 0.5s;
+    #black.open {
+      left: 0vw;
+      transition-delay: 0.3s;
+    }
+    #black {
+      position: absolute;
+      left: -30vw;
+      top: 0;
+      height: 100vh;
+      width: 100vw;
+      opacity: 0.6;
+      background-color: black;
+      z-index: -1;
+      transition-duration: 0.2s;
     }
     #links{
       position: relative;
-      top: 3vh;
-      height: 5vh;
       display: flex;
-      flex-direction: row;
-      overflow-x: scroll;
-      overflow-y: hidden;
-      white-space: nowrap;
+      flex-direction: column;
       .link{
         position: relative;
-        height: 100%;
         display: flex;
         align-items: center;
         width: max-content;
-        margin: 0 3%;
-        font-size: 1.1rem;
+        margin: 2% 0;
+        padding: 0 3%;
+        font-size: 1.2rem;
         cursor: pointer;
       }
     }
   }
 }
 
-@media only screen and (hover: none) and (pointer: coarse){
-#links{
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  &::-webkit-scrollbar { display: none; }
-}
+  @media only screen and (hover: none) and (pointer: coarse){
+    #links{
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+      &::-webkit-scrollbar { display: none; }
+    }
+  }
 
 }
 
-}
-
-.fade-delay-enter-active {
-  transition: opacity 0.5s;
-  transition-delay: 0.3s;
-}
-.fade-delay-leave-active {
-  transition: opacity 0.5s;
-  transition-delay: 0;
-}
-.fade-delay-enter, .fade-delay-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

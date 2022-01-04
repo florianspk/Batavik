@@ -2,7 +2,7 @@
   <div class="section">
     <h1 class="title" v-if="title"> {{title}} </h1>
     <div class="product-list">
-      <products v-for="(product, i) in nbProduct" :key="i" :index="i" />
+      <products v-for="(product, i) in products" :key="i" :index="i" :data="product" />
     </div>
   </div>
 </template>
@@ -12,7 +12,7 @@ import Products from './g_products.vue';
 
 export default {
   name: 'section-product',
-  props: ['title', 'type', 'nbProduct'],
+  props: ['title', 'type', 'nbProduct', 'products'],
   components: { Products },
 };
 </script>
@@ -20,15 +20,16 @@ export default {
 <style scoped lang="scss">
 .section{
   display: flex;
-  width: 83vw;
+  width: 85vw;
   margin: 1% auto 0 auto;
-  padding: 1%;
+  padding: 2% 1%;
   flex-wrap: wrap;
   flex: 1 1 30%;
   flex-direction: row;
   justify-content: space-around;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
   background: #ffffff;
+  border-radius: 1rem;
   overflow: hidden;
   .title {
     flex: 1 1 70%;
@@ -36,7 +37,13 @@ export default {
     margin-right: 2.2%;
     margin-bottom: 1%;
     font-size: 2.5em;
-    border-bottom: 0.3vh solid black;
+    border-width: 1px;
+    border-style: solid;
+    border-image: linear-gradient(
+      to right, 
+      black, 
+      rgba(0, 0, 0, 0)
+    ) 0 0 1 0;
   }
   .product-list{
     display: flex;
@@ -53,6 +60,8 @@ export default {
   .section{
     margin-top: 3vh;
     width: 90%;
+    padding: 5% 1%;
+
     .title{ font-size: 1.7em; margin-bottom: 2vh; }
     .product-list { flex-direction: column; }
   }
