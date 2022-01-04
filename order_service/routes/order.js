@@ -13,7 +13,16 @@ module.exports = (app) => {
    *     tags:
    *       - order
    *     description: recherche tous les commande d'un utilisteur en fonction de son id (idUser)
-   *     
+   *     parameters:
+   *       - in: body
+   *         name : body
+   *         schema: 
+   *           type: objet
+   *           required:
+   *             - idUser
+   *           properties:
+   *            idUser:
+   *              type: integer 
   */
     router.get("/all", order.findAll);
   
@@ -52,6 +61,11 @@ module.exports = (app) => {
    *     tags:
    *       - order
    *     description: change le status d'une commande en "return" si elle n'est pas "finish", en fonction de l'id de la commande
+   *     parameters:
+   *       - in: path
+   *         name : id
+   *         schema: 
+   *           type: integer
    *     
   */
     router.post("/return/:id", order.return)

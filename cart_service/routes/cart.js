@@ -18,23 +18,14 @@ module.exports = (app) => {
    *         name : body
    *         
    *         schema: 
-   *           $ref: '#/definitions/test' 
+   *           $ref: '#/definitions/Order' 
    *     responses:
    *       200:
    *         description: succesful operation
    *         content:
    *           application/json:
    *            schema: 
-   *             $ref: '#/definitions/test'  
-   * @openapi        
-   * definitions:
-   *  test:
-   *    type: objet   
-   *    required:
-   *     - idUser
-   *    properties:
-   *     idUser:
-   *       type: integer   
+   *             $ref: '#/definitions/Order'  
   */ 
     router.get("/", cart.findOne);
   
