@@ -292,7 +292,12 @@ exports.searchProduct = (req, res, next) => {
         }]
     }).then(result => {
         Product.count({
-            where: {name: {[Sequelize.Op.like]: `%${name}%`},}
+            where: {
+                [Sequelize.Op.and]: [
+                    {name: {[Sequelize.Op.like]: `%${name}%`}},
+                    {price: {[Sequelize.Op.between]: [minprice,maxprice]}},
+                ]
+            }
         }).then(count => {
             const response = Product.getPagingData(result, count, page, limit)
             res.status(200).json(response);
