@@ -8,15 +8,15 @@
     <el-button type="primary" @click="formVisible = true">Créer</el-button>
   </div>
 
-  <el-dialog v-model="formVisible" title="Créer un produit" width="60">
+  <el-dialog v-model="formVisible" title="Créer un produit">
     <product-form @close="formVisible = false"/>
   </el-dialog>
 
-  <el-dialog v-model="showVisible" title="Voir un produit" width="60">
+  <el-dialog v-model="showVisible" title="Voir un produit">
     <product-show :product="productToShow" @close="showVisible = false"/>
   </el-dialog>
 
-  <el-dialog v-model="editVisible" title="Éditer un produit" width="60">
+  <el-dialog v-model="editVisible" title="Éditer un produit">
     <product-form @close="editVisible = false" :edit="true" :product-to-edit="productToEdit"/>
   </el-dialog>
 
@@ -30,13 +30,17 @@
     <el-table-column prop="name" label="Nom" sortable/>
     <el-table-column prop="price" label="Prix (€)" width="80" sortable/>
     <el-table-column prop="description" label="Description"/>
-    <el-table-column prop="note" label="Note" width="80" sortable/>
-    <el-table-column prop="createdAt" label="Créé le" sortable>
+    <el-table-column prop="rate" label="Note" width="80" sortable/>
+    <el-table-column prop="info[0].height" label="Hauteur (cm)" width="80" sortable/>
+    <el-table-column prop="info[0].depth" label="Profondeur (cm)" width="80" sortable/>
+    <el-table-column prop="info[0].length" label="Largeur (cm)" width="80" sortable/>
+    <el-table-column prop="info[0].color" label="Couleur" width="100" sortable/>
+    <el-table-column prop="createdAt" label="Créé le" width="175" sortable>
       <template #default="scope">
         {{ formatDate(scope.row.createdAt) }}
       </template>
     </el-table-column>
-    <el-table-column prop="updatedAt" label="Mis à jour le" sortable>
+    <el-table-column prop="updatedAt" label="Mis à jour le" width="175" sortable>
       <template #default="scope">
         {{ formatDate(scope.row.updatedAt) }}
       </template>
@@ -57,11 +61,8 @@
       </template>
     </el-table-column>
   </el-table>
-
-  <el-pagination layout="prev, pager, next" :total="products.length"
-                 @current-change="handlerCurrentChange">
-  </el-pagination>
-
+  <el-pagination layout="prev, pager, next" :total="this.totalItems"
+                 @current-change="getProducts"></el-pagination>
 </template>
 
 <script>
@@ -76,7 +77,10 @@ import {
   ElImage,
 } from 'element-plus';
 
-import { ref } from 'vue';
+import {
+  ref,
+} from 'vue';
+
 import productForm from '../../components/admin/Product/form.vue';
 import productShow from '../../components/admin/Product/show.vue';
 
@@ -108,16 +112,18 @@ export default {
   data() {
     return {
       products: [],
+      totalItems: null,
       productToShow: null,
       productToEdit: null,
     };
   },
   methods: {
-    async getProducts() {
+    async getProducts(val = 1) {
       try {
         const { data: product } = await this.$axios.get(
-          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products`,
+          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products?size=10&page=${val}`,
         );
+        this.totalItems = product.totalItems;
         this.products = product.products;
       } catch (e) {
         console.error(e);
@@ -135,6 +141,10 @@ export default {
       this.editVisible = true;
     },
     deleteProduct(productIndex) {
+      this.$axios.delete(
+        `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.products[productIndex].id}`,
+        this.product,
+      );
       this.products.splice(productIndex, 1);
     },
     formatDate(dateToFormat) {

@@ -1,26 +1,29 @@
 <template>
-  <el-form ref="form" :model="product" label-width="120px">
-    <el-form-item label="Nom">
+  <el-form ref="form" :model="product" :rules="rules" label-width="120px">
+    <el-form-item label="Nom" prop="name">
       <el-input v-model="product.name"></el-input>
     </el-form-item>
-    <el-form-item label="Prix">
-      <el-input-number v-model="product.price"></el-input-number> €
+    <el-form-item label="Prix" prop="price">
+      <el-input-number v-model="product.price"></el-input-number>
+      €
     </el-form-item>
-    <el-form-item label="Description">
+    <el-form-item label="Description" prop="description">
       <el-input v-model="product.description" type="textarea"></el-input>
     </el-form-item>
-<!--    <el-form-item label="Hauteur">
-      <el-input-number v-model="product.info.height"></el-input-number>
-    </el-form-item>
-    <el-form-item label="Profondeur">
-      <el-input-number v-model="product.info.depth"></el-input-number>
-    </el-form-item>
-    <el-form-item label="Largeur">
-      <el-input-number v-model="product.info.length"></el-input-number>
-    </el-form-item>
-    <el-form-item label="Couleur">
-      <el-input v-model="product.info.color"></el-input>
-    </el-form-item>-->
+    <div v-if="product.info.length >= 1">
+      <el-form-item label="Hauteur" prop="info[0].height">
+        <el-input-number v-model="product.info[0].height"></el-input-number>
+      </el-form-item>
+      <el-form-item label="Profondeur" prop="info[0].depth">
+        <el-input-number v-model="product.info[0].depth"></el-input-number>
+      </el-form-item>
+      <el-form-item label="Largeur" prop="info[0].length">
+        <el-input-number v-model="product.info[0].length"></el-input-number>
+      </el-form-item>
+      <el-form-item label="Couleur" prop="info[0].color">
+        <el-input v-model="product.info[0].color"></el-input>
+      </el-form-item>
+    </div>
     <el-form-item>
       <span class="dialog-footer" style="display: flex;justify-content: flex-end;">
         <el-button @click="close">Annuler</el-button>
@@ -51,29 +54,86 @@ export default {
         name: '',
         price: 0,
         description: '',
-        // image: null,
+        image: null,
         categId: 1,
-        // info: {
-        //   height: 0,
-        //   depth: 0,
-        //   length: 0,
-        //   color: '',
-        // },
+        info: [
+          {
+            height: 0,
+            depth: 0,
+            length: 0,
+            color: null,
+          },
+        ],
+      },
+      rules: {
+        name: [
+          {
+            required: true,
+            message: 'Le nom est obligatoire',
+            trigger: 'blur',
+          },
+        ],
+        price: [
+          {
+            required: true,
+            message: 'Le prix est obligatoire',
+            trigger: 'blur',
+          },
+        ],
+        description: [
+          {
+            required: true,
+            message: 'La description est obligatoire',
+            trigger: 'blur',
+          },
+        ],
+        info: [
+          {
+            height: [
+              {
+                required: true,
+                message: 'La hauteur est obligatoire',
+                trigger: 'blur',
+              },
+            ],
+            depth: [
+              {
+                required: true,
+                message: 'La profondeur est obligatoire',
+                trigger: 'blur',
+              },
+            ],
+            length: [
+              {
+                required: true,
+                message: 'La largeur est obligatoire',
+                trigger: 'blur',
+              },
+            ],
+            color: [
+              {
+                required: true,
+                message: 'La couleur est obligatoire',
+                trigger: 'blur',
+              },
+            ],
+          },
+        ],
       },
     };
   },
   methods: {
     async onSubmit() {
       if (!this.edit) {
-        console.log('create :', this.product);
-        console.log(JSON.stringify(this.product));
-        const product = await this.$axios.post(
+        await this.$axios.post(
           `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product`,
           this.product,
         );
-        console.log(product);
       } else {
-        console.log('edit :', this.product);
+        await this.$axios.patch(
+          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.product.id}`,
+          this.product,
+        );
       }
       this.close();
     },

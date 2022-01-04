@@ -59,7 +59,8 @@ export default {
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  height: 100vh;
+  min-height: 1080px;
+  height: 100%;
 }
 
 #sidebar.active {
