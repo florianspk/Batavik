@@ -6,7 +6,6 @@ const Sequelize = require("sequelize")
 const multer = require("multer")
 const path = require('path');
 
-//TODO Gerer les statuts d'erreur et passer chaque champs dans un try catch
 
 exports.getProducts = (req, res, next) => {
     const {page, size} = req.query;
@@ -111,7 +110,6 @@ exports.newProduct = async (req, res, next) => {
                 transaction: t
             })
             await t.commit();
-            //TODO rendre le retour jolie
             res.status(200).json({product: productResult, info: infoResult});
         } catch (exception) {
             t.rollback();
