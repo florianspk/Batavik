@@ -56,6 +56,9 @@ export default {
       }
       this.cost = Math.round(this.cost * 100) / 100;
     },
+    async getCartProducts() {
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/best/products?size=${this.nbSlide}`);
+    },
     navigateToCartPage() {
       this.$router.push('/cart');
       this.$emit('close');

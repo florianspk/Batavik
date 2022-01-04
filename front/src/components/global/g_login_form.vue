@@ -13,7 +13,7 @@
 
     <div id="button">
       <button id="validate" @click="validate()">Valider</button>
-      <button id="clear">Créer un compte</button>
+      <button id="clear" @click="$router.push({ path: '/login' })">Créer un compte</button>
     </div>
 
   </div>
@@ -28,7 +28,7 @@ export default {
     validate() {
       if (this.$route.name !== 'user') {
         console.log(this.$route.name);
-        this.$router.push({ path: '/user' });
+        this.$router.push({ path: '/user/1' });
       }
       this.$emit('validate');
     },

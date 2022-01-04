@@ -1,25 +1,28 @@
 <template>
   <div id="product-description">
     <div id="img-container">
-      <img :src="require(`../../assets/logo.png`)" alt="" />
+      <img :src="data.image" alt="" />
     </div>
 
     <div id="info-container">
-      <h1>Pare douche KRYSTAL™</h1>
-      <p id="descr">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores,
-        quod illum vel voluptatibus nostrum corrupti in ut, id, ipsum nulla eos
-        sed. Vel natus repellat nemo optio neque quasi eos?
-      </p>
+      <h1>{{data.name}}</h1>
+      <p id="descr"> {{data.description}} </p>
 
-      <h2>Style du produit disponible</h2>
-      <div id="style">
-        <button :class="active === 1 ? 'active' : ''" @click="active = 1">123cm X 150cm - Style A</button>
-        <button :class="active === 2 ? 'active' : ''" @click="active = 2">123cm X 150cm - Style B</button>
-        <button :class="active === 3 ? 'active' : ''" @click="active = 3">150cm X 180cm - Style C</button>
+      <div id="styles" v-if="infos.length >= 1">
+        <h2>Style du produit disponible</h2>
+        <div id="style">
+          <button v-for="(style, i) in infos" :key="i" :class="active === i ? 'active' : ''" @click="active = i">{{style.height}}cm X {{style.depth}}cm - Style {{style.color}}</button>
+        </div>
       </div>
 
-      <h2 id="price">Prix : 135,22€</h2>
+      <div id="qte-zone">
+        <h2>Quantitée</h2>
+        <select name="qte" id="qte">
+          <option v-for="i in maxqte" :key="i" :value="i">{{i}}</option>
+        </select>
+      </div>
+
+      <h2 id="price">Prix : {{data.price}}€</h2>
 
       <div class="add">
         <button>
@@ -34,10 +37,16 @@
 <script>
 export default {
   name: 'description-product',
+  props: ['data'],
   data() {
     return {
-      active: 1,
+      active: 0,
+      maxqte: 10,
+      infos: [],
     };
+  },
+  mounted() {
+    this.infos = this.data.info;
   },
 };
 </script>
@@ -46,11 +55,16 @@ export default {
 @media screen and (orientation: landscape) {
   #product-description {
     margin-top: 5vh;
-    height: 50vh;
+    height: min-content;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
     #img-container {
       width: 45%;
       img {
         width: 100%;
+        border-radius: 2rem;
       }
     }
     #info-container {
@@ -59,6 +73,28 @@ export default {
       top: 1%;
       right: 2%;
       width: 50%;
+      #qte-zone{
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        display: flex;
+        #qte {
+          width: 10%;
+          margin-left: 2vh;
+          border-radius: 2rem;
+          border:#a1a1a1 1px solid;
+          padding: 0.5% 2%;
+          option {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            border:#a1a1a1 1px solid;
+            border-radius: 2rem;
+            box-sizing: border-box;
+          }
+        }
+      }
       #style {
         display: flex;
         gap: 2%;
@@ -66,7 +102,7 @@ export default {
           display: inline-block;
           border: dotted black 2px;
           height: 7vh;
-          border-radius: 20% / 50%;
+          border-radius: 2rem;
           padding: 2%;
           cursor: pointer;
           transition-duration: 0.2s;
@@ -84,7 +120,7 @@ export default {
       }
       .add{
         button{
-          margin-top: 13%;
+          margin-top: 8%;
           position: relative;
           display: flex;
           align-items: center;
@@ -116,17 +152,28 @@ export default {
 @media screen and (orientation: portrait) {
   #product-description {
     margin-top: 10vh;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 2rem;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
     #img-container {
       width: 100%;
       height: 45%;
       img {
         height: 100%;
         width: 100%;
+        border-radius: 2rem;
         object-fit: cover;
       }
     }
     #info-container {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      p { text-align: center; }
+      #qte-zone { display: flex; flex-direction: column; justify-content: center; align-items: center;}
       #style {
         display: flex;
         gap: 2%;
@@ -156,9 +203,9 @@ export default {
           position: relative;
           display: flex;
           align-items: center;
-          width: 60vw;
+          width: 80vw;
           height: 10vh;
-          border-radius: 15% / 50%;
+          border-radius: 2rem;
           border: black solid 2px;
           transition-duration: 0.25s;
           padding-left: 5%;

@@ -1,8 +1,8 @@
 <template>
   <div class="home-page">
     <carrousel />
-    <section-product :nbProduct="6" :title="'NOS MEILLEURES VENTES'" :type="'bestsellers'" />
-    <section-product :nbProduct="6" :title="'NOS PRODUITS PHARES'" :type="'highlight'" />
+    <section-product :products="bestSales" :title="'NOS MEILLEURES VENTES'" :type="'bestsellers'" />
+    <section-product :products="topProducts" :title="'NOS PRODUITS PHARES'" :type="'highlight'" />
   </div>
 </template>
 
@@ -13,6 +13,27 @@ import SectionProduct from '../components/global/g_section.vue';
 export default {
   name: 'Home',
   components: { Carrousel, SectionProduct },
+  data() {
+    return {
+      bestSales: [],
+      topProducts: [],
+      sizeProduct: 6,
+    };
+  },
+  methods: {
+    async getBestSales() {
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/best/products?size=${this.sizeProduct}`);
+      this.bestSales = products.products;
+    },
+    async getTopProducts() {
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/top/products?size=${this.sizeProduct}`);
+      this.topProducts = products.products;
+    },
+  },
+  mounted() {
+    this.getBestSales();
+    this.getTopProducts();
+  },
 };
 </script>
 

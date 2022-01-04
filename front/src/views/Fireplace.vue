@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     async getProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/categ/1/products?size=${this.pageSize}&page=${this.currentPage}`);
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/categ/3/products?size=${this.pageSize}&page=${this.currentPage}`);
       this.products = products.products;
       this.totalItems = products.totalItems;
       this.totalPage = products.totalPages;

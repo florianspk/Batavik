@@ -84,7 +84,7 @@ export default {
       height: 5vh;
       width: 75%;
       top: 0;
-      border-radius: 7% / 50%;
+      border-radius: 2rem;
       border: none;
       transition-duration: 0.2s;
       font-size: 1.2em;

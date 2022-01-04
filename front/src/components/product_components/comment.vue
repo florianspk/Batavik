@@ -115,12 +115,12 @@ export default {
   .comm{
     position: relative;
     width: 100%;
-    height: 20vh;
     background: #fff;
-    padding: 1%;
-    border-radius: 1.5%/ 10%;
+    padding: 1rem;
+    border-radius: 2rem;
     border-top-right-radius: 0;
     border-bottom-left-radius: 0;
+    margin-bottom: 1rem;
     .from{
       font-size: 1.4em;
       margin-bottom: 1%;
@@ -137,17 +137,20 @@ export default {
       .note{
         width: 80%;
         .star{
-          width: 7%;
+          width: 12%;
           margin-left: 1%;
+          margin-top: 10%;
         }
         .star .yellow{
           fill: #d4e157;
         }
       }
       .date{
-        width: 40%;
+        width: 70%;
         font-size: 1rem;
         justify-content: flex-end;
+        align-items: center;
+        margin-top: 8%;
       }
     }
   }
