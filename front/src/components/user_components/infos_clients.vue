@@ -34,6 +34,7 @@ export default {
   left: 2.5vw;
   display: flex;
   background: #FFF;
-  
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 2rem;
 }
 </style>

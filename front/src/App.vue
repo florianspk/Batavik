@@ -55,30 +55,27 @@ export default {
   height: 100vh;
 }
 
-@media screen and (orientation: portrait) {
-  * {
-    scrollbar-color: #eee transparent;
-    scrollbar-width: thin;
-  }
+*{
+  scrollbar-color: #eee transparent;
+  scrollbar-width: thin;
+}
 
-  /* Scrollbar style */
-  *::-webkit-scrollbar {
-    width: 5px;
-    height: 8px;
-    background-color: transparent;
-  }
+/* Scrollbar style */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+  background-color: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 2rem;
+  opacity: 0;
+  transition: background-color 0.5s ease;
+  -webkit-transition: background-color 0.5s ease-out;
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #eee;
-    border-radius: 2rem;
-    opacity: 0;
-    transition: background-color 0.5s ease;
-    -webkit-transition: background-color 0.5s ease-out;
-  }
-
-  *::-webkit-scrollbar-thumb:hover {
-    background-color: #ccc;
-  }
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #ccc;
 }
 
 #admin {

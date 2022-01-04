@@ -3,6 +3,8 @@ const router = express.Router();
 const infoController = require('../controllers/infoProductController')
 let multer = require('multer');
 let mu = multer();
+const auth = require("../middlewares/auth")
+
 /**
  * @openapi
  * /api/info/product/{idProduct}:
@@ -44,7 +46,7 @@ let mu = multer();
  *       500:
  *         description: An error occured when create a new information product
  */
-router.post('/product/:idProduct', mu.fields([]),infoController.addInfo);
+router.post('/product/:idProduct', [auth.validateToken,mu.fields([])],infoController.addInfo);
 
 /**
  * @openapi

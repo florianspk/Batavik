@@ -34,7 +34,6 @@ exports.updateInfo = (req, res, next) => {
         Info_Product.findOne({where: {id: idInfo}})
             .then(info_product => {
                 let height = req.body.height ? req.body.height : info_product.getDataValue("height");
-                console.log(req.body.height)
                 let depth = req.body.depth ? req.body.depth : info_product.getDataValue("depth");
                 let length = req.body.length ? req.body.length : info_product.getDataValue("length");
                 let color = req.body.color ? req.body.color : info_product.getDataValue("color");

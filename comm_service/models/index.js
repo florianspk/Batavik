@@ -1,16 +1,21 @@
-const dbConfig = require("../db/config.js");
+const fs = require('fs');
+const path = require('path');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const dbConfig = require(__dirname + '/../config/config.js')[env];
+
 /* co */
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  port: dbConfig.PORT,
+const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
+  host: dbConfig.host,
+  port: dbConfig.port,
   dialect: dbConfig.dialect,
   operatorsAliases: 0,
   pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle,
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
   },
 });
 /* */
@@ -19,7 +24,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 /*
 /* declaration */
-
+db.comment = require("./comment.js")(sequelize, Sequelize);
 //db.model2 = require("./model2.js")(sequelize, Sequelize);
 /* relation 
 db.model2.hasOne(db.model1, {foreignKey: "id"});
