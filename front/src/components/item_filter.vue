@@ -9,7 +9,7 @@
       <input type="text" name="search" placeholder="Ex: douche">
     </div>  
 
-    <div class="block">
+    <div class="block bg-red">
       <label for="price">Prix</label>
       <div>
         <input class="input-number" type="number" name="price" placeholder="0 €"> 
@@ -55,6 +55,7 @@ export default {
   width: 85vw;
   background: #ffffff;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 1rem;
   .title{
     width: 96%;
     padding-bottom: 0.5%;
@@ -78,7 +79,9 @@ export default {
         margin-right: 2%;
       }
       input{
+        border-radius: 1rem;
         border: #a1a1a1 1px solid;
+        padding: 0 3%;
       }
       &:last-of-type{
         border: none;
@@ -109,7 +112,7 @@ export default {
 @media screen and (orientation: portrait) {
   #filter{
     width: 90vw;
-    height: 20vh;
+    height: 23vh;
   }  
   #filter-group{
     flex-wrap: wrap !important;

@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#container{ width: 100vw; padding-top: 20vh; }
+#container{ width: 100vw; height: 50vh; margin-bottom: 15vh; margin-top: 15vh;}
 .error-page{ margin: auto; font-size: 8em; text-align: center; }
 .text{ font-size: 2em; text-align: center; }
 .btn-lst{ justify-content: center; top: 10vh; position: relative; gap: 2%; display: flex; }
