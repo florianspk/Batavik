@@ -1,7 +1,21 @@
 module.exports = (app) => {
     var router = require("express").Router();
     const comment = require("../controllers/comment.js");
-     
+    const auth = require("../middlewares/auth.js")
+
+   /**
+   * @openapi
+   * /api/comment/all:
+   *   get:
+   *     security:
+   *       - jwt: []
+   *     tags:
+   *       - comment
+   *     description: recherche tous les commentaires 
+   *     
+  */
+    router.get("/all", comment.findAllComment);
+    
   /**
    * @openapi
    * /api/comment:
@@ -13,7 +27,7 @@ module.exports = (app) => {
    *     description: creer un commentaire
    *     
   */
-    router.post("/", comment.newComment);
+    router.post("/", auth.validateToken ,comment.newComment);
 
   /**
    * @openapi
@@ -23,7 +37,7 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - comment
-   *     description: recherche tous les commentaires d'u produit en fonction de son id
+   *     description: recherche tous les commentaires d'un produit en fonction de son id
    *     
   */
     router.get("/product/:idProduct", comment.findProductComment);
@@ -66,6 +80,8 @@ module.exports = (app) => {
    *     
   */
     router.get("/user/:idUser", comment.findUserComment);
+
+ 
    
     app.use("/api/comment", router);
 
