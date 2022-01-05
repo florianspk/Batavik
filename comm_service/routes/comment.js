@@ -11,7 +11,14 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - comment
-   *     description: recherche tous les commentaires 
+   *     description: search all comments
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/ListComment' 
    *     
   */
     router.get("/all", comment.findAllComment);
@@ -24,7 +31,22 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - comment
-   *     description: creer un commentaire
+   *     description: create a comment header
+   *     parameters:
+   *       - in: body
+   *         name : body
+   *         schema: 
+   *          $ref: '#/definitions/NewComment' 
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/Comment' 
    *     
   */
     router.post("/", auth.validateToken ,comment.newComment);
@@ -37,7 +59,18 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - comment
-   *     description: recherche tous les commentaires d'un produit en fonction de son id
+   *     description: searches all reviews for a product based on its id
+   *     parameters:
+   *       - in: path
+   *         name: idProduit
+   *         type: integer
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/ListComment' 
    *     
   */
     router.get("/product/:idProduct", comment.findProductComment);
@@ -50,7 +83,18 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - comment
-   *     description: recherche un commentaire
+   *     description: search for a comment
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         type: integer
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/Comment' 
    *     
   */
     router.get("/:id", comment.findOne)
@@ -63,7 +107,18 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - comment
-   *     description: Supprimer un commentaire
+   *     description: Delete a comment
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         type: integer
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/MessageResponse' 
    *     
   */
     router.delete("/:id", comment.removeOne)
@@ -76,7 +131,18 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - comment
-   *     description: recherche tous les commentaires d'un utilisteur en fonction de son id
+   *     description: searches all comments for a user based on their id
+   *     parameters:
+   *       - in: path
+   *         name: idUser
+   *         type: integer
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/ListComment' 
    *     
   */
     router.get("/user/:idUser", comment.findUserComment);
