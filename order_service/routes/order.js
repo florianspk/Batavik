@@ -3,7 +3,6 @@ module.exports = (app) => {
   
     var router = require("express").Router();
   
-    // find one 
   /**
    * @openapi
    * /api/order/all:
@@ -24,7 +23,19 @@ module.exports = (app) => {
    *            idUser:
    *              type: integer 
   */
-    router.get("/all", order.findAll);
+    router.get("/allByUser", order.findAllByUser);
+
+  /**
+   * @openapi
+   * /api/order/all:
+   *   get:
+   *     security:
+   *       - jwt: []
+   *     tags:
+   *       - order
+   *     description: recherche tous les commandes
+  */
+     router.get("/all", order.findAll);
   
   /**
    * @openapi
