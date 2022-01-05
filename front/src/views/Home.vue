@@ -22,11 +22,11 @@ export default {
   },
   methods: {
     async getBestSales() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/best/products?size=${this.sizeProduct}`);
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/best?size=${this.sizeProduct}`);
       this.bestSales = products.products;
     },
     async getTopProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/top/products?size=${this.sizeProduct}`);
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/top?size=${this.sizeProduct}`);
       this.topProducts = products.products;
     },
   },

@@ -38,7 +38,7 @@ export default {
       if (product != null) this.dataLoaded = true;
     },
     async getSimilaire() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/best/products/`);
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/best`);
       this.simiProduct = products.products;
     },
   },
