@@ -57,7 +57,7 @@ exports.findAll = (req, res) => {
                 include: [{
                     model: cart ,
                     required: true,
-                    attributes: [],
+                    attributes: ['idUser'],
                     where: {
                         validation : 1
                     }
@@ -157,7 +157,7 @@ exports.validateOrder = (req, res) => {
                         }else{
                             await datacart.update({validation: 1})
                             datacart.save();
-                            res.send({message : order})
+                            res.send(order)
                         }
                         
                     })

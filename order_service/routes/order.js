@@ -5,13 +5,13 @@ module.exports = (app) => {
   
   /**
    * @openapi
-   * /api/order/all:
+   * /api/order/allByUser:
    *   get:
    *     security:
    *       - jwt: []
    *     tags:
    *       - order
-   *     description: recherche tous les commande d'un utilisteur en fonction de son id (idUser)
+   *     description: searches all the commands of a user according to his id
    *     parameters:
    *       - in: body
    *         name : body
@@ -22,6 +22,13 @@ module.exports = (app) => {
    *           properties:
    *            idUser:
    *              type: integer 
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/OrderWithIdUser' 
   */
     router.get("/allByUser", order.findAllByUser);
 
@@ -33,7 +40,14 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - order
-   *     description: recherche tous les commandes
+   *     description: search all commands
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/Order'
   */
      router.get("/all", order.findAll);
   
@@ -45,7 +59,19 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - order
-   *     description: valide le panier, enregistre les prix dans les lignes dans produit cart et creer une linge order et le renseigner dans cart produit
+   *     description: validate the basket, record the prices in the lines in product cart and create an order linen and enter it in product cart
+   *     parameters:
+   *       - in: body
+   *         name : body
+   *         schema:
+   *          $ref: '#/definitions/ValidateInfo'
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/OrderSimple'
    *     
   */
     router.post("/validate", order.validateOrder)
@@ -58,7 +84,28 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - order
-   *     description: change le status d'une commande en "annuler" si elle n'est pas "finish", en fonction de l'id de la commande
+   *     description: change the status of a command to "cancel" if it is not "finish", depending on the command id
+   *     parameters:
+   *       - in: path
+   *         name : id
+   *         schema: 
+   *           type: integer
+   *       - in: body
+   *         name : body
+   *         schema: 
+   *           type: objet
+   *           required:
+   *             - idUser
+   *           properties:
+   *            idUser:
+   *              type: integer
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/MessageResponse' 
    *     
   */
     router.post("/cancel/:id", order.cancel)
@@ -71,12 +118,28 @@ module.exports = (app) => {
    *       - jwt: []
    *     tags:
    *       - order
-   *     description: change le status d'une commande en "return" si elle n'est pas "finish", en fonction de l'id de la commande
+   *     description: change the status of a command to "return" if it is not "finish", depending on the command id
    *     parameters:
    *       - in: path
    *         name : id
    *         schema: 
    *           type: integer
+   *       - in: body
+   *         name : body
+   *         schema: 
+   *           type: objet
+   *           required:
+   *             - idUser
+   *           properties:
+   *            idUser:
+   *              type: integer
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/MessageResponse' 
    *     
   */
     router.post("/return/:id", order.return)
