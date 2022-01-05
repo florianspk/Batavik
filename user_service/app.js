@@ -5,6 +5,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser')
 
+const userRoutes = require('./routes/users')
+
 const corsOptions = {
     origin: process.env.ORIGIN_ALLOWED || "http://localhost:8080",
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -19,6 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.use('/api/',userRoutes)
 
 
 

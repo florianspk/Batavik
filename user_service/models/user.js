@@ -11,7 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
 
     static associate(models) {
-      // define association here
+      User.belongsToMany(models.Adress, {
+        through: "LivesIn",
+        as: "Cities",
+        foreignKey: "user_id",
+      });
+
     }
   };
   User.init({
@@ -41,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     lastLogin: {
       type: DataTypes.DATE
-    }
+    },
   }, {
     sequelize,
     modelName: 'User',
