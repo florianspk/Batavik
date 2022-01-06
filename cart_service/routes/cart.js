@@ -18,14 +18,17 @@ module.exports = (app) => {
    *         name : body
    *         
    *         schema: 
-   *           $ref: '#/definitions/Order' 
+   *          type: object
+   *          properties: 
+   *            idUser:
+   *              type: integer
    *     responses:
    *       200:
    *         description: succesful operation
    *         content:
    *           application/json:
    *            schema: 
-   *             $ref: '#/definitions/Order'  
+   *             $ref: '#/definitions/Cart'  
   */ 
     router.get("/", cart.findOne);
   
@@ -55,6 +58,15 @@ module.exports = (app) => {
    *              type: integer 
    *            quantity:     
    *              type: integer 
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/MessageResponse' 
+   *             
+   *             
     */ 
     router.post("/", cart.addcart);
   
@@ -84,6 +96,13 @@ module.exports = (app) => {
    *              type: integer 
    *            quantity:     
    *              type: integer 
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/MessageResponse' 
 
   */ 
     router.post("/quantityProduct", cart.quantityProduct);

@@ -8,7 +8,7 @@ const order = db.order;
 const historystatus = db.historystatus;
 
 //* Find a single with an id
-exports.findAll = (req, res) => {
+exports.findAllByUser = (req, res) => {
     try{
         if( typeof req.body.idUser === 'undefined' ){
           throw new Error("Il manque des informations dans notre requete");
@@ -28,6 +28,38 @@ exports.findAll = (req, res) => {
                     where: {
                         validation : 1,
                         idUser : req.body.idUser
+                    }
+                }],
+            }]
+        })
+        .then((data) => {
+        res.send(data);
+        })
+        .catch((err) => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving .",
+        });
+        });
+    }catch (error) {
+        res.status(400).send({
+          message: error.message
+        });
+      }
+  };
+
+//* Find a single with an id
+exports.findAll = (req, res) => {
+    try{
+        order.findAll({
+            include:[{
+                model: productCart,
+                required: true,
+                include: [{
+                    model: cart ,
+                    required: true,
+                    attributes: ['idUser'],
+                    where: {
+                        validation : 1
                     }
                 }],
             }]
@@ -125,7 +157,7 @@ exports.validateOrder = (req, res) => {
                         }else{
                             await datacart.update({validation: 1})
                             datacart.save();
-                            res.send({message : order})
+                            res.send(order)
                         }
                         
                     })
