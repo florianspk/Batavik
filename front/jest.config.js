@@ -1,9 +1,7 @@
 module.exports = {
   preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel',
-  transform: {
-    '^.+\\.vue$': 'vue-jest',
-  },
-  "coverageReporters": ["text", "html"],
-  "collectCoverage": true,
-  "collectCoverageFrom": ['src/**/*.{ts,tsx,vue}'],
+  moduleNameMapper: { "^@/(.*)$": "<rootDir>/src/$1" },
+  transform: { ".*\\.(vue)$": "vue-jest" },
+  collectCoverage: true,
+  collectCoverageFrom: ["**/*.{ts,vue}", "!**/node_modules/**"],
 };
