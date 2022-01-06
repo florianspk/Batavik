@@ -73,7 +73,7 @@ export default {
 <style scoped lang="scss">
 #cart{
   position: absolute;
-  width: 25vw;
+  width: 27vw;
   right: 2vw;
   top: 5vh;
   background: white;
@@ -82,7 +82,7 @@ export default {
   #triangle{
     position: absolute;
     top: -5%;
-    right: 18%;
+    right: 17%;
     width: 0;
     height: 0;
     border-left: 2vh solid transparent; 
@@ -124,7 +124,8 @@ export default {
       background: none;
       border: none;
       cursor: pointer;
-      padding: 0 0.5rem;
+      padding: 0 1rem;
+      border-radius: 2rem;
     }
     #clear{
       background: #e1e1e1;

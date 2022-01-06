@@ -22,8 +22,6 @@
 <script>
 export default {
   name: 'login',
-  components: {
-  },
   methods: {
     validate() {
       if (this.$route.name !== 'user') {
@@ -95,6 +93,7 @@ export default {
       font-size: 1.1em;
       cursor: pointer;
       transition: 0.2s;
+      border-radius: 1rem;
     }
     #clear{
       background: #e1e1e1;
