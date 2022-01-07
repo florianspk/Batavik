@@ -89,7 +89,7 @@ exports.findOne = (req, res) => {
         if(comment != null || 0){
           res.status(200).send(comment);
         }else{
-          res.status(400).send({
+          res.status(204).send({
             message: 'Commentaire introuvable'
           });
         }
@@ -132,7 +132,7 @@ exports.removeOne = (req, res) => {
             message: 'Commentaire supprimer'
           });
         }else{
-          res.status(400).send({
+          res.status(204).send({
             message: 'Commentaire introuvable'
           });
         }
@@ -188,7 +188,9 @@ exports.removeOne = (req, res) => {
         res.status(200).send(comments);
       })
       .catch((err) => {
-        throw new Error('Les commentaires sont introuvable');
+        res.status(500).send({
+          message: err.message
+        });
       }); 
   }
   
