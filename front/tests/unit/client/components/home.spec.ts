@@ -3,6 +3,13 @@ import { mount } from '@vue/test-utils';
 import carousel from '@/components/home_components/h_carousel.vue';
 import slide from '@/components/home_components/h_slide.vue';
 
+/*
+ * Test des composants du caroussel de la home
+ * 
+ * Ecriture des tests:    KEIFF Julien
+ * Objectif de coverage:  90%
+*/
+
 // Test du carousel
 test('Test carousel infos is correct', () => {
   const wrapper = mount(carousel);

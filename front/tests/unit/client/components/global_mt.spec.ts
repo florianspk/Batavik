@@ -7,6 +7,9 @@ import spinner from '@/components/global/spinner.vue';
 
 /*
  * Test des composants globaux avec peut de code 
+ * 
+ * Ecriture des tests:    KEIFF Julien
+ * Objectif de coverage:  90%
 */
 
 // Test du footer

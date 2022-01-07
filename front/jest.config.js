@@ -4,4 +4,7 @@ module.exports = {
   transform: { ".*\\.(vue)$": "vue-jest" },
 	collectCoverage: true,
 	collectCoverageFrom: ["**/*.{ts,vue}", "!**/node_modules/**"],
+	testPathIgnorePatterns : [
+		"<rootDir>/helpers/portList.ts" 
+	]
 };

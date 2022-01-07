@@ -7,7 +7,10 @@ import paginator from '@/components/global/g_paginator.vue';
 import product from '@/components/global/g_products.vue';
 
 /*
- * Test des composants globaux avec avec de la logique 
+ * Test des composants globaux plus complexes
+ * 
+ * Ecriture des tests:    KEIFF Julien
+ * Objectif de coverage:  90%
 */
 
 const productData = {
@@ -43,6 +46,6 @@ test('Test paginator behavior', () => {
 
 // Test d'une instance de produit
 test('Test product card display', () => {
-  const wrapper = mount(product);
+  const wrapper = mount(product, { props: { data: productData }});
   expect(true).toEqual(true)
 });
