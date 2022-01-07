@@ -30,7 +30,7 @@ module.exports = (app) => {
    *            schema: 
    *             $ref: '#/definitions/Cart'  
   */ 
-    router.get("/", cart.findOne);
+    router.get("/:idUser", cart.findOne);
   
     // Create a new
     /**

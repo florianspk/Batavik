@@ -5,11 +5,11 @@ const productCart = db.productCart;
 //* Find a single with an id
 exports.findOne = (req, res) => {
     try{
-      if( typeof req.body.idUser === 'undefined' ){
+      if( typeof req.params.idUser === 'undefined' ){
         throw new Error("Il manque des informations dans notre requete");
       }
         
-      if( isNaN(parseInt(req.body.idUser)) ){
+      if( isNaN(parseInt(req.params.idUser)) ){
           throw new Error("Une des valeurs envoyé n'est pas valide");
       }
 
@@ -19,12 +19,12 @@ exports.findOne = (req, res) => {
           }],
         where: {
           validation : 0,
-          idUser : req.body.idUser
+          idUser : req.params.idUser
       }
     })
       .then((data) => {
         if(data == null ){
-          res.status(400).send({
+          res.status(204).send({
             message: "Panier introuvable",
           });
         }else{
