@@ -18,6 +18,10 @@ exports.findAllByUser = (req, res) => {
         if( isNaN(parseInt(req.params.idUser)) ){
             throw new Error("Une des valeurs envoyé n'est pas valide");
         }
+
+        const {page, size} = req.query;
+        const {limit, offset} = order.getPagination(page, size);
+
         order.findAll({
             include:[{
                 model: productCart,
@@ -25,7 +29,9 @@ exports.findAllByUser = (req, res) => {
             }],
             where: {
                 idUser : req.params.idUser
-            }
+            },
+            limit,
+            offset
         })
         .then((data) => {
             res.send(data);
@@ -45,14 +51,15 @@ exports.findAllByUser = (req, res) => {
 //* Find a single with an id
 exports.findAll = (req, res) => {
     try{
+        const {page, size} = req.query;
+        const {limit, offset} = order.getPagination(page, size);
         order.findAll({
             include:[{
                 model: productCart,
                 required: true
             }],
-            where: {
-                idUser : req.params.idUser
-            }
+            limit,
+            offset
         })
         .then((data) => {
         res.send(data);
