@@ -38,7 +38,13 @@ module.exports = (sequelize, DataTypes) => {
     deadLineOrder:{
         type: DataTypes.DATE,
         allowNull:false
-    }
+    },
+
+    idUser:{
+      type: DataTypes.INTEGER(10),
+      allowNull:false
+  }
+  
   }, {
     sequelize,
     modelName: 'order',

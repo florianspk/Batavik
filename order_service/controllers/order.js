@@ -2,6 +2,7 @@ const { create } = require("domain");
 const { findOne } = require("../../cart_service/controllers/cart");
 const { Op } = require("sequelize");
 const db = require("../models");
+const { exit } = require("process");
 const cart = db.cart;
 const productCart = db.productCart;
 const order = db.order;
@@ -100,6 +101,7 @@ exports.validateOrder = (req, res) => {
               }),
             orderPrice: 0.00,
             tradeInformation: "tradeInformation",
+            idUser: req.body.idUser,
             deadLineOrder: new Date(new Date().getTime()+(10*24*60*60*1000))
         }).then(async(order) => {
 
@@ -122,46 +124,53 @@ exports.validateOrder = (req, res) => {
                     where:{
                         idProduct: element["id"]
                     },
+                }).then(async productcart => {
+                    if(productcart != null){
+                        totalPrices += element["price"] * productcart.quantity;
+    
+                        await productcart.update({
+                            unitPrice: element["price"],
+                            orderId: order.id,
+                            cartId: null
+                        })
+                        console.log(productcart);
+                        productcart.save();
+                    }else{
+                        await order.destroy();
+                        order = null;
+                        
+                    }
                 })
-                if(productcart != null){
-                    totalPrices += element["price"] * productcart.quantity;
-
-                    await productcart.update({
-                        unitPrice: element["price"],
-                        id_order: order.id
-                    })
-                    productcart.save();
-                }else{
-                    await order.destroy();
-                    
-                }
+                
                 
                 
             })
 
             Promise.all(orderPromises).then(arrayOfResponses => {
-                order.update({
-                    orderPrice: totalPrices
-                        
-                })
-                console.log("test");
-                order.save().then((order) => 
-                    cart.findOne({
-                        where: {
-                            validation : 0,
-                            idUser : req.body.idUser
-                        }
-                    }).then(async(datacart)=> {
-                        if(datacart == null){
-                            res.send({message : 'impossible de trouver votre panier ou votre article ou le client'})
-                        }else{
-                            await datacart.update({validation: 1})
-                            datacart.save();
-                            res.send(order)
-                        }
-                        
+                if(order == null){
+                    res.send({message : 'impossible de trouver votre panier ou votre article ou le client'})
+                }else{
+                    order.update({
+                        orderPrice: totalPrices
                     })
-                );
+                    console.log("test");
+                    order.save().then((order) => 
+                        cart.destroy({
+                            where: {
+                                validation : 0,
+                                idUser : req.body.idUser
+                            }
+                        }).then(async(datacart)=> {
+                            if(datacart == null){
+                                res.send({message : 'impossible de trouver votre panier ou votre article ou le client'})
+                            }else{
+                                res.send(order)
+                            }
+                            
+                        })
+                    );
+                }
+                
             })
 
             
