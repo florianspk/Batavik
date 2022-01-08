@@ -21,7 +21,8 @@ module.exports = {
     'linebreak-style': 'off',
     'no-trailing-spaces': 'off',
     'max-len': 'off',
-    'import/no-cycle': 'off'
+    'import/no-cycle': 'off',
+    'no-param-reassign': 'off',
   },
   overrides: [
     {
