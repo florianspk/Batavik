@@ -21,16 +21,11 @@ exports.findAllByUser = (req, res) => {
         order.findAll({
             include:[{
                 model: productCart,
-                required: true,
-                include: [{
-                    model: order ,
-                    required: true,
-                    attributes: [],
-                    where: {
-                        idUser : req.params.idUser
-                    }
-                }],
-            }]
+                required: true
+            }],
+            where: {
+                idUser : req.params.idUser
+            }
         })
         .then((data) => {
             res.send(data);
@@ -53,16 +48,11 @@ exports.findAll = (req, res) => {
         order.findAll({
             include:[{
                 model: productCart,
-                required: true,
-                include: [{
-                    model: cart ,
-                    required: true,
-                    attributes: ['idUser'],
-                    where: {
-                        validation : 1
-                    }
-                }],
-            }]
+                required: true
+            }],
+            where: {
+                idUser : req.params.idUser
+            }
         })
         .then((data) => {
         res.send(data);
@@ -198,23 +188,18 @@ exports.cancel = (req, res) => {
             {
                 include: [{
                     model: productCart,
-                    required: true,
-                    include: [{
-                        model: cart ,
-                        required: true,
-                        attributes: [],
-                        where: {
-                            validation : 1,
-                            idUser : req.body.idUser
-                        }
-                    }]
+                    required: true
                  },
                  {
                     model: historystatus,
                      required: true,
                      limit: 1,
                      order: [ [ 'createdAt', 'DESC' ]]
-                 }]
+                 }],
+                 where: {
+                     idUser : req.body.idUser
+                 }
+                 
             })
         .then((order) => {
             if(order && order.historystatuses[0].id_status != 2){
@@ -267,15 +252,6 @@ exports.cancel = (req, res) => {
                     {
                     model: productCart,
                     required: true,
-                    include: [{
-                        model: cart ,
-                        required: true,
-                        attributes: [],
-                        where: {
-                            validation : 1,
-                            idUser : req.body.idUser
-                        }
-                    }]
                  },
                  {
                     model: historystatus,
@@ -283,7 +259,10 @@ exports.cancel = (req, res) => {
                      limit: 1,
                      order: [ [ 'createdAt', 'DESC' ]]
                  }
-            ]
+                ],
+                where: {
+                    idUser : req.body.idUser
+                }
             })
         .then((order) => {
 
