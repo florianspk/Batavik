@@ -1,25 +1,34 @@
 <template>
   <div class="right">
-      <div class="section">
+      <div class="section" v-if="history[0]">
         <div class="title">Votre dernière commandes</div>
-        <div class="sub-title">20 Janvier 2021 - {{cost}}€  <button class="btn">Voir la facture</button></div>
+        <div class="sub-title">{{createDate(history[0]?.createdAt)}}  <button class="btn">Voir la facture</button></div>
         
         <div class="last-checkout"> 
-           <card class="card" v-for="(item, i) in lastCheckout" :key="i" :data="item" fontSize="150%" :background="true" :margin='0' />
+          <card class="card" v-for="(item, i) in history[0]?.productCarts" :key="i" :data="item" fontSize="1.5" :background="true" :margin='0' />
         </div>
+
+        <div class="total-cost">Total de la commande: <b>{{history[0]?.orderPrice}}€</b></div>
 
       </div>
 
+    <div id="section-container" v-if="history.length > 1">
       <div class="section">
         <div class="title">Vos anciennes commandes</div>
-        <div class="sub-title">16 Décembre 2020 - {{cost}}€ <button class="btn">Voir la facture</button></div>
-        
-        <div class="last-checkout"> 
-           <card class="card" v-for="(item, i) in lastCheckout" :key="i" :data="item" fontSize="150%" :background="true" :margin='0' />
+        <div class="content" v-for="(item, i) in history" :key="i">
+          <div class="sub-title" v-if="i != 0">{{createDate(history[i]?.createdAt)}} <button class="btn">Voir la facture</button></div>
+          
+          <div class="last-checkout" v-if="i != 0"> 
+            <card class="card" v-for="(item, i) in history[i]?.productCarts" :key="i" :data="item" fontSize="150%" :background="true" :margin='0' />
+          </div>
+          
+          <div class="total-cost" v-if="i != 0">Total de la commande: <b>{{history[i]?.orderPrice}}€</b></div>
         </div>
 
       </div>
     </div>
+
+  </div>
 </template>
 
 <script>
@@ -29,6 +38,15 @@ export default {
   name: 'history',
   components: { Card },
   props: ['history'],
+  methods: {
+    createDate(isoDate) {
+      const date = this.$date.fromISO(isoDate, { locale: 'fr-FR' });
+      return date.setZone('Europe/Paris').toFormat('dd MMMM yyyy à HH:mm');
+    },
+  },
+  mounted() {
+    console.log(this.history);
+  },
 };
 </script>
 
@@ -47,9 +65,17 @@ export default {
     }
   }
   .section{
+    position: relative;
     margin-top: 5%;
+    margin-bottom: 7%;
     &:first-of-type{
       margin-top: 1%;
+    }
+    .total-cost {
+      margin-top: 2%;
+      font-size: 1.5em;
+      position: absolute;
+      right: 0;
     }
   }
   .bar{

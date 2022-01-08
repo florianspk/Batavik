@@ -2,18 +2,18 @@
   <div class="cart-item" ref="cartItem">
     
     <div class="info">
-      <img :src="getImg(data.img)" class="item-img" ref="cartImg" >
+      <img :src="productList.image" class="item-img" ref="cartImg" >
 
       <div class="item-name">
-        {{data.name}}
+        {{productList.name}}
       </div>
 
       <div class="item-quantity">
-        X{{data.qte}}
+        X{{data.quantity}}
       </div>
 
       <div class="item-price">
-        {{data.price}} €
+        {{ calculatePrice(data.unitPrice, data.quantity) }} €
       </div>
     </div>
   
@@ -30,9 +30,20 @@ export default {
     margin: Number,
     forcedHeight: Number,
   },
+  data() {
+    return {
+      productList: {},
+    };
+  },
   methods: {
-    getImg: function (item) {
-      return require('@/assets/logo.png');
+    calculatePrice(price, qte) {
+      return price * qte;
+    },
+    getProductInormations() {
+      this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.data.idProduct}`)
+        .then(({ data: product }) => {
+          this.productList = product;
+        });
     },
   },
   watch: {
@@ -41,6 +52,7 @@ export default {
     },
   },
   mounted: function () {
+    this.getProductInormations();
     if (this.forcedHeight) this.$refs.cartItem.style.height = `${this.forcedHeight}vh`;
     else this.$refs.cartItem.style.height = `${this.$refs.cartImg.clientWidth}px`;
 
@@ -59,9 +71,10 @@ export default {
 .cart-item{
   position: relative;
   height: 5vh;
-  margin: 1% 0;
+  margin: 1rem 0;
+  padding: 0 2rem 0 0;
   width: 100%;
-  border-radius: 1% / 5%;
+  border-radius: 1rem;
   cursor: pointer;
   .info{
     height: 100%;
@@ -72,8 +85,8 @@ export default {
       width: 15%;
       object-fit: cover;
       margin-right: 2%;
-      border-top-left-radius: 7%;
-      border-bottom-left-radius: 7%;
+      border-top-left-radius: 1rem;
+      border-bottom-left-radius: 1rem;
     }
     .item-name{
       width: 55%;

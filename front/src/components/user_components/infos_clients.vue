@@ -32,13 +32,15 @@ export default {
       this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/user`, this.config)
         .then(({ data: user }) => {
           this.user = user;
+          this.getUserHistory();
+          console.log(`${this.$baseURL}:${this.$port.ORDER_SERVICE}/api/order/allByUser/${this.user.id}`);
         })
         .catch((error) => {
           console.log(error);
         });
     },
     getUserHistory() {
-      this.$axios.get(`${this.$baseURL}:${this.$port.ORDER_SERVICE}/api/order/allByUser/24`, this.config)
+      this.$axios.get(`${this.$baseURL}:${this.$port.ORDER_SERVICE}/api/order/allByUser/${this.user.id}`, this.config)
         .then(({ data: userHistory }) => {
           this.userHistory = userHistory;
         })
