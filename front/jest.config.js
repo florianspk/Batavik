@@ -5,6 +5,6 @@ module.exports = {
 	collectCoverage: true,
 	collectCoverageFrom: ["**/*.{ts,vue}", "!**/node_modules/**"],
 	testPathIgnorePatterns : [
-		"<rootDir>/helpers/portList.ts" 
+		"<rootDir>/helpers/portList.ts"
 	]
 };

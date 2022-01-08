@@ -49,6 +49,44 @@
       </template>
       {{ product.description }}
     </el-descriptions-item>
+    <div v-if="product.info.length >= 1">
+      <el-descriptions-item>
+        <template #label>
+          <el-icon>
+            <setting/>
+          </el-icon>
+          Hauteur
+        </template>
+        {{ product.info[0].height }} cm
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <el-icon>
+            <setting/>
+          </el-icon>
+          Profondeur
+        </template>
+        {{ product.info[0].depth }} cm
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <el-icon>
+            <setting/>
+          </el-icon>
+          Largeur
+        </template>
+        {{ product.info[0].length }} cm
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
+          <el-icon>
+            <orange/>
+          </el-icon>
+          Couleur
+        </template>
+        {{ product.info[0].color }}
+      </el-descriptions-item>
+    </div>
     <el-descriptions-item>
       <template #label>
         <el-icon>
@@ -56,7 +94,7 @@
         </el-icon>
         Note
       </template>
-      {{ product.note }}
+      {{ product.rate }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
@@ -85,7 +123,7 @@ import {
   Box,
   PictureRounded,
   Tickets,
-  PriceTag, Star, Calendar,
+  PriceTag, Star, Calendar, Setting, Orange,
 } from '@element-plus/icons-vue';
 
 import {
@@ -99,6 +137,8 @@ export default {
   name: 'show',
   props: ['product'],
   components: {
+    Orange,
+    Setting,
     Calendar,
     Star,
     PriceTag,
@@ -116,9 +156,6 @@ export default {
       const date = this.$date.fromISO(dateToFormat, { locale: 'fr-FR' });
       return date.setZone('Europe/Paris').toFormat('dd MMMM yyyy HH:mm');
     },
-  },
-  mounted() {
-    console.log(this.product);
   },
 };
 </script>

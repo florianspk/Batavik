@@ -21,7 +21,7 @@
   </el-dialog>
 
   <el-table stripe style="width: 99%" :data="users" highlight-current-row>
-    <el-table-column prop="id" label="Id" width="80%" sortable/>
+    <el-table-column prop="id" label="Id" width="80" sortable/>
     <el-table-column prop="name" label="Nom" sortable/>
     <el-table-column prop="username" label="Pseudo" sortable/>
     <el-table-column prop="email" label="Email" sortable/>
@@ -30,9 +30,9 @@
     <el-table-column fixed="right" label="Actions">
       <template #default="scope">
         <div style="display: flex;">
-          <el-button type="info" size="small" @click.prevent="showUser(scope.$index)">Voir</el-button>
-          <el-button type="primary" size="small" @click.prevent="editUser(scope.$index)">Éditer</el-button>
-          <el-button type="danger" size="small" @click.prevent="deleteUser(scope.$index)">Supprimer</el-button>
+          <el-button type="info" size="small" @click.prevent="showUser(scope.$index)"><f-icon :icon="'eye'"></f-icon></el-button>
+          <el-button type="primary" size="small" @click.prevent="editUser(scope.$index)"><f-icon :icon="'pen'"></f-icon></el-button>
+          <el-button type="danger" size="small" @click.prevent="deleteUser(scope.$index)"><f-icon :icon="'trash'"></f-icon></el-button>
         </div>
       </template>
     </el-table-column>
