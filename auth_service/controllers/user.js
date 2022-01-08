@@ -4,12 +4,14 @@ const bcrypt = require("bcryptjs"),
     JWT_SECRET = process.env.JWT_SECRET
 
 exports.signUp = async (req, res) => {
-    const {email, password: plainTextPassword} = req.body;
+    const {firstname, lastname,email, password: plainTextPassword} = req.body;
     const enabled = 1
     //Then we have to hashed the password so no one can see it from database.
     try {
         const password = await bcrypt.hash(plainTextPassword, 10)
         db.User.create({
+            firstname,
+            lastname,
             email,
             password,
             enabled
