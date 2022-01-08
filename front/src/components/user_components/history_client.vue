@@ -44,9 +44,6 @@ export default {
       return date.setZone('Europe/Paris').toFormat('dd MMMM yyyy à HH:mm');
     },
   },
-  mounted() {
-    console.log(this.history);
-  },
 };
 </script>
 

@@ -33,7 +33,6 @@ export default {
         .then(({ data: user }) => {
           this.user = user;
           this.getUserHistory();
-          console.log(`${this.$baseURL}:${this.$port.ORDER_SERVICE}/api/order/allByUser/${this.user.id}`);
         })
         .catch((error) => {
           console.log(error);

@@ -42,6 +42,5 @@ app.config.globalProperties.$baseURL = baseurl;
 app.config.globalProperties.$port = port;
 app.config.globalProperties.$axios = Axios;
 app.config.globalProperties.$date = DateTime;
-app.config.globalProperties.$heyo = 'test';
 
 export { baseurl, port };
