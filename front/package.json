@@ -21,7 +21,9 @@
     "core-js": "^3.6.5",
     "element-plus": "^1.1.0-beta.20",
     "luxon": "^2.2.0",
+    "moxios": "^0.4.0",
     "vue": "^3.0.0",
+    "vue-loader": "^17.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },

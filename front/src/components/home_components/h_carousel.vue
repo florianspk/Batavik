@@ -39,7 +39,7 @@ export default {
       }
     },
     async getSlidesProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/best/products?size=${this.nbSlide}`);
+      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/best?size=${this.nbSlide}`);
       this.slides = products.products;
     },
   },
@@ -57,7 +57,7 @@ export default {
   margin: auto;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
   overflow: hidden;
-  border-radius: 2rem;
+  border-radius: 1rem;
 }
 
 @media screen and (max-width: 720px) {

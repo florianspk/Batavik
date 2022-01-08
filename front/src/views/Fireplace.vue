@@ -68,5 +68,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.shower-page{ margin-top: 10vh; padding-top: 4vh; min-height: 86vh; }
+.shower-page{ margin-top: 1vh; padding-top: 4vh; min-height: 86vh; }
 </style>

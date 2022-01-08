@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     getImg: function (item) {
-      return require('../../assets/logo.png');
+      return require('@/assets/logo.png');
     },
   },
   watch: {
