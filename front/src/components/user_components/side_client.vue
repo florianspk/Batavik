@@ -26,7 +26,6 @@ export default {
   props: ['user'],
   data() {
     return {
-      username: 'John Doe',
       preferedCity: 'Lille',
     };
   },
