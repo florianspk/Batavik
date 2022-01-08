@@ -32,11 +32,11 @@ db.historystatus = require("./historystatus.js")(sequelize, Sequelize);
 
 /* relation */
 
-db.productCart.belongsTo(db.order, {foreignKey: "id_order"});//
-db.order.hasMany(db.productCart, {foreignKey: "id_order"});//
+db.productCart.belongsTo(db.order, {foreignKey: {field: "id_order", allowNull: true}});//
+db.order.hasMany(db.productCart, {foreignKey: {field: "id_order", allowNull: true}});//
 
-db.productCart.belongsTo(db.cart, {foreignKey: "id_cart"});//
-db.cart.hasMany(db.productCart, {foreignKey: "id_cart"});
+db.productCart.belongsTo(db.cart, {foreignKey: {field: "id_cart", allowNull: true }});//
+db.cart.hasMany(db.productCart, {foreignKey: {field: "id_cart", allowNull: true }});
 
 db.historystatus.belongsTo(db.order, {foreignKey: "id_order"});//
 db.order.hasMany(db.historystatus, {foreignKey: "id_order"});
