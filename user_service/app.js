@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/api',userRoutes)
+app.use('/api', userRoutes)
 
 // static Images Folder
 app.use('/uploads', express.static('./uploads'))

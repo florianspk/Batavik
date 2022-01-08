@@ -1,28 +1,36 @@
-const sequelize = require("../models")
+const model = require("../models")
+const Sequelize = require("sequelize")
+const User = model.User;
 
 module.exports = {
+    getAllUser(req,res,next){
+        User.findAll({
+            attributes: {exclude: ["password"]},
+            include: [{
+                model: model.Adress,
+                as: "Adress",
+                //TODO
+                // include: [{
+                //     model: model.City,
+                //     as: "City"
+                // }]
+            }]
+        }).then(response => {
+            res.status(200).json(response)
+        }).catch(error => {
+            res.status(401).json(error.message)
+        })
+    },
     getCurrentUser(req, res, next) {
 
     },
     createUser(req, res, next) {
-        console.log("toto")
-        let firstanme, lastname, image, adress_name, adress_number, adress_additionalAdress, poastalCode, city_name,
-            city_departement;
+        let image, adress_name, adress_number, adress_additionalAdress, poastalCode, city_name;
+        try {
 
-        if (typeof req.body.firstname === "string") {
-            firstanme = req.body.firstname
-        } else {
-            return res.status(401).json("firstname is not valid")
+        }catch (e){
+            res.status(401).json(e.message)
         }
-        if (typeof req.body.lastname === "string") {
-            lastname = req.body.lastname
-        } else {
-           return  res.status(401).json("lastname is not valid")
-        }
-        if (typeof req.file) {
-
-        }
-
 
     },
     deleteCurrentUser(req, res, next) {

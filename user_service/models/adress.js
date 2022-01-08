@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Adress.belongsToMany(models.User, {
         through: "LivesIn",
-        as: "Users",
-        foreignKey: "adress_id",
+        as: "User",
+        foreignKey: "adressId",
       });
     }
   };
