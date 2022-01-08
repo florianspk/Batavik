@@ -28,43 +28,7 @@ import Card from '../global/cart_item.vue';
 export default {
   name: 'history',
   components: { Card },
-  data() {
-    return {
-      lastCheckout: [
-        {
-          name: 'Produit 1 | 207cm x 100cm',
-          img: 'img3.jpg',
-          qte: 2,
-          price: 115.99,
-        }, 
-        {
-          name: 'Produit 3 | Coloris 2',
-          img: 'img1.jpg',
-          qte: 1,
-          price: 16.99,
-        },
-        {
-          name: 'Produit 2 | 39cm x 25cm',
-          img: 'img2.jpg',
-          qte: 5,
-          price: 19.99,
-        },
-      ],
-      cost: 0,
-    };
-  }, 
-  methods: {
-    calcCost() {
-      for (let i = 0; i < this.lastCheckout.length; i++) {
-        const product = this.lastCheckout[i];
-        this.cost += (product.price * product.qte);
-      }
-      this.cost = Math.round(this.cost * 100) / 100;
-    },
-  },
-  mounted() {
-    this.calcCost();
-  },
+  props: ['history'],
 };
 </script>
 
