@@ -4,35 +4,58 @@ const productCart = db.productCart;
 
 //* Find a single with an id
 exports.findOne = (req, res) => {
-    
+    try{
+      if( typeof req.params.idUser === 'undefined' ){
+        throw new Error("Il manque des informations dans notre requete");
+      }
+        
+      if( isNaN(parseInt(req.params.idUser)) ){
+          throw new Error("Une des valeurs envoyé n'est pas valide");
+      }
+
     cart.findOne({
-        include: [{
-                model: productCart ,               
-            }],
-          where: {
-            validation : 0,
-            idUser : req.body.idUser
-        }
-      })
-        .then((data) => {
-          if(data == null ){
-            res.status(400).send({
-              message: "Panier introuvable",
-            });
-          }else{
-            res.send(data);
-          }
-          
-        })
-        .catch((err) => {
-          res.status(500).send({
-            message: err.message || "Some error occurred while retrieving .",
+      include: [{
+              model: productCart ,               
+          }],
+        where: {
+          validation : 0,
+          idUser : req.params.idUser
+      }
+    })
+      .then((data) => {
+        if(data == null ){
+          res.status(204).send({
+            message: "Panier introuvable",
           });
+        }else{
+          res.send(data);
+        }
+        
+      })
+      .catch((err) => {
+        res.status(400).send({
+          message: err.message || "Some error occurred while retrieving .",
         });
+      });
+
+    }catch (error) {
+      res.status(400).send({
+        message: error.message
+      });
+    }
+    
   };
 
 //* create and add new cart and new cproduct cart 
 exports.addcart = async(req, res) => {
+  try{
+    if( typeof req.body.idUser === 'undefined' || typeof req.body.idProduct === 'undefined' || typeof req.body.quantity === 'undefined'){
+      throw new Error("Il manque des informations dans notre requete");
+    }
+      
+    if( isNaN(parseInt(req.body.idUser)) || isNaN(parseInt(req.body.idProduct)) || isNaN(parseInt(req.body.quantity))){
+        throw new Error("Une des valeurs envoyé n'est pas valide");
+    }
 
     await cart.findOne({
         where: {
@@ -102,14 +125,25 @@ exports.addcart = async(req, res) => {
               });
             });
 
-        res.send("Produit ajouter");
-    
+        res.send({ message: "Produit ajouter"});
+    }catch (error) {
+      res.status(400).send({
+        message: error.message
+      });
+    }
   };
 
 
   //* Update by the id in the request
 exports.quantityProduct = async(req, res) => {
-
+  try{
+    if( typeof req.body.idUser === 'undefined' || typeof req.body.idProduct === 'undefined' || typeof req.body.quantity === 'undefined'){
+      throw new Error("Il manque des informations dans notre requete");
+    }
+      
+    if( isNaN(parseInt(req.body.idUser)) || isNaN(parseInt(req.body.idProduct)) || isNaN(parseInt(req.body.quantity))){
+        throw new Error("Une des valeurs envoyé n'est pas valide");
+    }
     await productCart.findOne({
         include: [{
                 model: cart ,
@@ -124,7 +158,7 @@ exports.quantityProduct = async(req, res) => {
       })
         .then( async (data) => {
             if( data == null || data == [] ){
-                res.status(400).json({ message: 'Ligne de panier introuvable' });
+              throw new Error('Ligne de panier introuvable');
             }else
             {
                 if(req.body.quantity <= 0 ){
@@ -134,6 +168,9 @@ exports.quantityProduct = async(req, res) => {
                     data.quantity = req.body.quantity;
                     await data.save()
                 }
+                res.send({
+                  message: "Ligne panier modifier"
+                });
             }
         })
         .catch((err) => {
@@ -142,28 +179,15 @@ exports.quantityProduct = async(req, res) => {
           });
         });
 
-        res.send("Ligne panier modifier");
+        
+      }catch (error) {
+        res.status(400).send({
+          message: error.message
+        });
+      }
   };
 
 
-
-/*
-//* Retrieve all data
-exports.findAll = (req, res) => {
-  Produit.findAll({
-    include: ["marque", "detailclimuint", "detailpac", "detailclimuext"],
-  })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving .",
-      });
-    });
-};
-
-*/
 
 
 

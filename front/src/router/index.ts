@@ -1,4 +1,7 @@
+/* istanbul ignore file */
 import { createRouter, createWebHistory } from 'vue-router';
+import { baseurl, port } from '@/main';
+import Axios from 'axios';
 
 import Home from '../views/Home.vue';
 import Shower from '../views/Shower.vue';
@@ -13,6 +16,12 @@ import Shops from '../views/admin/Shops.vue';
 import Cart from '../views/Cart.vue';
 import Login from '../views/Login.vue';
 import User from '../views/User.vue';
+
+function setConfig() {
+  return {
+    headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+  };
+}
 
 const routes = [
   {
@@ -51,9 +60,22 @@ const routes = [
     component: Login,
   },
   {
-    path: '/user/:id',
+    path: '/user',
     name: 'User',
     component: User,
+    beforeEnter(to: any, from: any, next: any) {
+      Axios.get(`${baseurl}:${port.AUTH_SERVICE}/api/auth/validateToken`, setConfig())
+        .then(() => { 
+          next((vm: any) => {
+            vm.$isLogged = true;
+          }); 
+        })
+        .catch(() => { 
+          next('/login', (vm: any) => {
+            vm.$isLogged = false;
+          }); 
+        });
+    },
   },
   // Admin routes
   {

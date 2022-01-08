@@ -3,17 +3,27 @@
     <div id="triangle"></div>
     <div id="title">{{"Panier"}}</div>
     
-    <div id="cart-item">
-      <cartItem v-for="(item, i) in cartList" :key="i" :data="item" />
+    <div id="content" v-if="haveProduct">
+      <div id="cart-item">
+        <cartItem v-for="(item, i) in cartList.productCarts" :key="i" :data="item" />
+      </div>
+
+      <div id="cost">
+        Coût total de la commande: <span id="cost-price">{{cartList.cartPrice}} €</span>
+      </div>
+
+      <div id="button">
+        <button id="clear">Vider le panier</button>
+        <button id="validate" @click="navigateToCartPage">Voir le panier et passer la commande</button>
+      </div>
     </div>
 
-    <div id="cost">
-      Coût total de la commande: <span id="cost-price">{{cost}} €</span>
+    <div id="no-product" class="msg" v-else-if="!haveProduct">
+      Pas de produit dans le panier
     </div>
 
-    <div id="button">
-      <button id="clear">Vider le panier</button>
-      <button id="validate" @click="navigateToCartPage">Voir le panier et passer la commande</button>
+    <div id="error" class="msg" v-else>
+      Erreur lors de la récupération des données
     </div>
 
   </div>
@@ -29,51 +39,66 @@ export default {
   },
   data() {
     return {
-      cartList: [{
-        name: 'Produit 1 | 207cm x 100cm',
-        img: 'img3.jpg',
-        qte: 2,
-        price: 115.99,
-      }, {
-        name: 'Produit 3 | Coloris 2',
-        img: 'img1.jpg',
-        qte: 1,
-        price: 16.99,
-      }, {
-        name: 'Produit 2 | 39cm x 25cm',
-        img: 'img2.jpg',
-        qte: 5,
-        price: 19.99,
-      }],
-      cost: 0,
+      user: null,
+      cartList: null,
+      haveError: false,
+      haveProduct: false,
     };
   },
   methods: {
-    calcCost() {
-      for (let i = 0; i < this.cartList.length; i++) {
-        const product = this.cartList[i];
-        this.cost += (product.price * product.qte);
-      }
-      this.cost = Math.round(this.cost * 100) / 100;
-    },
-    async getCartProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/best/products?size=${this.nbSlide}`);
-    },
     navigateToCartPage() {
       this.$router.push('/cart');
       this.$emit('close');
     },
+    setConfig() {
+      return {
+        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
+    },
+    getIdentity() {
+      this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig())
+        .then(({ data: user }) => {
+          this.user = user;
+          this.getCartContent();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.haveError = true;
+        });
+    },
+    getCartContent() {
+      this.$axios.get(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/${this.user.id}`, this.setConfig())
+        .then(({ data: cartContent }) => {
+          if (cartContent.length !== 0) {
+            this.cartList = cartContent;
+            this.haveProduct = true;
+            console.log(cartContent);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.haveError = true;
+        });
+    },
   },
   mounted: function () {
-    this.calcCost();
+    this.getIdentity();
   },
 };
 </script>
 
 <style scoped lang="scss">
+.msg {
+  height: 20vh;
+  padding: 2rem;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 #cart{
   position: absolute;
-  width: 25vw;
+  width: 27vw;
   right: 2vw;
   top: 5vh;
   background: white;
@@ -82,7 +107,7 @@ export default {
   #triangle{
     position: absolute;
     top: -5%;
-    right: 18%;
+    right: 17%;
     width: 0;
     height: 0;
     border-left: 2vh solid transparent; 
@@ -124,7 +149,8 @@ export default {
       background: none;
       border: none;
       cursor: pointer;
-      padding: 0 0.5rem;
+      padding: 0 1rem;
+      border-radius: 2rem;
     }
     #clear{
       background: #e1e1e1;

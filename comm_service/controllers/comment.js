@@ -1,25 +1,31 @@
 const db = require("../models");
+const axios = require("axios")
 const Comment = db.comment;
 
-exports.newComment = (req, res) => {
+exports.newComment = async(req, res) => {
 
   try{
-    if( typeof req.body.note === 'undefined' || typeof req.body.idProduct === 'undefined' || typeof req.body.idUser === 'undefined' || typeof req.body.text === 'undefined'){
+    if( typeof req.body.note === 'undefined' || typeof req.body.idProduct === 'undefined' || typeof req.body.text === 'undefined'){
       throw new Error("Il manque des informations dans notre requete");
     }
       
-    if( isNaN(parseInt(req.body.note)) || isNaN(parseInt(req.body.idProduct)) ||isNaN(parseInt(req.body.idUser))){
+    if( isNaN(parseInt(req.body.note)) || isNaN(parseInt(req.body.idProduct)) ){
         throw new Error("Une des valeurs envoyé n'est pas valide");
     }
+
+
+    const config = {
+      headers: { authorization: req.headers.authorization}
+    };
+    let resultAxios = await axios.get("http://localhost:3010/api/auth/user",config)
+    const idUser = resultAxios.data.id
+
     // Read text, note, idProduct and idUser from request body
-    const { text, note, idProduct, idUser } = req.body;
+    const { text, note, idProduct } = req.body;
 
     Comment.create({ text: String(text), note: note, idProduct: idProduct, idUser: idUser })
-    .then((Comment) => {
-      res.status(200).send({
-        message: 'Commentaire créer',
-        content: Comment
-      });
+    .then((comment) => {
+      res.status(200).send(comment);
     })
     .catch((err) => {
       throw new Error("Impossible de creer votre commentaire ");
@@ -48,10 +54,8 @@ exports.findProductComment = (req, res) => {
           idProduct: req.params.idProduct
         }
     })
-      .then((user) => {
-        res.status(200).send({
-          content: user
-        });
+      .then((comments) => {
+        res.status(200).send(comments);
       })
       .catch((err) => {
         throw new Error('Les commentaires sont introuvable');
@@ -81,21 +85,20 @@ exports.findOne = (req, res) => {
           id: req.params.id
         }
     })
-      .then((user) => {
-        if(user != null || 0){
-          res.status(200).send({
-            content: user
-          });
+      .then((comment) => {
+        if(comment != null || 0){
+          res.status(200).send(comment);
         }else{
-          res.status(200).send({
-            message: 'Commentaire introuvable',
-            content: null
+          res.status(204).send({
+            message: 'Commentaire introuvable'
           });
         }
         
       })
       .catch((err) => {
-        throw new Error('Une erreur est survenue');
+        res.status(400).send({
+          message: 'Une erreur est survenue'
+        });
       }); 
   }catch(error){
     res.status(400).send({
@@ -123,13 +126,13 @@ exports.removeOne = (req, res) => {
           id: req.params.id
         }
     })
-      .then((user) => {
-        if(user != 0){
+      .then((comment) => {
+        if(comment != 0){
           res.status(200).send({
             message: 'Commentaire supprimer'
           });
         }else{
-          res.status(200).send({
+          res.status(204).send({
             message: 'Commentaire introuvable'
           });
         }
@@ -163,10 +166,8 @@ exports.removeOne = (req, res) => {
           idUser: req.params.idUser
           }
       })
-        .then((user) => {
-          res.status(200).send({
-            content: user
-          });
+        .then((comments) => {
+          res.status(200).send(comments);
         })
         .catch((err) => {
           throw new Error('Les commentaires sont introuvable');
@@ -179,6 +180,19 @@ exports.removeOne = (req, res) => {
   
     };
 
+  exports.findAllComment = (req, res) => {
+    Comment.findAll({
+      attributes: ['text', 'note', 'idProduct', 'idUser']
+    })
+      .then((comments) => {
+        res.status(200).send(comments);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message
+        });
+      }); 
+  }
   
 
 

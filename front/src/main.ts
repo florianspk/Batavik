@@ -32,13 +32,18 @@ library.add(
 );
 
 const app = createApp(App);
-app.use(router);
+app.use(router, app);
 app.component('f-icon', FontAwesomeIcon);
 app.mount('#app');
 
 // Define global var
+const baseurl = process.env.NODE_ENV === 'development' ? 'http://localhost' : 'https://julienkeiff.fr';
+const port = Port;
+
 app.config.globalProperties.$env = process.env.NODE_ENV;
-app.config.globalProperties.$baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost' : 'https://julienkeiff.fr';
-app.config.globalProperties.$port = Port;
+app.config.globalProperties.$baseURL = baseurl;
+app.config.globalProperties.$port = port;
 app.config.globalProperties.$axios = Axios;
 app.config.globalProperties.$date = DateTime;
+
+export { baseurl, port };
