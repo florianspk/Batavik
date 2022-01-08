@@ -12,7 +12,7 @@ module.exports = {
                 type: Sequelize.FLOAT
             }, depth: {
                 type: Sequelize.FLOAT
-            }, length: {
+            }, width: {
                 type: Sequelize.FLOAT
             }, color: {
                 type: Sequelize.STRING

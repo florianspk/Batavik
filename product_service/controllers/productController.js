@@ -16,7 +16,7 @@ exports.getProducts = (req, res, next) => {
         offset,
         include: [{
             model: model.Info_product,
-            attributes: ['height', 'depth', 'length', 'color'],
+            attributes: ['height', 'depth', 'width', 'color'],
             as: "info",
         }],
     }).then(result => {
@@ -40,7 +40,7 @@ exports.getProduct = (req, res, next) => {
         attributes: ['name', 'price', 'description', 'image', 'rate', 'categId', 'createdAt', 'updatedAt'],
         include: [{
             model: model.Info_product,
-            attributes: ['height', 'depth', 'length', 'color'],
+            attributes: ['height', 'depth', 'width', 'color'],
             as: "info"
         }]
     }).then(result => {
@@ -77,7 +77,7 @@ exports.newProduct = async (req, res, next) => {
         let idCateg = req.body.categId
         let height = req.body.height ? req.body.height : null;
         let depth = req.body.depth ? req.body.depth : null;
-        let length = req.body.length ? req.body.length : null;
+        let width = req.body.width ? req.body.width : null;
         let color = req.body.color ? req.body.color : null;
         let t;
         try {
@@ -101,7 +101,7 @@ exports.newProduct = async (req, res, next) => {
             const infoResult = await model.Info_product.create({
                 height: height,
                 depth: depth,
-                length: length,
+                width: width,
                 color: color,
                 ProductId: prod_id,
                 createdAt: Date.now(),
@@ -163,13 +163,13 @@ exports.updateProduct = async (req, res, next) => {
         const infoUpdate = await model.Info_product.findOne({where: {productId: idProduct}}).then(info_product => {
             let height = req.body.height ? req.body.height : info_product.getDataValue("height");
             let depth = req.body.depth ? req.body.depth : info_product.getDataValue("depth");
-            let length = req.body.length ? req.body.length : info_product.getDataValue("length");
+            let width = req.body.width ? req.body.width : info_product.getDataValue("width");
             let color = req.body.color ? req.body.color : info_product.getDataValue("color");
             if (info_product) {
                 info_product.update({
                     height: height,
                     depth: depth,
-                    length: length,
+                    width: width,
                     color: color,
                     updatedAt: Date.now()
                 }, {
@@ -225,7 +225,7 @@ exports.topProducts = (req, res, next) => {
         offset,
         include: [{
             model: model.Info_product,
-            attributes: ['height', 'depth', 'length', 'color'],
+            attributes: ['height', 'depth', 'width', 'color'],
             as: "info",
         }],
         order: Sequelize.literal('rand()')
@@ -250,7 +250,7 @@ exports.bestProducts = (req, res, next) => {
         offset,
         include: [{
             model: model.Info_product,
-            attributes: ['height', 'depth', 'length', 'color'],
+            attributes: ['height', 'depth', 'width', 'color'],
             as: "info",
         }],
         order: Sequelize.literal('rand()')
@@ -285,7 +285,7 @@ exports.searchProduct = (req, res, next) => {
         },
         include: [{
             model: model.Info_product,
-            attributes: ['height', 'depth', 'length', 'color'],
+            attributes: ['height', 'depth', 'width', 'color'],
             as: "info",
         }]
     }).then(result => {

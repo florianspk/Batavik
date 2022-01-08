@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     Info_product.init({
         height: DataTypes.FLOAT,
         depth: DataTypes.FLOAT,
-        length: DataTypes.FLOAT,
+        width: DataTypes.FLOAT,
         color: DataTypes.STRING,
     }, {
         sequelize,

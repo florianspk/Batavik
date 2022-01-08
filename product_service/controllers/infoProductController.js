@@ -5,14 +5,14 @@ exports.addInfo = (req, res, next) => {
     try {
         let height = req.body.height ? req.body.height : null;
         let depth = req.body.depth ? req.body.depth : null;
-        let length = req.body.length ? req.body.length : null;
+        let width = req.body.width ? req.body.width : null;
         let color = req.body.color ? req.body.color : null;
         let idProduct = req.params.idProduct ? req.params.idProduct : null;
         console.log(idProduct)
         Info_Product.create({
             height: height,
             depth: depth,
-            length: length,
+            width: width,
             color: color,
             ProductId: idProduct,
             createdAt: Date.now(),
@@ -35,14 +35,14 @@ exports.updateInfo = (req, res, next) => {
             .then(info_product => {
                 let height = req.body.height ? req.body.height : info_product.getDataValue("height");
                 let depth = req.body.depth ? req.body.depth : info_product.getDataValue("depth");
-                let length = req.body.length ? req.body.length : info_product.getDataValue("length");
+                let width = req.body.width ? req.body.width : info_product.getDataValue("width");
                 let color = req.body.color ? req.body.color : info_product.getDataValue("color");
                 let productId = req.body.productId ? req.body.productId : info_product.getDataValue("productId");
                 if (info_product) {
                     info_product.update({
                         height: height,
                         depth: depth,
-                        length: length,
+                        width: width,
                         color: color,
                         productId: productId,
                         updatedAt: Date.now(),
@@ -73,7 +73,7 @@ exports.getInfo = (req, res, next) => {
         },
         limit,
         offset,
-        attributes: ['id', 'height', 'depth', 'length', 'color', 'createdAt', 'updatedAt'],
+        attributes: ['id', 'height', 'depth', 'width', 'color', 'createdAt', 'updatedAt'],
         }
     ).then(result => {
         const response = Info_Product.getPagingData(result, page, limit)

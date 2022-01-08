@@ -31,7 +31,7 @@ exports.getProductCateg = (req, res, next) => {
         attributes: ['id', 'name', 'price', 'description', 'image', 'rate', 'createdAt', 'updatedAt'],
         include: [{
             model: model.Info_product,
-            attributes: ['height', 'depth', 'length', 'color'],
+            attributes: ['height', 'depth', 'width', 'color'],
             as: "info",
         }]
     }).then(result => {
