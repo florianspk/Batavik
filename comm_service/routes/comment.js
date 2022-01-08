@@ -13,20 +13,20 @@ module.exports = (app) => {
    *       - comment
    *     description: search all comments
    *     parameters:
-   *       - in: query
-   *         name : page
-   *         schema:
-   *           type: integer
-   *           default: 1
-   *         required: false
-   *         description: The number of page
-   *       - in: query
-   *         name : size
-   *         schema:
-   *           type: integer
-   *           default: 3
-   *         required: false
-   *         description: The number of items to skip before starting to collect the result set
+   *      - in: query
+   *        name : page
+   *        schema:
+   *          type: integer
+   *          default: 1
+   *        required: false
+   *        description: The number of page
+   *      - in: query
+   *        name : size
+   *        schema:
+   *          type: integer
+   *          default: 3
+   *        required: false
+   *        description: The number of items to skip before starting to collect the result set
    *     responses:
    *       200:
    *         description: succesful operation
@@ -76,23 +76,23 @@ module.exports = (app) => {
    *       - comment
    *     description: searches all reviews for a product based on its id
    *     parameters:
-   *       - in: path
-   *         name: idProduit
-   *         type: integer
    *       - in: query
    *         name : page
    *         schema:
-   *           type: integer
-   *           default: 1
+   *          type: integer
+   *          default: 1
    *         required: false
    *         description: The number of page
    *       - in: query
    *         name : size
    *         schema:
-   *           type: integer
-   *           default: 3
+   *          type: integer
+   *          default: 3
    *         required: false
    *         description: The number of items to skip before starting to collect the result set
+   *       - in: path
+   *         name: idProduit
+   *         type: integer
    *     responses:
    *       200:
    *         description: succesful operation
@@ -168,15 +168,15 @@ module.exports = (app) => {
    *       - in: query
    *         name : page
    *         schema:
-   *           type: integer
-   *           default: 1
+   *          type: integer
+   *          default: 1
    *         required: false
    *         description: The number of page
    *       - in: query
    *         name : size
    *         schema:
-   *           type: integer
-   *           default: 3
+   *          type: integer
+   *          default: 3
    *         required: false
    *         description: The number of items to skip before starting to collect the result set
    *     responses:
