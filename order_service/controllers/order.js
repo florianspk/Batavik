@@ -22,23 +22,22 @@ exports.findAllByUser = (req, res) => {
                 model: productCart,
                 required: true,
                 include: [{
-                    model: cart ,
+                    model: order ,
                     required: true,
                     attributes: [],
                     where: {
-                        validation : 1,
                         idUser : req.params.idUser
                     }
                 }],
             }]
         })
         .then((data) => {
-        res.send(data);
+            res.send(data);
         })
         .catch((err) => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving .",
-        });
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving .",
+            });
         });
     }catch (error) {
         res.status(400).send({
