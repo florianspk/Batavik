@@ -14,14 +14,10 @@ module.exports = (app) => {
    *       - order
    *     description: searches for the invalid basket of a user with his id
    *     parameters:
-   *       - in: body
-   *         name : body
-   *         
+   *       - in: path
+   *         name : idUser
    *         schema: 
-   *          type: object
-   *          properties: 
-   *            idUser:
-   *              type: integer
+   *           type: integer
    *     responses:
    *       200:
    *         description: succesful operation
@@ -30,7 +26,7 @@ module.exports = (app) => {
    *            schema: 
    *             $ref: '#/definitions/Cart'  
   */ 
-    router.get("/", cart.findOne);
+    router.get("/:idUser", cart.findOne);
   
     // Create a new
     /**

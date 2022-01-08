@@ -13,15 +13,10 @@ module.exports = (app) => {
    *       - order
    *     description: searches all the commands of a user according to his id
    *     parameters:
-   *       - in: body
-   *         name : body
+   *       - in: path
+   *         name : idUser
    *         schema: 
-   *           type: objet
-   *           required:
-   *             - idUser
-   *           properties:
-   *            idUser:
-   *              type: integer 
+   *           type: integer
    *     responses:
    *       200:
    *         description: succesful operation
@@ -30,7 +25,7 @@ module.exports = (app) => {
    *            schema: 
    *             $ref: '#/definitions/OrderWithIdUser' 
   */
-    router.get("/allByUser", order.findAllByUser);
+    router.get("/allByUser/:idUser", order.findAllByUser);
 
   /**
    * @openapi

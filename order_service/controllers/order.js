@@ -10,11 +10,11 @@ const historystatus = db.historystatus;
 //* Find a single with an id
 exports.findAllByUser = (req, res) => {
     try{
-        if( typeof req.body.idUser === 'undefined' ){
+        if( typeof req.params.idUser === 'undefined' ){
           throw new Error("Il manque des informations dans notre requete");
         }
           
-        if( isNaN(parseInt(req.body.idUser)) ){
+        if( isNaN(parseInt(req.params.idUser)) ){
             throw new Error("Une des valeurs envoyé n'est pas valide");
         }
         order.findAll({
@@ -27,7 +27,7 @@ exports.findAllByUser = (req, res) => {
                     attributes: [],
                     where: {
                         validation : 1,
-                        idUser : req.body.idUser
+                        idUser : req.params.idUser
                     }
                 }],
             }]
@@ -224,7 +224,7 @@ exports.cancel = (req, res) => {
                     });
                     });
             }else{
-                res.status(400).send({
+                res.status(204).send({
                     message: "Commande introuvable ou fini",
                 });
             }
@@ -294,7 +294,7 @@ exports.cancel = (req, res) => {
                     });
                     });
             }else{
-                res.status(400).send({
+                res.status(204).send({
                     message: "Commande introuvable ou fini",
                 });
             }
