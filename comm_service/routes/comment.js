@@ -12,6 +12,21 @@ module.exports = (app) => {
    *     tags:
    *       - comment
    *     description: search all comments
+   *     parameters:
+   *       - in: query
+   *         name : page
+   *         schema:
+   *           type: integer
+   *           default: 1
+   *         required: false
+   *         description: The number of page
+   *       - in: query
+   *         name : size
+   *         schema:
+   *           type: integer
+   *           default: 3
+   *         required: false
+   *         description: The number of items to skip before starting to collect the result set
    *     responses:
    *       200:
    *         description: succesful operation
@@ -64,6 +79,20 @@ module.exports = (app) => {
    *       - in: path
    *         name: idProduit
    *         type: integer
+   *       - in: query
+   *         name : page
+   *         schema:
+   *           type: integer
+   *           default: 1
+   *         required: false
+   *         description: The number of page
+   *       - in: query
+   *         name : size
+   *         schema:
+   *           type: integer
+   *           default: 3
+   *         required: false
+   *         description: The number of items to skip before starting to collect the result set
    *     responses:
    *       200:
    *         description: succesful operation
@@ -136,6 +165,20 @@ module.exports = (app) => {
    *       - in: path
    *         name: idUser
    *         type: integer
+   *       - in: query
+   *         name : page
+   *         schema:
+   *           type: integer
+   *           default: 1
+   *         required: false
+   *         description: The number of page
+   *       - in: query
+   *         name : size
+   *         schema:
+   *           type: integer
+   *           default: 3
+   *         required: false
+   *         description: The number of items to skip before starting to collect the result set
    *     responses:
    *       200:
    *         description: succesful operation

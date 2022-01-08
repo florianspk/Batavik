@@ -48,11 +48,17 @@ exports.findProductComment = (req, res) => {
     if( isNaN(parseInt(req.params.idProduct)) ){
         throw new Error("Une des valeurs envoyé n'est pas valide");
     }
+
+    const {page, size} = req.query;
+    const {limit, offset} = Comment.getPagination(page, size);
+
     Comment.findAll({
       attributes: ['text', 'note', 'idProduct', 'idUser'],
       where: {
           idProduct: req.params.idProduct
-        }
+        },
+      limit,
+      offset
     })
       .then((comments) => {
         res.status(200).send(comments);
@@ -160,11 +166,17 @@ exports.removeOne = (req, res) => {
       if( isNaN(parseInt(req.params.idUser)) ){
           throw new Error("Une des valeurs envoyé n'est pas valide");
       }
+
+      const {page, size} = req.query;
+      const {limit, offset} = Comment.getPagination(page, size);
+
       Comment.findAll({
         attributes: ['text', 'note', 'idProduct', 'idUser'],
         where: {
           idUser: req.params.idUser
-          }
+          },
+          limit,
+          offset
       })
         .then((comments) => {
           res.status(200).send(comments);
@@ -181,8 +193,12 @@ exports.removeOne = (req, res) => {
     };
 
   exports.findAllComment = (req, res) => {
+    const {page, size} = req.query;
+    const {limit, offset} = Comment.getPagination(page, size);
     Comment.findAll({
-      attributes: ['text', 'note', 'idProduct', 'idUser']
+      attributes: ['text', 'note', 'idProduct', 'idUser'],
+      limit,
+      offset
     })
       .then((comments) => {
         res.status(200).send(comments);
