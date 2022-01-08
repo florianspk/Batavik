@@ -33,7 +33,7 @@
     <el-table-column prop="rate" label="Note" width="80" sortable/>
     <el-table-column prop="info[0].height" label="Hauteur (cm)" width="80" sortable/>
     <el-table-column prop="info[0].depth" label="Profondeur (cm)" width="80" sortable/>
-    <el-table-column prop="info[0].length" label="Largeur (cm)" width="80" sortable/>
+    <el-table-column prop="info[0].width" label="Largeur (cm)" width="80" sortable/>
     <el-table-column prop="info[0].color" label="Couleur" width="100" sortable/>
     <el-table-column prop="createdAt" label="Créé le" width="175" sortable>
       <template #default="scope">
@@ -118,11 +118,15 @@ export default {
     };
   },
   methods: {
+    setConfig() {
+      return {
+        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
+    },
     async getProducts(val = 1) {
+      console.log(this.config);
       try {
-        const { data: product } = await this.$axios.get(
-          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products?size=10&page=${val}`,
-        );
+        const { data: product } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products?size=10&page=${val}`, this.setConfig());
         this.totalItems = product.totalItems;
         this.products = product.products;
       } catch (e) {
@@ -142,7 +146,7 @@ export default {
     },
     deleteProduct(productIndex) {
       this.$axios.delete(
-        `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.products[productIndex].id}`,
+        `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.products[productIndex].id}`, this.setConfig(),
         this.product,
       );
       this.products.splice(productIndex, 1);

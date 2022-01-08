@@ -75,7 +75,7 @@
           </el-icon>
           Largeur
         </template>
-        {{ product.info[0].length }} cm
+        {{ product.info[0].width }} cm
       </el-descriptions-item>
       <el-descriptions-item>
         <template #label>

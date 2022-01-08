@@ -10,18 +10,22 @@
     <el-form-item label="Description" prop="description">
       <el-input v-model="product.description" type="textarea"></el-input>
     </el-form-item>
-    <div v-if="product.info.length >= 1">
-      <el-form-item label="Hauteur" prop="info[0].height">
-        <el-input-number v-model="product.info[0].height"></el-input-number>
+    <div v-if="!edit || (edit && product?.info?.length >= 1)">
+      <el-form-item label="Hauteur" prop="height">
+        <el-input-number v-if="edit" v-model="product.info[0].height"></el-input-number>
+        <el-input-number v-else v-model="product.height"></el-input-number>
       </el-form-item>
-      <el-form-item label="Profondeur" prop="info[0].depth">
-        <el-input-number v-model="product.info[0].depth"></el-input-number>
+      <el-form-item label="Profondeur" prop="depth">
+        <el-input-number v-if="edit" v-model="product.info[0].depth"></el-input-number>
+        <el-input-number v-else v-model="product.depth"></el-input-number>
       </el-form-item>
-      <el-form-item label="Largeur" prop="info[0].length">
-        <el-input-number v-model="product.info[0].length"></el-input-number>
+      <el-form-item label="Largeur" prop="width">
+        <el-input-number v-if="edit" v-model="product.info[0].width"></el-input-number>
+        <el-input-number v-else v-model="product.width"></el-input-number>
       </el-form-item>
-      <el-form-item label="Couleur" prop="info[0].color">
-        <el-input v-model="product.info[0].color"></el-input>
+      <el-form-item label="Couleur" prop="color">
+        <el-input v-if="edit" v-model="product.info[0].color"></el-input>
+        <el-input v-else v-model="product.color"></el-input>
       </el-form-item>
     </div>
     <el-form-item>
@@ -56,14 +60,10 @@ export default {
         description: '',
         image: null,
         categId: 1,
-        info: [
-          {
-            height: 0,
-            depth: 0,
-            length: 0,
-            color: null,
-          },
-        ],
+        height: 0,
+        depth: 0,
+        width: 0,
+        color: null,
       },
       rules: {
         name: [
@@ -87,52 +87,51 @@ export default {
             trigger: 'blur',
           },
         ],
-        info: [
+        height: [
           {
-            height: [
-              {
-                required: true,
-                message: 'La hauteur est obligatoire',
-                trigger: 'blur',
-              },
-            ],
-            depth: [
-              {
-                required: true,
-                message: 'La profondeur est obligatoire',
-                trigger: 'blur',
-              },
-            ],
-            length: [
-              {
-                required: true,
-                message: 'La largeur est obligatoire',
-                trigger: 'blur',
-              },
-            ],
-            color: [
-              {
-                required: true,
-                message: 'La couleur est obligatoire',
-                trigger: 'blur',
-              },
-            ],
+            required: true,
+            message: 'La hauteur est obligatoire',
+            trigger: 'blur',
+          },
+        ],
+        depth: [
+          {
+            required: true,
+            message: 'La profondeur est obligatoire',
+            trigger: 'blur',
+          },
+        ],
+        width: [
+          {
+            required: true,
+            message: 'La largeur est obligatoire',
+            trigger: 'blur',
+          },
+        ],
+        color: [
+          {
+            required: true,
+            message: 'La couleur est obligatoire',
+            trigger: 'blur',
           },
         ],
       },
     };
   },
   methods: {
+    setConfig() {
+      return {
+        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
+    },
     async onSubmit() {
       if (!this.edit) {
         await this.$axios.post(
-          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product`,
-          this.product,
+          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product`, this.product, this.setConfig(),
         );
       } else {
         await this.$axios.patch(
-          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.product.id}`,
-          this.product,
+          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.product.id}`, this.product, this.setConfig(),
         );
       }
       this.close();
@@ -141,6 +140,7 @@ export default {
       this.$emit('close');
     },
     changeProduct() {
+      console.log(this.productToEdit);
       if (this.edit && this.productToEdit != null) {
         this.product = this.productToEdit;
       }
