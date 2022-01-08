@@ -3,7 +3,7 @@
 
     <div id="user-infos">
       <img src="@/assets/icons/person-circle-outline.svg" id="profile">
-      <span class="username"> {{username}} </span>
+      <span class="username"> {{user.firstname}} {{user.lastname}} </span>
       <span class="prefered-city"> 
         <img src="@/assets/icons/location-outline.svg" id="pin"> 
         {{preferedCity}} 
@@ -23,7 +23,7 @@
 <script>
 export default {
   name: 'side',
-  props: ['userID'],
+  props: ['user'],
   data() {
     return {
       username: 'John Doe',

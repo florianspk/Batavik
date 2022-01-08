@@ -3,31 +3,35 @@
     <div id="create">
       <h1>Creer un nouveau compte</h1>
       <div id="form">
-        <label for="username">Nom d'utilisateur</label> <br>
-        <input name="username" type="text" placeholder="johnDoe"> <br>
+        <label for="firstname">Prenom</label> <br>
+        <input name="firstname" type="text" placeholder="John" v-model="userRegister.firstname"> <br>
+        <label for="lastname">Nom</label> <br>
+        <input name="lastname" type="text" placeholder="Doe" v-model="userRegister.lastname"> <br>
+        <label for="mail">Email</label> <br>
+        <input name="mail" type="text" placeholder="johnDoe@email.fr" v-model="userRegister.email"> <br>
         <label for="password" class="password">Mot de passe</label> <br>
-        <input name="password" type="password" placeholder="···········"> <br>
-        <div class="info">Mot de passe oublié ?</div>
+        <input name="password" type="password" placeholder="···········" v-model="userRegister.password"> <br>
+        <label for="v-password" class="password">Valider le mot de passe</label> <br>
+        <input name="v-password" type="password" placeholder="···········" v-model="validatePassword"> <br>
       </div>
 
       <div id="button">
-        <button id="validate" @click="validate()">Creer le compte</button>
+        <button id="validate" @click="validateRegister()">Creer le compte</button>
       </div>
     </div>
 
     <div id="login">
       <h1>Se connecter</h1>
       <div id="form">
-        <label for="username">Nom d'utilisateur</label> <br>
-        <input name="username" type="text" placeholder="johnDoe"> <br>
+        <label for="mail">Email</label> <br>
+        <input name="mail" type="text" placeholder="johnDoe@email.fr" v-model="userLogin.email"> <br>
         <label for="password" class="password">Mot de passe</label> <br>
-        <input name="password" type="password" placeholder="···········"> <br>
-        <label for="v-password" class="password">Valider le mot de passe</label> <br>
-        <input name="v-password" type="password" placeholder="···········"> <br>
+        <input name="password" type="password" placeholder="···········" v-model="userLogin.password"> <br>
+        <div class="info">Mot de passe oublié ?</div>
       </div>
 
       <div id="button">
-        <button id="validate" @click="validate()">Se connecter</button>
+        <button id="validate" @click="validateLogin()">Se connecter</button>
       </div>
     </div>
 
@@ -36,7 +40,51 @@
 
 <script>
 export default {
-
+  name: 'Login',
+  data() {
+    return {
+      userRegister: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+      },
+      validatePassword: '',
+      userLogin: {
+        email: '',
+        password: '',
+      },
+    };
+  },
+  methods: {
+    validateLogin() {
+      this.$axios.post(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/login`, this.userLogin)
+        .then(({ data: user }) => {
+          console.log(user);
+          this.setToken(user.token);
+          this.$router.push('/user');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    validateRegister() {
+      if (this.userRegister.password === this.validatePassword) {
+        this.$axios.post(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/register`, this.userRegister)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        console.log('Les mots de passe ne correspondent pas');
+      }
+    }, 
+    setToken(token) {
+      localStorage.setItem('token', token);
+    },
+  },
 };
 </script>
 
