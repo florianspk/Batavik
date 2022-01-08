@@ -17,19 +17,16 @@ const app = express();
 app.use(cors(corsOptions))
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false}));
+app.use(express.urlencoded({ extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/auth',userRoutes)
 
-// static Images Folder
-app.use('/uploads', express.static('./uploads'))
 
 const db = require("./models");
 
-
-db.sequelize.sync({ force: false })
+db.sequelize.sync({ force: false})
   .then(() => {
     console.log("Drop and re-sync db.");
   });
