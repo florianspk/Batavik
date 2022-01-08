@@ -8,7 +8,6 @@ module.exports = {
             try {
                 const result = await jwt.verify(token, process.env.JWT_SECRET)
                 req.decoded = result;
-                console.log(req.headers.host)
                 next()
             } catch (error) {
                 return res.status(401).json({"status": "error", "message": "Invalid Authentication.", error})
