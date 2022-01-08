@@ -11,7 +11,7 @@
       <div id="styles" v-if="infos.length >= 1">
         <h2>Style du produit disponible</h2>
         <div id="style">
-          <button v-for="(style, i) in infos" :key="i" :class="active === i ? 'active' : ''" @click="active = i">{{style.height}}cm X {{style.depth}}cm - Style {{style.color}}</button>
+          <button v-for="(style, i) in infos" :key="i" :class="active === i ? 'active' : ''" @click="active = i">{{style.height}}cm X {{style.width}}cm X {{style.depth}}cm - Style {{style.color}}</button>
         </div>
       </div>
 
