@@ -2,7 +2,7 @@
   <div id="product-page" v-if=dataLoaded>
     <product-description :data="productData" />
     <same-product :products="simiProduct" v-if="simiProduct.length >= 1" />
-    <comment-section />
+    <comment-section :commentList="comments" />
   </div>
   
   <div v-else id="spinner">
@@ -28,6 +28,7 @@ export default {
     return {
       productData: null,
       simiProduct: [],
+      comments: [],
       dataLoaded: false,
     };
   },
@@ -41,10 +42,15 @@ export default {
       const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/best`);
       this.simiProduct = products.products;
     },
+    async getComments() {
+      const { data: comments } = await this.$axios.get(`${this.$baseURL}:${this.$port.COMM_SERVICE}/api/comment/product/${this.$route.params.id}`);
+      this.comments = comments;
+    },
   },
   mounted() {
     this.getProductInfo();
     this.getSimilaire();
+    this.getComments();
   },
 };
 </script>
