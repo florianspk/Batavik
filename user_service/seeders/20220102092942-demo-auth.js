@@ -1,18 +1,16 @@
 'use strict';
-const faker = require('faker');
-faker.locale = "fr";
+const casual = require('casual');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     let users = []
-    for (let i=0; i < 10; i++){
+    for (let i=0; i < 5; i++){
       users.push({
-        lastname: faker.name.lastName(),
-        firstname: faker.name.firstName(),
-        email: faker.internet.email(),
-        password: faker.internet.password(),
+        lastname: casual.last_name,
+        firstname: casual.first_name,
+        email: casual.email,
+        password: casual.password,
         enabled: 1,
-        image: faker.internet.avatar(),
         lastLogin: new Date(),
         createdAt: new Date(),
         updatedAt: new Date()
