@@ -3,15 +3,17 @@
 
     <h1 id="title">Panier</h1>
 
-    <div id="card-items">
-      <cart-item :data="item" :fontSize="itemFontSize" forcedHeight=10 />
-      <cart-item :data="item" :fontSize="itemFontSize" forcedHeight=10 />
-      <cart-item :data="item" :fontSize="itemFontSize" forcedHeight=10 />
-      <cart-item :data="item" :fontSize="itemFontSize" forcedHeight=10 />
+    <div id="card-items" v-if="haveProduct">
+      <cart-item v-for="(item, i) in cartList.productCarts" :key="i" :data="item" :fontSize="itemFontSize" forcedHeight=10 />
     </div>
 
-    <div id="total">
-      <h2 id="line">Total du panier: {{totalPrice}}€</h2>
+    <div id="total" v-if="haveProduct">
+      <h2 id="line">Total du panier: {{cartList.cartPrice}}€</h2>
+    </div>
+
+    <div id="buttons">
+      <button class="btn" id="validate" @click="validate()">Valider</button>
+      <button class="btn" id="clear" @click="clearCart()">Vider le panier</button>
     </div>
   </div>
 </template>
@@ -24,24 +26,48 @@ export default {
   components: { cartItem },
   data() {
     return {
-      item: {
-        name: 'Produit 1 | 207cm x 100cm',
-        img: 'img3.jpg',
-        qte: 2,
-        price: 115.99,
-      },
-      totalPrice: 463.96,
-      itemFontSize: 1.7,
+      cartList: null,
+      haveProduct: false,
     };
   },
   methods: {
     setFontSize() {
       this.itemFontSize = window.innerHeight > window.innerWidth ? 1.1 : 1.7;
     },
+    setConfig() {
+      return {
+        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
+    },
+    getIdentity() {
+      this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig())
+        .then(({ data: user }) => {
+          this.user = user;
+          this.getCartContent();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.haveError = true;
+        });
+    },
+    getCartContent() {
+      this.$axios.get(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/${this.user.id}`, this.setConfig())
+        .then(({ data: cartContent }) => {
+          if (cartContent.length !== 0) {
+            this.cartList = cartContent;
+            this.haveProduct = true;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.haveError = true;
+        });
+    },
   },
   mounted() {
     window.addEventListener('resize', () => this.setFontSize());
     this.setFontSize();
+    this.getIdentity();
     // TODO Ajouter les appels Axios
   },
 };
@@ -70,6 +96,8 @@ export default {
   }
 
   #total {
+    position: absolute;
+    bottom: 5vh;
     display: flex;
     justify-content: flex-end;
     padding-top: 1vh;
@@ -83,6 +111,32 @@ export default {
       black, 
       rgba(0, 0, 0, 0)
     ) 1 0 0 0;
+  }
+
+  #validate{
+    background: #a7d1a7;
+    &:hover{
+      background: #94b894;
+    }
+  }
+
+  #buttons{
+    position: absolute;
+    bottom: 4vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 25%;
+    .btn{
+      width: 45%;
+      border-radius: 2rem;
+    }
+    #clear{
+      background: #e1e1e1;
+      &:hover{
+        background: #d2d2d2;
+      }
+    }
   }
 }
 
