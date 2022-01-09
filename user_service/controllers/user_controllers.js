@@ -36,7 +36,7 @@ module.exports = {
         };
         axios.get("http://localhost:3010/api/auth/user", config).then(response => {
             User.findAll({
-                where:{id: response.data.id},
+                where: {id: response.data.id},
                 attributes: {exclude: ["password"]},
                 include: [{
                     model: model.Adress,
@@ -55,26 +55,18 @@ module.exports = {
             return res.status(401).json({"status": "error", "message": "Invalid Authentication.", error})
         })
     },
-    createUser(req, res, next) {
-        let image, adress_name, adress_number, adress_additionalAdress, poastalCode, city_name;
+    async deleteCurrentUser(req, res, next) {
+        const config = {
+            headers: {authorization: req.headers.authorization}
+        };
         try {
-
-        } catch (e) {
-            res.status(401).json(e.message)
-        }
-
-    },
-    deleteCurrentUser(req, res, next) {
-
-    },
-    editCurrentUser(req, res, next) {
-
-    },
-    getOneUser(req, res, next) {
-        try {
-            const idUser = req.params.idUser
-            User.findAll({
-                where:{id: idUser},
+            const idCurrentuser = await axios.get("http://localhost:3010/api/auth/user", config);
+            console.log()
+            const idupdateUser = (await (await User.findByPk(idCurrentuser.data.id)).update({
+                enabled: 0,
+            })).getDataValue("id")
+            User.findOne({
+                where: {id: idupdateUser},
                 attributes: {exclude: ["password"]},
                 include: [{
                     model: model.Adress,
@@ -93,10 +85,36 @@ module.exports = {
             res.status(401).json(e.message)
         }
     },
-    editOneUser(req,res,next){
-
+    editCurrentUser(req, res, next) {
+        //TODO
     },
-    deleteOneUser(req,res,next){
-
+    getOneUser(req, res, next) {
+        try {
+            const idUser = req.params.idUser
+            User.findOne({
+                where: {id: idUser},
+                attributes: {exclude: ["password"]},
+                include: [{
+                    model: model.Adress,
+                    as: "Adress",
+                    include: [{
+                        model: model.City,
+                        as: "City"
+                    }]
+                }]
+            }).then(result => {
+                res.status(200).json(result);
+            }).catch(error => {
+                res.status(401).json(error.message)
+            })
+        } catch (e) {
+            res.status(401).json(e.message)
+        }
+    },
+    editOneUser(req, res, next) {
+        //TODO
+    },
+    deleteOneUser(req, res, next) {
+        //TODO
     }
 }
