@@ -1,6 +1,7 @@
 module.exports = (app) => {
     const cart = require("../controllers/cart.js");
-  
+    const auth = require("../middlewares/auth.js")
+    
     var router = require("express").Router();
   
     // find one
@@ -26,7 +27,7 @@ module.exports = (app) => {
    *            schema: 
    *             $ref: '#/definitions/Cart'  
   */ 
-    router.get("/:idUser", cart.findOne);
+    router.get("/:idUser", auth.validateToken, cart.findOne);
   
     // Create a new
     /**
@@ -64,7 +65,7 @@ module.exports = (app) => {
    *             
    *             
     */ 
-    router.post("/", cart.addcart);
+    router.post("/", auth.validateToken, cart.addcart);
   
     // cahnge quentiter or delete a row cart 
     /**
@@ -101,7 +102,7 @@ module.exports = (app) => {
    *             $ref: '#/definitions/MessageResponse' 
 
   */ 
-    router.post("/quantityProduct", cart.quantityProduct);
+    router.post("/quantityProduct", auth.validateToken, cart.quantityProduct);
 
         /**
    * @openapi
@@ -126,7 +127,7 @@ module.exports = (app) => {
    *             $ref: '#/definitions/MessageResponse' 
 
   */ 
-    router.delete("/clean/:id", cart.cleanCart);
+    router.delete("/clean/:id", auth.validateToken, cart.cleanCart);
   
     app.use("/api/cart", router);
    
