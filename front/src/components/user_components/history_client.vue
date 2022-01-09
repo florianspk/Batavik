@@ -15,7 +15,7 @@
     <div id="section-container" v-if="history.length > 1">
       <div class="section">
         <div class="title">Vos anciennes commandes</div>
-        <div class="content" v-for="(item, i) in history" :key="i">
+        <div class="content" v-for="(item, i) in history" :key="i" :style="i == 0 ? 'margin-top:1%' : ''" >
           <div class="sub-title" v-if="i != 0">{{createDate(history[i]?.createdAt)}} <button class="btn">Voir la facture</button></div>
           
           <div class="last-checkout" v-if="i != 0"> 
@@ -62,17 +62,12 @@ export default {
     }
   }
   .section{
-    position: relative;
-    margin-top: 5%;
-    margin-bottom: 7%;
-    &:first-of-type{
-      margin-top: 1%;
-    }
     .total-cost {
       margin-top: 2%;
       font-size: 1.5em;
-      position: absolute;
-      right: 0;
+      text-align: right;
+      padding-right: 1%;
+      margin-bottom: 4%;
     }
   }
   .bar{
