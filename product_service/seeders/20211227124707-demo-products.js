@@ -1,6 +1,6 @@
 'use strict';
-const faker = require('faker');
-faker.locale = "fr";
+const casual = require('casual');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     let categs = ["Pare douche","Cloison/Parois","Cheminée"];
@@ -20,12 +20,12 @@ module.exports = {
     );
     for (let i=0; i < 100; i++){
         products.push({
-          name: faker.commerce.productName(),
-          price:faker.commerce.price(1, 10000, 2),
-          description : faker.commerce.productDescription(),
+          name: casual.title,
+          price: casual.double(0,1000).toFixed(2),
+          description : casual.short_description,
           rate:  Math.floor(Math.random() * 10),
-          image: faker.image.abstract() + '?_r=' + Math.floor(((new Date()).getTime() * Math.random()) + i),
-          categId: faker.random.arrayElement(products_categ[0]).id,
+          image:  'http://placeimg.com/640/480/abstract?_r=' + Math.floor(((new Date()).getTime() * Math.random()) + i),
+          categId: casual.random_element(products_categ[0]).id,
           createdAt:new Date(),
           updatedAt:new Date(),
         })
@@ -39,9 +39,9 @@ module.exports = {
       info_products.push({
         height : parseFloat(Math.random() * 100).toFixed(2),
         depth : parseFloat(Math.random() * 100).toFixed(2),
-        length : parseFloat(Math.random() * 100).toFixed(2),
-        color : faker.commerce.color(),
-        ProductID: faker.random.arrayElement(products_id[0]).id,
+        width : parseFloat(Math.random() * 100).toFixed(2),
+        color : casual.color_name,
+        ProductID: casual.random_element(products_id[0]).id,
         createdAt:new Date(),
         updatedAt:new Date(),
       })
