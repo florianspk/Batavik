@@ -6,6 +6,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser')
 
 const userRoutes = require('./routes/users')
+const adressRoutes = require('./routes/adress')
 
 const corsOptions = {
     origin: process.env.ORIGIN_ALLOWED || "http://localhost:8080",
@@ -23,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/api', userRoutes)
+
+app.use('/api/adress/', adressRoutes)
 
 // static Images Folder
 app.use('/uploads', express.static('./uploads'))
