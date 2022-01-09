@@ -51,6 +51,7 @@ exports.signIn = async (req, res) => {
                 }, attributes: {exclude: ["password"]}
             })
             if (user){
+
                 const payload = {id: userVal.id, email: userVal.email};
                 const options = {expiresIn: '1d'};
                 const secret = JWT_SECRET;
