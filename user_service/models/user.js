@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         through: "LivesIn",
         as: "Adress",
         foreignKey: "userId",
+        onDelete: "cascade"
       });
 
     }

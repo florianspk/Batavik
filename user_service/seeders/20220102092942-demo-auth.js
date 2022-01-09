@@ -10,6 +10,7 @@ module.exports = {
         firstname: casual.first_name,
         email: casual.email,
         password: casual.password,
+        image:  'http://placeimg.com/640/480/abstract?_r=' + Math.floor(((new Date()).getTime() * Math.random()) + i),
         enabled: 1,
         lastLogin: new Date(),
         createdAt: new Date(),
@@ -17,6 +18,7 @@ module.exports = {
       })
     }
     await queryInterface.bulkInsert('Users',users, {});
+
 
   },
   down: async (queryInterface, Sequelize) => {

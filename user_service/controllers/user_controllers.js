@@ -4,19 +4,27 @@ const User = model.User;
 
 module.exports = {
     getAllUser(req,res,next){
+        const {page, size} = req.query;
+        const {limit, offset} = User.getPagination(page, size);
         User.findAll({
             attributes: {exclude: ["password"]},
+            limit,
+            offset,
             include: [{
                 model: model.Adress,
                 as: "Adress",
-                //TODO
-                // include: [{
-                //     model: model.City,
-                //     as: "City"
-                // }]
+                include: [{
+                    model: model.City,
+                    as: "cityId"
+                }]
             }]
-        }).then(response => {
-            res.status(200).json(response)
+        }).then(result => {
+            User.count().then(count => {
+                const response = User.getPagingData(result, count, page, limit)
+                res.status(200).json(response);
+            }).catch(error => {
+                res.status(401).json(error.message)
+            })
         }).catch(error => {
             res.status(401).json(error.message)
         })
