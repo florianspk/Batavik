@@ -150,7 +150,7 @@ module.exports = (app) => {
    *             $ref: '#/definitions/MessageResponse' 
    *     
   */
-    router.delete("/:id", comment.removeOne)
+    router.delete("/:id", auth.validateToken, comment.removeOne)
 
   /**
    * @openapi

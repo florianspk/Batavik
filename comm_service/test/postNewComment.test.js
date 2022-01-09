@@ -2,23 +2,21 @@
 const request  = require("supertest");
 const app = require("../app.js");
 const axios = require('axios');
-const FormData = require('form-data');
+const qs = require('qs');
 
 describe("search for a user's unvalidated basket, if it does not exist, create it, then create a product Card with the basket id, with the product id and with the quantity", () => {
 
 
     it('valide test', async() => {
       //connexion
-      var data = new FormData();
-      data.append('email', 'soria.cao@hotmail.com');
-      data.append('password', 'azerty');
+      var data = qs.stringify({
+      'email': 'test4',
+      'password': 'test' 
+      });
       
       var config = {
         method: 'post',
         url: 'http://localhost:3010/api/auth/login',
-        headers: { 
-          ...data.getHeaders()
-        },
         data : data
       };
       
@@ -44,24 +42,22 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
 
     it('no valide test 1', async() => {
       //connexion
-      var data = new FormData();
-      data.append('email', 'soria.cao@hotmail.com');
-      data.append('password', 'azerty');
-      
-      var config = {
-        method: 'post',
-        url: 'http://localhost:3010/api/auth/login',
-        headers: { 
-          ...data.getHeaders()
-        },
-        data : data
-      };
-      
-      await axios(config)
-      .then(function (response) {
-        token = response.data.token;
-      })
-      //connexion
+      var data = qs.stringify({
+        'email': 'test4',
+        'password': 'test' 
+        });
+        
+        var config = {
+          method: 'post',
+          url: 'http://localhost:3010/api/auth/login',
+          data : data
+        };
+        
+        await axios(config)
+        .then(function (response) {
+          token = response.data.token;
+        })
+        //connexion
 
       const res = await request(app)
       .post("/api/comment")
@@ -77,24 +73,22 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
 
     it('no valide test 2', async() => {
       //connexion
-      var data = new FormData();
-      data.append('email', 'soria.cao@hotmail.com');
-      data.append('password', 'azerty');
-      
-      var config = {
-        method: 'post',
-        url: 'http://localhost:3010/api/auth/login',
-        headers: { 
-          ...data.getHeaders()
-        },
-        data : data
-      };
-      
-      await axios(config)
-      .then(function (response) {
-        token = response.data.token;
-      })
-      //connexion
+      var data = qs.stringify({
+        'email': 'test4',
+        'password': 'test' 
+        });
+        
+        var config = {
+          method: 'post',
+          url: 'http://localhost:3010/api/auth/login',
+          data : data
+        };
+        
+        await axios(config)
+        .then(function (response) {
+          token = response.data.token;
+        })
+        //connexion
 
       const res = await request(app)
       .post("/api/comment")
@@ -111,16 +105,14 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
 
     it('no valide test 3', async() => {
       //connexion
-      var data = new FormData();
-      data.append('email', 'soria.cao@hotmail.com');
-      data.append('password', 'azerty');
+      var data = qs.stringify({
+      'email': 'test4',
+      'password': 'test' 
+      });
       
       var config = {
         method: 'post',
         url: 'http://localhost:3010/api/auth/login',
-        headers: { 
-          ...data.getHeaders()
-        },
         data : data
       };
       

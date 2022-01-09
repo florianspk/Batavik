@@ -6,7 +6,7 @@ describe('searches for the invalid basket of a user with his id', () => {
 
     it('valide test', async() => {
       const res = await request(app)
-      .get("/api/comment/1")
+      .get("/api/comment/7")
       expect(res.statusCode).toEqual(200);
     })
 
