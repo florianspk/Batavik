@@ -14,34 +14,6 @@ module.exports = {
         }).catch(error => {
             return res.status(401).json({ "status": "error", "message": "Invalid Authentication.", error })
         })
-    },
-    signIn: async (req, res, next) => {
-        const config = {
-            body: { email: req.body.email, password: req.body.password}
-        };
-        axios.get("http://localhost:3010/api/auth/sigin",config).then(response => {
-            if (response.status === 200){
-                next();
-            }else{
-                return res.status(401).json({ "status": "error", "message": "Invalid Authentication." })
-            }
-        }).catch(error => {
-            return res.status(401).json({ "status": "error", "message": "Invalid Authentication.", error })
-        })
-    },
-    signUp: async (req, res, next) => {
-        const config = {
-            body: { email: req.body.email, password: req.body.password}
-        };
-        axios.get("http://localhost:3010/api/auth/signup",config).then(response => {
-            if (response.status === 200){
-                next();
-            }else{
-                return res.status(401).json({ "status": "error", "message": "Invalid Authentication." })
-            }
-        }).catch(error => {
-            return res.status(401).json({ "status": "error", "message": "Invalid Authentication.", error })
-        })
     }
 
 }
