@@ -102,6 +102,31 @@ module.exports = (app) => {
 
   */ 
     router.post("/quantityProduct", cart.quantityProduct);
+
+        /**
+   * @openapi
+   * /api/cart/clean/:id:
+   *   delete:
+   *     security:
+   *       - jwt: []
+   *     tags:
+   *       - order
+   *     description: clean cart by id cart
+   *     parameters:
+   *       - in: path
+   *         name : idUser
+   *         schema: 
+   *           type: integer
+   *     responses:
+   *       200:
+   *         description: succesful operation
+   *         content:
+   *           application/json:
+   *            schema: 
+   *             $ref: '#/definitions/MessageResponse' 
+
+  */ 
+    router.delete("/clean/:id", cart.cleanCart);
   
     app.use("/api/cart", router);
    
