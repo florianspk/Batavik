@@ -184,14 +184,15 @@ exports.validateOrder = (req, res) => {
   //* Find a single with an id
 exports.cancel = (req, res) => {
     try{
-        if( typeof req.body.idUser === 'undefined' && typeof req.params.id === 'undefined' ){
+        if( typeof req.body.idUser === 'undefined' || typeof req.params.id === 'undefined' ){
           throw new Error("Il manque des informations dans notre requete");
         }
           
-        if( isNaN(parseInt(req.body.idUser)) && isNaN(parseInt(req.params.id)) ){
+        if( isNaN(parseInt(req.body.idUser)) || isNaN(parseInt(req.params.id)) ){
             throw new Error("Une des valeurs envoyé n'est pas valide");
         }
-        order.findByPk(req.params.id, 
+        
+        order.findOne(
             {
                 include: [{
                     model: productCart,
@@ -204,8 +205,9 @@ exports.cancel = (req, res) => {
                      order: [ [ 'createdAt', 'DESC' ]]
                  }],
                  where: {
-                     idUser : req.body.idUser
-                 }
+                    idUser : req.body.idUser,
+                    id: req.params.id
+                }
                  
             })
         .then((order) => {
@@ -246,30 +248,30 @@ exports.cancel = (req, res) => {
 
   exports.return = (req, res) => {
     try{
-        if( typeof req.body.idUser === 'undefined' && typeof req.params.id === 'undefined' ){
+        if( typeof req.body.idUser === 'undefined' || typeof req.params.id === 'undefined' ){
           throw new Error("Il manque des informations dans notre requete");
         }
           
-        if( isNaN(parseInt(req.body.idUser)) && isNaN(parseInt(req.params.id)) ){
+        if( isNaN(parseInt(req.body.idUser)) || isNaN(parseInt(req.params.id)) ){
             throw new Error("Une des valeurs envoyé n'est pas valide");
         }
-        order.findByPk(req.params.id, 
+        order.findOne(
             {
-                include: [
-                    {
+                include: [{
                     model: productCart,
-                    required: true,
+                    required: true
                  },
                  {
                     model: historystatus,
                      required: true,
                      limit: 1,
                      order: [ [ 'createdAt', 'DESC' ]]
-                 }
-                ],
-                where: {
-                    idUser : req.body.idUser
+                 }],
+                 where: {
+                    idUser : req.body.idUser,
+                    id: req.params.id
                 }
+                 
             })
         .then((order) => {
 

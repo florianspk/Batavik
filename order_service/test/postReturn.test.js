@@ -1,21 +1,59 @@
 
 const request  = require("supertest");
 const app = require("../app.js");
+const axios = require('axios');
+const qs = require('qs');
 
 describe('searches for the invalid basket of a user with his id', () => {
 
     it('valide test', async() => {
+      //connexion
+      var data = qs.stringify({
+        'email': 'test4',
+        'password': 'test' 
+        });
+        
+        var config = {
+          method: 'post',
+          url: 'http://localhost:3010/api/auth/login',
+          data : data
+        };
+        
+        await axios(config)
+        .then(function (response) {
+          token = response.data.token;
+        })
+        //connexion
       const res = await request(app)
-      .post("/api/order/return/2")
+      .post("/api/order/return/1")
+      .set('Authorization', 'Bearer ' + token)
       .send({
-        idUser: 1
+        idUser: 2
       })
       expect(res.statusCode).toEqual(200);
     })
 
     it('not valide test 1', async() => {
+      //connexion
+      var data = qs.stringify({
+        'email': 'test4',
+        'password': 'test' 
+        });
+        
+        var config = {
+          method: 'post',
+          url: 'http://localhost:3010/api/auth/login',
+          data : data
+        };
+        
+        await axios(config)
+        .then(function (response) {
+          token = response.data.token;
+        })
+        //connexion
         const res = await request(app)
         .post("/api/order/return/2")
+        .set('Authorization', 'Bearer ' + token)
         .send({
             idUser: 99999
         })
@@ -23,12 +61,30 @@ describe('searches for the invalid basket of a user with his id', () => {
       })
 
     it('not valide test 2', async() => {
+      //connexion
+      var data = qs.stringify({
+        'email': 'test4',
+        'password': 'test' 
+        });
+        
+        var config = {
+          method: 'post',
+          url: 'http://localhost:3010/api/auth/login',
+          data : data
+        };
+        
+        await axios(config)
+        .then(function (response) {
+          token = response.data.token;
+        })
+        //connexion
         const res = await request(app)
         .post("/api/order/return/1")
+        .set('Authorization', 'Bearer ' + token)
         .send({
             idUser: "string"
         })
-        expect(res.statusCode).toEqual(204);
+        expect(res.statusCode).toEqual(400);
       })
 
   })

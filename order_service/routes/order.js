@@ -1,5 +1,6 @@
 module.exports = (app) => {
     const order = require("../controllers/order.js");
+    const auth = require("../middlewares/auth.js")
   
     var router = require("express").Router();
   
@@ -39,7 +40,7 @@ module.exports = (app) => {
    *            schema: 
    *             $ref: '#/definitions/OrderWithIdUser' 
   */
-    router.get("/allByUser/:idUser", order.findAllByUser);
+    router.get("/allByUser/:idUser", auth.validateToken, order.findAllByUser);
 
   /**
    * @openapi
@@ -73,7 +74,7 @@ module.exports = (app) => {
    *            schema: 
    *             $ref: '#/definitions/Order'
   */
-     router.get("/all", order.findAll);
+     router.get("/all", auth.validateToken, order.findAll);
   
   /**
    * @openapi
@@ -98,7 +99,7 @@ module.exports = (app) => {
    *             $ref: '#/definitions/OrderSimple'
    *     
   */
-    router.post("/validate", order.validateOrder)
+    router.post("/validate", auth.validateToken, order.validateOrder)
     
   /**
    * @openapi
@@ -132,7 +133,7 @@ module.exports = (app) => {
    *             $ref: '#/definitions/MessageResponse' 
    *     
   */
-    router.post("/cancel/:id", order.cancel)
+    router.post("/cancel/:id", auth.validateToken, order.cancel)
 
   /**
    * @openapi
@@ -166,7 +167,7 @@ module.exports = (app) => {
    *             $ref: '#/definitions/MessageResponse' 
    *     
   */
-    router.post("/return/:id", order.return)
+    router.post("/return/:id", auth.validateToken, order.return)
   
   
     app.use("/api/order", router);

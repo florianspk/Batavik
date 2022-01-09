@@ -1,6 +1,7 @@
 module.exports = (app) => {
     const cart = require("../controllers/cart.js");
-  
+    const auth = require("../middlewares/auth.js")
+    
     var router = require("express").Router();
   
     // find one
@@ -11,7 +12,7 @@ module.exports = (app) => {
    *     security:
    *       - jwt: []
    *     tags:
-   *       - order
+   *       - cart
    *     description: searches for the invalid basket of a user with his id
    *     parameters:
    *       - in: path
@@ -26,7 +27,7 @@ module.exports = (app) => {
    *            schema: 
    *             $ref: '#/definitions/Cart'  
   */ 
-    router.get("/:idUser", cart.findOne);
+    router.get("/:idUser", auth.validateToken, cart.findOne);
   
     // Create a new
     /**
@@ -36,7 +37,7 @@ module.exports = (app) => {
    *     security:
    *       - jwt: []
    *     tags:
-   *       - order
+   *       - cart
    *     description: search for a user's unvalidated basket, if it does not exist, create it, then create a product Card with the basket id, with the product id and with the quantity
    *     parameters:
    *       - in: body
@@ -64,7 +65,7 @@ module.exports = (app) => {
    *             
    *             
     */ 
-    router.post("/", cart.addcart);
+    router.post("/", auth.validateToken, cart.addcart);
   
     // cahnge quentiter or delete a row cart 
     /**
@@ -74,7 +75,7 @@ module.exports = (app) => {
    *     security:
    *       - jwt: []
    *     tags:
-   *       - order
+   *       - cart
    *     description: Change the quantity of a product in product cart if the quantity is => 0 we delete the line of the product cart
    *     parameters:
    *       - in: body
@@ -101,7 +102,7 @@ module.exports = (app) => {
    *             $ref: '#/definitions/MessageResponse' 
 
   */ 
-    router.post("/quantityProduct", cart.quantityProduct);
+    router.post("/quantityProduct", auth.validateToken, cart.quantityProduct);
 
         /**
    * @openapi
@@ -110,7 +111,7 @@ module.exports = (app) => {
    *     security:
    *       - jwt: []
    *     tags:
-   *       - order
+   *       - cart
    *     description: clean cart by id cart
    *     parameters:
    *       - in: path
@@ -126,7 +127,7 @@ module.exports = (app) => {
    *             $ref: '#/definitions/MessageResponse' 
 
   */ 
-    router.delete("/clean/:id", cart.cleanCart);
+    router.delete("/clean/:id", auth.validateToken, cart.cleanCart);
   
     app.use("/api/cart", router);
    
