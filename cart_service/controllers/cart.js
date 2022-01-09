@@ -189,6 +189,42 @@ exports.quantityProduct = async(req, res) => {
 
 
 
+  exports.cleanCart = async (req, res) => {
+    try{
+      if( typeof req.params.id === 'undefined'){
+        throw new Error("Il manque des informations dans notre requete");
+      }
+        
+      if( isNaN(parseInt(req.params.id)) ){
+          throw new Error("Une des valeurs envoyé n'est pas valide");
+      }
+
+    
+    await productCart.destroy({where: {id_cart: req.params.id}})
+    .catch((err) => {
+      res.status(400).send({
+        message: err.message || "Some error occurred while retrieving .",
+      });
+    });
+
+    await cart.destroy({where: {id: req.params.id}})
+      .catch((err) => {
+        res.status(400).send({
+          message: err.message || "Some error occurred while retrieving .",
+        });
+      });
+
+      res.status(200).send({
+        message: 'The cart is clean' 
+      });
+
+    }catch (error) {
+      res.status(400).send({
+        message: error.message
+      });
+    }
+    
+  };
 
 
 
