@@ -11,7 +11,7 @@ module.exports = (app) => {
    *     security:
    *       - jwt: []
    *     tags:
-   *       - order
+   *       - cart
    *     description: searches for the invalid basket of a user with his id
    *     parameters:
    *       - in: path
@@ -36,7 +36,7 @@ module.exports = (app) => {
    *     security:
    *       - jwt: []
    *     tags:
-   *       - order
+   *       - cart
    *     description: search for a user's unvalidated basket, if it does not exist, create it, then create a product Card with the basket id, with the product id and with the quantity
    *     parameters:
    *       - in: body
@@ -74,7 +74,7 @@ module.exports = (app) => {
    *     security:
    *       - jwt: []
    *     tags:
-   *       - order
+   *       - cart
    *     description: Change the quantity of a product in product cart if the quantity is => 0 we delete the line of the product cart
    *     parameters:
    *       - in: body
@@ -110,7 +110,7 @@ module.exports = (app) => {
    *     security:
    *       - jwt: []
    *     tags:
-   *       - order
+   *       - cart
    *     description: clean cart by id cart
    *     parameters:
    *       - in: path
