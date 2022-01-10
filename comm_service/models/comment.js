@@ -7,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
 
     static getPagingData = (data,count, page, limit) => {
       const totalItems = count
-      const products = data
+      const comments = data
       const currentPage = page ? +page : 1;
       const totalPages = Math.ceil(totalItems / limit);
-      return { totalItems, products, totalPages, currentPage };
+      return { totalItems, comments, totalPages, currentPage };
     };
 
     static getPagination = (page, size) => {

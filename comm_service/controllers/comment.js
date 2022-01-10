@@ -197,8 +197,11 @@ exports.removeOne = (req, res) => {
       limit,
       offset
     })
-      .then((comments) => {
-        res.status(200).send(comments);
+      .then(result => {
+        Comment.count().then(count => {
+          const response = Comment.getPagingData(result, count, page, limit)
+          res.status(200).json(response);
+        })
       })
       .catch((err) => {
         res.status(500).send({
