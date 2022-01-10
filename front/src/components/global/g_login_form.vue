@@ -26,7 +26,7 @@ export default {
     validate() {
       if (this.$route.name !== 'user') {
         console.log(this.$route.name);
-        this.$router.push({ path: '/user/1' });
+        this.$router.push({ path: '/user' });
       }
       this.$emit('validate');
     },

@@ -1,13 +1,13 @@
 <template>
-  <div class="comm">
-    <div class="from">De {{pseudo}}</div> 
+  <div class="comm" v-if="userLoaded">
+    <div class="from">De temp</div> 
     <div class="message">
-        {{message}}
+        {{data.text}}
     </div>
     <div class="infos">
       <div class="note">
         <svg class="star" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512.002 512.002" style="enable-background:new 0 0 512.002 512.002;" xml:space="preserve">
-          <path :class="note >= 1 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
+          <path :class="data.note >= 1 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
           c-2.526-5.12-7.741-8.361-13.45-8.361c-5.71,0-10.924,3.241-13.451,8.361l-70.988,143.827l-158.72,23.065
           c-5.649,0.82-10.344,4.778-12.108,10.208c-1.765,5.431-0.293,11.392,3.796,15.377l114.848,111.954L92.271,482.671
           c-0.966,5.628,1.348,11.314,5.967,14.671c2.613,1.898,5.708,2.864,8.818,2.864c2.388,0,4.784-0.569,6.978-1.723l141.967-74.638
@@ -16,7 +16,7 @@
         </svg>
 
         <svg class="star" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512.002 512.002" style="enable-background:new 0 0 512.002 512.002;" xml:space="preserve">
-          <path :class="note >= 2 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
+          <path :class="data.note >= 2 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
           c-2.526-5.12-7.741-8.361-13.45-8.361c-5.71,0-10.924,3.241-13.451,8.361l-70.988,143.827l-158.72,23.065
           c-5.649,0.82-10.344,4.778-12.108,10.208c-1.765,5.431-0.293,11.392,3.796,15.377l114.848,111.954L92.271,482.671
           c-0.966,5.628,1.348,11.314,5.967,14.671c2.613,1.898,5.708,2.864,8.818,2.864c2.388,0,4.784-0.569,6.978-1.723l141.967-74.638
@@ -25,7 +25,7 @@
         </svg>
 
         <svg class="star" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512.002 512.002" style="enable-background:new 0 0 512.002 512.002;" xml:space="preserve">
-          <path :class="note >= 3 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
+          <path :class="data.note >= 3 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
           c-2.526-5.12-7.741-8.361-13.45-8.361c-5.71,0-10.924,3.241-13.451,8.361l-70.988,143.827l-158.72,23.065
           c-5.649,0.82-10.344,4.778-12.108,10.208c-1.765,5.431-0.293,11.392,3.796,15.377l114.848,111.954L92.271,482.671
           c-0.966,5.628,1.348,11.314,5.967,14.671c2.613,1.898,5.708,2.864,8.818,2.864c2.388,0,4.784-0.569,6.978-1.723l141.967-74.638
@@ -34,7 +34,7 @@
         </svg>
 
         <svg class="star" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512.002 512.002" style="enable-background:new 0 0 512.002 512.002;" xml:space="preserve">
-          <path :class="note >= 4 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
+          <path :class="data.note >= 4 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
           c-2.526-5.12-7.741-8.361-13.45-8.361c-5.71,0-10.924,3.241-13.451,8.361l-70.988,143.827l-158.72,23.065
           c-5.649,0.82-10.344,4.778-12.108,10.208c-1.765,5.431-0.293,11.392,3.796,15.377l114.848,111.954L92.271,482.671
           c-0.966,5.628,1.348,11.314,5.967,14.671c2.613,1.898,5.708,2.864,8.818,2.864c2.388,0,4.784-0.569,6.978-1.723l141.967-74.638
@@ -43,7 +43,7 @@
         </svg>
 
         <svg class="star" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512.002 512.002" style="enable-background:new 0 0 512.002 512.002;" xml:space="preserve">
-          <path :class="note >= 5 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
+          <path :class="data.note >= 5 ? 'yellow' : '' " d="M511.267,197.258c-1.764-5.431-6.457-9.389-12.107-10.209l-158.723-23.065L269.452,20.157
           c-2.526-5.12-7.741-8.361-13.45-8.361c-5.71,0-10.924,3.241-13.451,8.361l-70.988,143.827l-158.72,23.065
           c-5.649,0.82-10.344,4.778-12.108,10.208c-1.765,5.431-0.293,11.392,3.796,15.377l114.848,111.954L92.271,482.671
           c-0.966,5.628,1.348,11.314,5.967,14.671c2.613,1.898,5.708,2.864,8.818,2.864c2.388,0,4.784-0.569,6.978-1.723l141.967-74.638
@@ -51,7 +51,6 @@
           C511.56,208.649,513.033,202.688,511.267,197.258z"/>
         </svg>
       </div>
-      <div class="date">{{date}}</div>
     </div>
   </div>
 </template>
@@ -59,11 +58,22 @@
 <script>
 export default {
   name: 'comment',
-  props: {
-    pseudo: String,
-    message: String,
-    note: Number,
-    date: String,
+  props: ['data'],
+  data() {
+    return {
+      user: null,
+      userLoaded: false,
+    };
+  },
+  methods: {
+    async getUserName() {
+      this.userLoaded = true;
+      const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.USER_SERVICE}/api/user/${this.data.userId}`);
+      this.user = user;
+    },
+  },
+  mounted() {
+    this.getUserName();
   },
 };
 </script>
@@ -76,9 +86,13 @@ export default {
     height: 18vh;
     background: #fff;
     padding: 1%;
-    border-radius: 1.5%/ 10%;
+    border-radius: 2rem;
     border-top-right-radius: 0;
     border-bottom-left-radius: 0;
+    margin-bottom: 4vh;
+    &:nth-of-type(even) {
+      margin-left: 20%;
+    }
     .from{
       font-size: 1.4em;
       margin-bottom: 1%;

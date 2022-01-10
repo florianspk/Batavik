@@ -1,12 +1,8 @@
 <template>
   <div id="commentaire">
     <h1>Commentaires produits</h1>
-    <div id="container-comm">
-      <comment 
-      :pseudo="'Julien'" 
-      :message="'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores error dicta omnis consequatur ea fuga dolores pariatur vitae eum, similique saepe commodi, ipsam quo deleniti. Atque dignissimos facere odit quo.'"
-      :note="3"
-      :date="'Le 20 Janvier 2021'" />
+    <div id="container-comm" v-if="commentList.length >= 1">
+      <comment v-for="(comment, i) in commentList" :key="i" :data="comment" />
     </div>
   </div> 
 </template>
@@ -16,9 +12,8 @@ import comment from './comment.vue';
 
 export default {
   name: 'commentaire',
-  components: {
-    comment,
-  },
+  props: ['commentList'],
+  components: { comment },
 };
 </script>
 
@@ -30,6 +25,7 @@ export default {
   }
   #container-comm {
     display: flex;
+    flex-direction: column;
     gap: 1%;
     justify-content: space-between;
   }
