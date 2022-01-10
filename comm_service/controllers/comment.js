@@ -5,11 +5,11 @@ const Comment = db.comment;
 exports.newComment = async(req, res) => {
 
   try{
-    if( typeof req.body.note === 'undefined' || typeof req.body.idProduct === 'undefined' || typeof req.body.text === 'undefined'){
+    if( typeof req.body.rate === 'undefined' || typeof req.body.idProduct === 'undefined' || typeof req.body.text === 'undefined'){
       throw new Error("Il manque des informations dans notre requete");
     }
       
-    if( isNaN(parseInt(req.body.note)) || isNaN(parseInt(req.body.idProduct)) ){
+    if( isNaN(parseInt(req.body.rate)) || isNaN(parseInt(req.body.idProduct)) ){
         throw new Error("Une des valeurs envoyé n'est pas valide");
     }
 
@@ -20,10 +20,10 @@ exports.newComment = async(req, res) => {
     let resultAxios = await axios.get("http://localhost:3010/api/auth/user",config)
     const idUser = resultAxios.data.id
 
-    // Read text, note, idProduct and idUser from request body
-    const { text, note, idProduct } = req.body;
+    // Read text, rate, idProduct and idUser from request body
+    const { text, rate, idProduct } = req.body;
 
-    Comment.create({ text: String(text), note: note, idProduct: idProduct, idUser: idUser })
+    Comment.create({ text: String(text), rate: rate, idProduct: idProduct, idUser: idUser })
     .then((comment) => {
       res.status(200).send(comment);
     })
@@ -53,7 +53,7 @@ exports.findProductComment = (req, res) => {
     const {limit, offset} = Comment.getPagination(page, size);
 
     Comment.findAll({
-      attributes: ['text', 'note', 'idProduct', 'idUser'],
+      attributes: ['text', 'rate', 'idProduct', 'idUser'],
       where: {
           idProduct: req.params.idProduct
         },
@@ -86,7 +86,7 @@ exports.findOne = (req, res) => {
     }
 
     Comment.findOne({
-      attributes: ['text', 'note', 'idProduct', 'idUser'],
+      attributes: ['text', 'rate', 'idProduct', 'idUser'],
       where: {
           id: req.params.id
         }
@@ -171,7 +171,7 @@ exports.removeOne = (req, res) => {
       const {limit, offset} = Comment.getPagination(page, size);
 
       Comment.findAll({
-        attributes: ['text', 'note', 'idProduct', 'idUser'],
+        attributes: ['text', 'rate', 'idProduct', 'idUser'],
         where: {
           idUser: req.params.idUser
           },
@@ -196,7 +196,7 @@ exports.removeOne = (req, res) => {
     const {page, size} = req.query;
     const {limit, offset} = Comment.getPagination(page, size);
     Comment.findAll({
-      attributes: ['id', 'text', 'note', 'idProduct', 'idUser'],
+      attributes: ['id', 'text', 'rate', 'idProduct', 'idUser'],
       limit,
       offset
     })

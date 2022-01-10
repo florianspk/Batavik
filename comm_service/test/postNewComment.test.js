@@ -32,7 +32,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
       .send(
         {
           "text" : "string",
-          "note" : 5 ,
+          "rate" : 5 ,
           "idProduct" : 1 
         }
       )
@@ -64,7 +64,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
       .set('Authorization', 'Bearer ' + token)
       .send(
         {
-          "note" : 5 ,
+          "rate" : 5 ,
           "idProduct" : 1 
         }
       )
@@ -96,7 +96,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
       .send(
         {
           "text" : "string",
-          "note" : 5 ,
+          "rate" : 5 ,
           "idProduct" : "string" 
         }
       )

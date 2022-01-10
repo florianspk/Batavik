@@ -23,7 +23,7 @@
  *   properties:
  *    text: 
  *     type: string
- *    note: 
+ *    rate: 
  *     type: integer
  *    idProduct: 
  *     type: integer
@@ -37,7 +37,7 @@
  *    properties:
  *      text: 
  *          type: string
- *      note: 
+ *      rate: 
  *          type: integer
  *      idProduct: 
  *          type: integer
@@ -49,7 +49,7 @@
  *   properties:
  *    text: 
  *     type: string
- *    note: 
+ *    rate: 
  *     type: integer
  *    idProduct: 
  *     type: integer
