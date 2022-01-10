@@ -61,7 +61,6 @@ module.exports = {
         };
         try {
             const idCurrentuser = await axios.get("http://localhost:3010/api/auth/user", config);
-            console.log()
             const idupdateUser = (await (await User.findByPk(idCurrentuser.data.id)).update({
                 enabled: 0,
             })).getDataValue("id")
@@ -81,12 +80,39 @@ module.exports = {
             }).catch(error => {
                 res.status(401).json(error.message)
             })
-        }catch (e){
+        } catch (e) {
             res.status(401).json(e.message)
         }
     },
-    editCurrentUser(req, res, next) {
-        //TODO
+    async editCurrentUser(req, res, next) {
+        try {
+            let t;
+            const config = {
+                headers: {authorization: req.headers.authorization}
+            };
+            t = await model.sequelize.transaction();
+            const currentUser = await axios.get("http://localhost:3010/api/auth/user", config)
+            const user = await User.findOne({
+                where: {id: currentUser.data.id},
+                attributes: {exclude: ["password"]},
+                include: [{
+                    model: model.Adress,
+                    as: "Adress",
+                    include: [{
+                        model: model.City,
+                        as: "City"
+                    }]
+                }]
+            })
+            await User.update({
+                where: {id: currentUser.data.id}
+            }, {
+                transaction: t
+            })
+
+        } catch (e) {
+            res.status(401).json(e.message)
+        }
     },
     getOneUser(req, res, next) {
         try {
