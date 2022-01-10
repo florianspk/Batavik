@@ -15,7 +15,10 @@
           <router-link to="/admin/clients"><f-icon :icon="'users'" style="margin-right: 10px"></f-icon>Clients</router-link>
         </li>
         <li>
-          <router-link to="/admin/products"><f-icon :icon="'boxes'" style="margin-right: 10px"></f-icon>Produits</router-link>
+          <router-link to="/admin/produits"><f-icon :icon="'boxes'" style="margin-right: 10px"></f-icon>Produits</router-link>
+        </li>
+        <li>
+          <router-link to="/admin/commentaires"><f-icon :icon="'comments'" style="margin-right: 10px"></f-icon>Commentaires</router-link>
         </li>
       </ul>
     </nav>
