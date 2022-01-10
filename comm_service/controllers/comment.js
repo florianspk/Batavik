@@ -53,7 +53,6 @@ exports.findProductComment = (req, res) => {
     const {limit, offset} = Comment.getPagination(page, size);
 
     Comment.findAll({
-      attributes: ['text', 'rate', 'idProduct', 'idUser'],
       where: {
           idProduct: req.params.idProduct
         },
@@ -171,7 +170,6 @@ exports.removeOne = (req, res) => {
       const {limit, offset} = Comment.getPagination(page, size);
 
       Comment.findAll({
-        attributes: ['text', 'rate', 'idProduct', 'idUser'],
         where: {
           idUser: req.params.idUser
           },
@@ -196,7 +194,6 @@ exports.removeOne = (req, res) => {
     const {page, size} = req.query;
     const {limit, offset} = Comment.getPagination(page, size);
     Comment.findAll({
-      attributes: ['id', 'text', 'rate', 'idProduct', 'idUser'],
       limit,
       offset
     })
