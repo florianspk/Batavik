@@ -61,13 +61,16 @@ exports.findAll = (req, res) => {
             limit,
             offset
         })
-        .then((data) => {
-        res.send(data);
+        .then(result => {
+            order.count().then(count => {
+                const response = order.getPagingData(result, count, page, limit)
+                res.status(200).json(response);
+            })
         })
         .catch((err) => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving .",
-        });
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving .",
+            });
         });
     }catch (error) {
         res.status(400).send({

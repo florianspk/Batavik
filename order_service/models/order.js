@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     class order extends Model {
       static getPagingData = (data,count, page, limit) => {
         const totalItems = count
-        const products = data
+        const orders = data
         const currentPage = page ? +page : 1;
         const totalPages = Math.ceil(totalItems / limit);
         return { totalItems, products, totalPages, currentPage };
