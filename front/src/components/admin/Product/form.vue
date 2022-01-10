@@ -140,7 +140,6 @@ export default {
       this.$emit('close');
     },
     changeProduct() {
-      console.log(this.productToEdit);
       if (this.edit && this.productToEdit != null) {
         this.product = this.productToEdit;
       }

@@ -17,9 +17,6 @@
         <li>
           <router-link to="/admin/products"><f-icon :icon="'boxes'" style="margin-right: 10px"></f-icon>Produits</router-link>
         </li>
-        <li>
-          <router-link to="/admin/shops"><f-icon :icon="'store'" style="margin-right: 10px"></f-icon>Magasins</router-link>
-        </li>
       </ul>
     </nav>
     <div id="content">

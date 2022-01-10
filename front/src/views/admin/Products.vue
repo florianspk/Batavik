@@ -124,7 +124,6 @@ export default {
       };
     },
     async getProducts(val = 1) {
-      console.log(this.config);
       try {
         const { data: product } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products?size=10&page=${val}`, this.setConfig());
         this.totalItems = product.totalItems;

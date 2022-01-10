@@ -5,4 +5,5 @@ export default {
   COMM_SERVICE: '3111',
   ORDER_SERVICE: '3013',
   PRODUCT_SERVICE: '3015',
+  USER_SERVICE: '3019',
 };

@@ -12,7 +12,6 @@ import Product from '../views/Product.vue';
 import Dashboard from '../views/admin/Dashboard.vue';
 import Users from '../views/admin/Users.vue';
 import Products from '../views/admin/Products.vue';
-import Shops from '../views/admin/Shops.vue';
 import Cart from '../views/Cart.vue';
 import Login from '../views/Login.vue';
 import User from '../views/User.vue';
@@ -65,15 +64,15 @@ const routes = [
     component: User,
     beforeEnter(to: any, from: any, next: any) {
       Axios.get(`${baseurl}:${port.AUTH_SERVICE}/api/auth/validateToken`, setConfig())
-        .then(() => { 
+        .then(() => {
           next((vm: any) => {
             vm.$isLogged = true;
-          }); 
+          });
         })
-        .catch(() => { 
+        .catch(() => {
           next('/login', (vm: any) => {
             vm.$isLogged = false;
-          }); 
+          });
         });
     },
   },
@@ -92,11 +91,6 @@ const routes = [
     path: '/admin/products',
     name: 'Product_admin',
     component: Products,
-  },
-  {
-    path: '/admin/shops',
-    name: 'Shops_admin',
-    component: Shops,
   },
   {
     path: '/:pathMatch(.*)*',
