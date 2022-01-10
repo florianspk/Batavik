@@ -69,7 +69,7 @@ export default {
       try {
         const { data: comment } = await this.$axios.get(`${this.$baseURL}:${this.$port.COMM_SERVICE}/api/comment/all?size=10&page=${val}`, this.setConfig());
         this.totalItems = comment.totalItems;
-        this.comments = comment;
+        this.comments = comment.comments;
       } catch (e) {
         console.error(e);
       }
