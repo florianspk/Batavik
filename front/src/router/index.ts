@@ -3,18 +3,21 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { baseurl, port } from '@/main';
 import Axios from 'axios';
 
+// User
 import Home from '../views/Home.vue';
 import Shower from '../views/Shower.vue';
 import Fireplace from '../views/Fireplace.vue';
 import Wall from '../views/Wall.vue';
 import Page404 from '../views/404.vue';
 import Product from '../views/Product.vue';
-import Dashboard from '../views/admin/Dashboard.vue';
-import Users from '../views/admin/Users.vue';
-import Products from '../views/admin/Products.vue';
 import Cart from '../views/Cart.vue';
 import Login from '../views/Login.vue';
 import User from '../views/User.vue';
+// Admin
+import Dashboard from '../views/admin/Dashboard.vue';
+import Users from '../views/admin/Users.vue';
+import Products from '../views/admin/Products.vue';
+import Comments from '../views/admin/Comments.vue';
 
 function setConfig() {
   return {
@@ -88,9 +91,14 @@ const routes = [
     component: Users,
   },
   {
-    path: '/admin/products',
-    name: 'Product_admin',
+    path: '/admin/produits',
+    name: 'Products_admin',
     component: Products,
+  },
+  {
+    path: '/admin/commentaires',
+    name: 'Comments_admin',
+    component: Comments,
   },
   {
     path: '/:pathMatch(.*)*',

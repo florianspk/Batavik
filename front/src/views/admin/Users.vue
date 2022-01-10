@@ -57,8 +57,8 @@
     </el-table-column>
   </el-table>
 
-  <el-pagination layout="prev, pager, next" :total="users.length"
-                 @current-change="handlerCurrentChange">
+  <el-pagination layout="prev, pager, next" :total="this.totalItems"
+                 @current-change="getUsers">
   </el-pagination>
 
 </template>
@@ -124,9 +124,6 @@ export default {
       } catch (e) {
         console.error(e);
       }
-    },
-    handlerCurrentChange(val) {
-      console.log(val);
     },
     showUser(userIndex) {
       this.userToShow = this.users[userIndex];

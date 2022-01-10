@@ -7,10 +7,10 @@
       <div id="info">
         <input type="text" name="search" id="search" placeholder="Rechercher un produit" />
         <label for="search"></label>
-        <p 
-          class="click" 
-          v-for="(info, i) in infos" 
-          :key="i" 
+        <p
+          class="click"
+          v-for="(info, i) in infos"
+          :key="i"
           @click="info.text == 'S\'identifier' ? loginForm = true : info.text == 'Panier' ? cart = true : '' "
         >
         {{ info.text }}
@@ -19,8 +19,8 @@
 
       <div id="nav">
         <img src="../../assets/logo.png" id="logo" alt="logo"  @click="travel('/')">
-        <p class="page" v-for="(page, i) in pages" :key="i" @click="travel(page.path)"> 
-          {{ page.text }} <span class="bar"></span> 
+        <p class="page" v-for="(page, i) in pages" :key="i" @click="travel(page.path)">
+          {{ page.text }} <span class="bar"></span>
         </p>
       </div>
 
@@ -48,11 +48,11 @@
 
       <div id="nav" :class="mobileVisible ? 'open' : 'closed'">
         <div id="links">
-          <div class="link" @click="travel('/')"> 
-            Accueil 
+          <div class="link" @click="travel('/')">
+            Accueil
           </div>
-          <div class="link" v-for="(page, i) in pages" :key="i" @click="travel(page.path)"> 
-            <span v-if="$isLogged">{{page.text}}</span> 
+          <div class="link" v-for="(page, i) in pages" :key="i" @click="travel(page.path)">
+            <span v-if="$isLogged">{{page.text}}</span>
           </div>
           <div class="link" v-for="(info, i) in infos" :key="i" @click="info.text == 'S\'identifier' ? travel('/login') : info.text == 'Panier' ? travel('/cart') : '' "> {{info.text}} </div>
         </div>
@@ -80,7 +80,7 @@ export default {
     };
 
     setWindowSize();
-    
+
     window.addEventListener('resize', () => setWindowSize());
 
     const mobileVisible = ref(false);
@@ -91,20 +91,20 @@ export default {
 
     return {
       mobileVisible,
-      winSize, 
+      winSize,
       openNavMobile,
       infos: [
-        { text: 'Retrait des produits sous 2H', path: '/infos' }, 
-        { text: 'Trouver un point de retrait', path: '/sites' }, 
-        { text: 'Suivis de commandes', path: '/order' }, 
-        { text: 'Panier', path: '/cart' }, 
-        { text: 'S\'identifier', path: '/login' }, 
-      ], 
+        { text: 'Retrait des produits sous 2H', path: '/infos' },
+        { text: 'Trouver un point de retrait', path: '/sites' },
+        { text: 'Suivis de commandes', path: '/order' },
+        { text: 'Panier', path: '/cart' },
+        { text: 'S\'identifier', path: '/login' },
+      ],
       pages: [
         { text: 'Pare-douche', path: '/pare-douche' },
         { text: 'Cloison et parois', path: '/cloison' },
         { text: 'Cheminée', path: '/cheminee' },
-      ], 
+      ],
     };
   },
   data() {
@@ -118,19 +118,16 @@ export default {
       this.$router.push(path);
     },
   },
-  mounted() {
-    console.log(this.$heyo);
-  },
 };
 </script>
 
 <style scoped lang="scss">
 .black {
-  position: absolute; 
+  position: absolute;
   top: 0;
-  height: 100vh; 
-  width: 100vw; 
-  background: #000; 
+  height: 100vh;
+  width: 100vw;
+  background: #000;
   z-index: 100;
   opacity: 0.5;
   transition-duration: 0.2s;

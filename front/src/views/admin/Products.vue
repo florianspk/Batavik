@@ -1,7 +1,7 @@
 <template>
   <el-breadcrumb separator="/">
     <el-breadcrumb-item :to="{ path: '/admin' }">Administration</el-breadcrumb-item>
-    <el-breadcrumb-item :to="{ path: '/admin/products' }">Produits</el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/admin/produits' }">Produits</el-breadcrumb-item>
   </el-breadcrumb>
 
   <div style="display: flex;justify-content: flex-end; margin-right: 20px;margin-bottom: 10px;">
@@ -131,9 +131,6 @@ export default {
       } catch (e) {
         console.error(e);
       }
-    },
-    handlerCurrentChange(val) {
-      console.log(val);
     },
     showProduct(productIndex) {
       this.productToShow = this.products[productIndex];
