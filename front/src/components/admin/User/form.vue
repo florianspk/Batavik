@@ -1,12 +1,12 @@
 <template>
   <el-form ref="form" :model="user" :rules="rules" label-width="120px">
-    <el-form-item label="Nom">
+    <el-form-item label="Prénom" prop="firstname">
       <el-input v-model="user.firstname"></el-input>
     </el-form-item>
-    <el-form-item label="Pseudo">
+    <el-form-item label="Nom" prop="lastname">
       <el-input v-model="user.lastname"></el-input>
     </el-form-item>
-    <el-form-item label="Email">
+    <el-form-item label="Email" prop="email">
       <el-input v-model="user.email"></el-input>
     </el-form-item>
     <el-form-item>
@@ -39,6 +39,29 @@ export default {
         lastname: '',
         email: '',
         enabled: 1,
+      },
+      rules: {
+        firstname: [
+          {
+            required: true,
+            message: 'Le prénom est obligatoire',
+            trigger: 'blur',
+          },
+        ],
+        lastname: [
+          {
+            required: true,
+            message: 'Le nom est obligatoire',
+            trigger: 'blur',
+          },
+        ],
+        email: [
+          {
+            required: true,
+            message: 'L\'adresse email est obligatoire',
+            trigger: 'blur',
+          },
+        ],
       },
     };
   },
