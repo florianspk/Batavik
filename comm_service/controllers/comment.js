@@ -196,7 +196,7 @@ exports.removeOne = (req, res) => {
     const {page, size} = req.query;
     const {limit, offset} = Comment.getPagination(page, size);
     Comment.findAll({
-      attributes: ['text', 'note', 'idProduct', 'idUser'],
+      attributes: ['id', 'text', 'note', 'idProduct', 'idUser'],
       limit,
       offset
     })
