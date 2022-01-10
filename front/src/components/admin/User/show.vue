@@ -7,47 +7,39 @@
     <el-descriptions-item>
       <template #label>
         <el-icon>
-          <user/>
+          <key/>
         </el-icon>
-        Username
+        Id
       </template>
-      {{ user.name }}
+      {{ user.id }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <el-icon>
-          <iphone/>
+          <user/>
         </el-icon>
-        Telephone
+        Prénom - Nom
       </template>
-      {{ user.phone }}
+      {{ user.firstname }} {{ user.lastname }}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template #label>
+        <el-icon>
+          <message/>
+        </el-icon>
+        Email
+      </template>
+      {{ user.email }}
     </el-descriptions-item>
     <el-descriptions-item>
       <template #label>
         <el-icon>
           <location/>
         </el-icon>
-        Place
+        Actif
       </template>
-      Suzhou
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <el-icon>
-          <tickets/>
-        </el-icon>
-        Remarks
-      </template>
-      <el-tag size="small">School</el-tag>
-    </el-descriptions-item>
-    <el-descriptions-item>
-      <template #label>
-        <el-icon>
-          <office-building/>
-        </el-icon>
-        Address
-      </template>
-      {{ user.address.street }}
+      <div v-if="user.enabled">Actif</div>
+      <div v-else>Inactif</div>
     </el-descriptions-item>
   </el-descriptions>
 </template>
@@ -55,10 +47,8 @@
 <script>
 import {
   User,
-  Iphone,
   Location,
-  Tickets,
-  OfficeBuilding,
+  Message,
 } from '@element-plus/icons-vue';
 
 import {
@@ -66,22 +56,25 @@ import {
   ElDescriptionsItem,
   ElIcon,
 } from 'element-plus';
+import { Key } from '@element-plus/icons';
 
 export default {
   name: 'show',
   props: ['user'],
   components: {
+    Message,
+    Key,
     ElDescriptions,
     ElDescriptionsItem,
     ElIcon,
     User,
-    Iphone,
     Location,
-    Tickets,
-    OfficeBuilding,
   },
-  mounted() {
-    console.log(this.user);
+  methods: {
+    formatDate(dateToFormat) {
+      const date = this.$date.fromISO(dateToFormat, { locale: 'fr-FR' });
+      return date.setZone('Europe/Paris').toFormat('dd MMMM yyyy HH:mm');
+    },
   },
 };
 </script>

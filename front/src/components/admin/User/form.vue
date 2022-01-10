@@ -1,19 +1,13 @@
 <template>
-  <el-form ref="form" :model="user" label-width="120px">
+  <el-form ref="form" :model="user" :rules="rules" label-width="120px">
     <el-form-item label="Nom">
-      <el-input v-model="user.name"></el-input>
+      <el-input v-model="user.firstname"></el-input>
     </el-form-item>
     <el-form-item label="Pseudo">
-      <el-input v-model="user.username"></el-input>
+      <el-input v-model="user.lastname"></el-input>
     </el-form-item>
     <el-form-item label="Email">
       <el-input v-model="user.email"></el-input>
-    </el-form-item>
-    <el-form-item label="Adresse">
-      <el-input v-model="user.address.street"></el-input>
-    </el-form-item>
-    <el-form-item label="Téléphone">
-      <el-input v-model="user.phone"></el-input>
     </el-form-item>
     <el-form-item>
       <span class="dialog-footer" style="display: flex;justify-content: flex-end;">
@@ -41,20 +35,28 @@ export default {
   data() {
     return {
       user: {
-        name: '',
-        username: '',
+        firstname: '',
+        lastname: '',
         email: '',
-        address: { street: '' },
-        phone: '',
+        enabled: 1,
       },
     };
   },
   methods: {
-    onSubmit() {
+    setConfig() {
+      return {
+        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
+    },
+    async onSubmit() {
       if (!this.edit) {
-        console.log('create :', this.user);
+        await this.$axios.post(
+          `${this.$baseURL}:${this.$port.USER_SERVICE}/api/user`, this.user, this.setConfig(),
+        );
       } else {
-        console.log('edit :', this.user);
+        await this.$axios.patch(
+          `${this.$baseURL}:${this.$port.USER_SERVICE}/api/user/${this.user.id}`, this.user, this.setConfig(),
+        );
       }
       this.close();
     },
