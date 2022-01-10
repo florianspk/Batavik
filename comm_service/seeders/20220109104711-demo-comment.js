@@ -11,7 +11,7 @@ module.exports = {
     for (let i=0; i < 100; i++){
       comments.push({
         text: casual.description,
-        note: casual.integer( 0, 5),
+        rate: casual.integer( 0, 5),
         idProduct: casual.integer(1, 150),
         idUser: casual.integer(1, 30),
         createdAt:new Date(),

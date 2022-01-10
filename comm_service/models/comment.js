@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull:false
     },
 
-    note:{
+    rate:{
         type: DataTypes.INTEGER(10)
     },
 
