@@ -4,7 +4,7 @@ const casual = require('casual');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     let users = []
-    for (let i=0; i < 5; i++){
+    for (let i=0; i < 100; i++){
       users.push({
         lastname: casual.last_name,
         firstname: casual.first_name,
@@ -18,9 +18,8 @@ module.exports = {
       })
     }
     await queryInterface.bulkInsert('Users',users, {});
-
-
   },
+  
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Users', null, {});
   }
