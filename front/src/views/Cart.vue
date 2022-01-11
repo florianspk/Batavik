@@ -3,8 +3,8 @@
 
     <h1 id="title">Panier</h1>
 
-    <div id="card-items" v-if="haveProduct">
-      <cart-item v-for="(item, i) in cartList.productCarts" :key="i" :data="item" :fontSize="itemFontSize" forcedHeight=10 />
+    <div id="cart-items" v-if="haveProduct">
+      <cart-item v-for="(item, i) in cartList.productCarts" :key="i" :data="item" :fontSize="itemFontSize" :forcedHeight="12" />
     </div>
 
     <div id="total" v-if="haveProduct">
@@ -13,7 +13,7 @@
 
     <div id="buttons">
       <button class="btn" id="validate" @click="validate()">Valider</button>
-      <button class="btn" id="clear" @click="clearCart()">Vider le panier</button>
+      <button class="btn" id="clear" @click="cleanCart()">Vider le panier</button>
     </div>
   </div>
 </template>
@@ -26,6 +26,7 @@ export default {
   components: { cartItem },
   data() {
     return {
+      user: null,
       cartList: null,
       haveProduct: false,
     };
@@ -39,29 +40,36 @@ export default {
         headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
       };
     },
-    getIdentity() {
-      this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig())
-        .then(({ data: user }) => {
-          this.user = user;
-          this.getCartContent();
-        })
-        .catch((error) => {
-          console.log(error);
-          this.haveError = true;
-        });
+    async getIdentity() {
+      try {
+        const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig());
+        this.user = user;
+        this.getCartContent();
+      } catch (error) {
+        console.log(error);
+        this.haveError = true;
+      }
     },
-    getCartContent() {
-      this.$axios.get(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/${this.user.id}`, this.setConfig())
-        .then(({ data: cartContent }) => {
-          if (cartContent.length !== 0) {
-            this.cartList = cartContent;
-            this.haveProduct = true;
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          this.haveError = true;
-        });
+    async getCartContent() {
+      try {
+        const { data: cartContent } = await this.$axios.get(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/${this.user.id}`, this.setConfig());
+        if (cartContent.length !== 0) {
+          this.cartList = cartContent;
+          this.haveProduct = true;
+        }
+      } catch (error) {
+        console.log(error);
+        this.haveError = true;
+      }
+    },
+    async cleanCart() {
+      try {
+        const response = await this.$axios.delete(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/clean/${this.cartList.id}`, this.setConfig());
+        this.getCartContent();
+      } catch (error) {
+        console.log(error);
+        this.haveError = true;
+      }
     },
   },
   mounted() {
@@ -80,7 +88,6 @@ export default {
   margin-top: 4vh;
   width: 80%;
   background: #fff;
-  min-height: 70vh;
   border-radius: 2rem;
   padding: 2rem;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
@@ -94,9 +101,14 @@ export default {
       rgba(0, 0, 0, 0)
     ) 0 0 1 0;
   }
+  #cart-items {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5vh;
+  }
 
   #total {
-    position: absolute;
+    position: relative;
     bottom: 5vh;
     display: flex;
     justify-content: flex-end;
@@ -121,8 +133,8 @@ export default {
   }
 
   #buttons{
-    position: absolute;
-    bottom: 4vh;
+    position: relative;
+    bottom: 1vh;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
