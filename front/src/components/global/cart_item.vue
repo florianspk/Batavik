@@ -25,7 +25,7 @@ export default {
   name: 'cart-item',
   props: {
     data: Object,
-    fontSize: String,
+    fontSize: Number,
     background: Boolean,
     margin: Number,
     forcedHeight: Number,
@@ -75,6 +75,8 @@ export default {
   padding: 0 2rem 0 0;
   width: 100%;
   border-radius: 1rem;
+  background: #eee;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   .info{
     height: 100%;
