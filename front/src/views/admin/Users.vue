@@ -4,10 +4,6 @@
     <el-breadcrumb-item :to="{ path: '/admin/clients' }">Clients</el-breadcrumb-item>
   </el-breadcrumb>
 
-  <div style="display: flex;justify-content: flex-end; margin-right: 20px;margin-bottom: 10px;">
-    <el-button type="primary" @click="formVisible = true">Créer</el-button>
-  </div>
-
   <el-dialog v-model="formVisible" title="Créer un utilisateur" width="60%">
     <user-form @close="formVisible = false" />
   </el-dialog>
@@ -20,7 +16,7 @@
     <user-form @close="editVisible = false" :edit="true" :user-to-edit="userToEdit" />
   </el-dialog>
 
-  <el-table stripe style="width: 99%" :data="users" highlight-current-row>
+  <el-table stripe style="width: 99%;margin-top: 50px" :data="users" highlight-current-row>
     <el-table-column prop="id" label="Id" width="80" sortable/>
     <el-table-column prop="lastname" label="Nom" sortable/>
     <el-table-column prop="firstname" label="Prénom" sortable/>

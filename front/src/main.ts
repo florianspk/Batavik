@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-  faTachometerAlt, faUsers, faBoxes, faStore, faBars, faEye, faPen, faTrash, faComments,
+  faTachometerAlt, faUsers, faBoxes, faStore, faBars, faEye, faPen, faTrash, faComments, faFileInvoice,
 } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookSquare, faTwitterSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -30,6 +30,7 @@ library.add(
   faTwitterSquare,
   faLinkedin,
   faComments,
+  faFileInvoice,
 );
 
 const app = createApp(App);

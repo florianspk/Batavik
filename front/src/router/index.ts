@@ -14,10 +14,10 @@ import Cart from '../views/Cart.vue';
 import Login from '../views/Login.vue';
 import User from '../views/User.vue';
 // Admin
-import Dashboard from '../views/admin/Dashboard.vue';
 import Users from '../views/admin/Users.vue';
 import Products from '../views/admin/Products.vue';
 import Comments from '../views/admin/Comments.vue';
+import Orders from '../views/admin/Orders.vue';
 
 function setConfig() {
   return {
@@ -83,7 +83,7 @@ const routes = [
   {
     path: '/admin',
     name: 'Dashboard_admin',
-    component: Dashboard,
+    redirect: '/admin/clients',
   },
   {
     path: '/admin/clients',
@@ -99,6 +99,11 @@ const routes = [
     path: '/admin/commentaires',
     name: 'Comments_admin',
     component: Comments,
+  },
+  {
+    path: '/admin/commandes',
+    name: 'Orders_admin',
+    component: Orders,
   },
   {
     path: '/:pathMatch(.*)*',
