@@ -100,11 +100,10 @@ module.exports = (app) => {
    *           application/json:
    *            schema: 
    *             $ref: '#/definitions/MessageResponse' 
-
   */ 
     router.post("/quantityProduct", auth.validateToken, cart.quantityProduct);
 
-        /**
+  /**
    * @openapi
    * /api/cart/clean/:id:
    *   delete:

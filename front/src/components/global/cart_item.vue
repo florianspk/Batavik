@@ -13,7 +13,7 @@
       </div>
 
       <div class="item-price">
-        {{ calculatePrice(data.unitPrice, data.quantity) }} €
+        {{ calculatedPrice }} €
       </div>
     </div>
   
@@ -33,17 +33,23 @@ export default {
   data() {
     return {
       productList: {},
+      calculatedPrice: 0,
     };
   },
   methods: {
     calculatePrice(price, qte) {
       return price * qte;
     },
-    getProductInormations() {
-      this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.data.idProduct}`)
-        .then(({ data: product }) => {
-          this.productList = product;
-        });
+    async getProductInormations() {
+      try {
+        const { data: product } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.data.idProduct}`);
+        this.productList = product;
+        this.calculatedPrice = product.price * this.data.quantity;
+        this.$emit('cost', this.calculatedPrice);
+      } catch (error) {
+        console.log(error);
+        this.haveError = true;
+      }
     },
   },
   watch: {

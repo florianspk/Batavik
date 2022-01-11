@@ -13,7 +13,7 @@
 
     <div id="buttons">
       <button class="btn" id="validate" @click="validate()">Valider</button>
-      <button class="btn" id="clear" @click="clearCart()">Vider le panier</button>
+      <button class="btn" id="clear" @click="cleanCart()">Vider le panier</button>
     </div>
   </div>
 </template>
@@ -26,6 +26,7 @@ export default {
   components: { cartItem },
   data() {
     return {
+      user: null,
       cartList: null,
       haveProduct: false,
     };
@@ -56,6 +57,15 @@ export default {
           this.cartList = cartContent;
           this.haveProduct = true;
         }
+      } catch (error) {
+        console.log(error);
+        this.haveError = true;
+      }
+    },
+    async cleanCart() {
+      try {
+        const response = await this.$axios.delete(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/clean/${this.cartList.id}`, this.setConfig());
+        this.getCartContent();
       } catch (error) {
         console.log(error);
         this.haveError = true;
