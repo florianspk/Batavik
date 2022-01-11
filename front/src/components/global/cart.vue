@@ -5,15 +5,15 @@
     
     <div id="content" v-if="haveProduct">
       <div id="cart-item">
-        <cartItem v-for="(item, i) in cartList.productCarts" :key="i" :data="item" />
+        <cartItem v-for="(item, i) in cartList.productCarts" :key="i" :data="item" @cost="calculatePrice" />
       </div>
 
       <div id="cost">
-        Coût total de la commande: <span id="cost-price">{{cartList.cartPrice}} €</span>
+        Coût total de la commande: <span id="cost-price">{{price}} €</span>
       </div>
 
       <div id="button">
-        <button id="clear">Vider le panier</button>
+        <button id="clear" @click="cleanCart">Vider le panier</button>
         <button id="validate" @click="navigateToCartPage">Voir le panier et passer la commande</button>
       </div>
     </div>
@@ -43,6 +43,7 @@ export default {
       cartList: null,
       haveError: false,
       haveProduct: false,
+      price: 0,
     };
   },
   methods: {
@@ -55,34 +56,45 @@ export default {
         headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
       };
     },
-    getIdentity() {
-      this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig())
-        .then(({ data: user }) => {
-          this.user = user;
-          this.getCartContent();
-        })
-        .catch((error) => {
-          console.log(error);
-          this.haveError = true;
-        });
+    async getIdentity() {
+      try {
+        const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig());
+        this.user = user;
+        this.getCartContent();
+      } catch (error) {
+        console.log(error);
+        this.haveError = true;
+      }
     },
-    getCartContent() {
-      this.$axios.get(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/${this.user.id}`, this.setConfig())
-        .then(({ data: cartContent }) => {
-          if (cartContent.length !== 0) {
-            this.cartList = cartContent;
-            this.haveProduct = true;
-            console.log(cartContent);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          this.haveError = true;
-        });
+    async getCartContent() {
+      try {
+        this.price = 0;
+        const { data: cartContent } = await this.$axios.get(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/${this.user.id}`, this.setConfig());
+        if (cartContent.length !== 0) {
+          this.cartList = cartContent;
+          this.haveProduct = true;
+        }
+      } catch (error) {
+        console.log(error);
+        this.haveError = true;
+      }
+    },
+    async cleanCart() {
+      try {
+        const response = await this.$axios.delete(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/clean/${this.cartList.id}`, this.setConfig());
+        this.getCartContent();
+      } catch (error) {
+        console.log(error);
+        this.haveError = true;
+      }
+    },
+    calculatePrice(price) {
+      this.price += price;
     },
   },
   mounted: function () {
     this.getIdentity();
+    window.addEventListener('updateCart', () => this.getCartContent());
   },
 };
 </script>
