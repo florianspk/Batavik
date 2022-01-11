@@ -9,7 +9,7 @@ describe('searches for the invalid basket of a user with his id', () => {
     it('valide test', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         
