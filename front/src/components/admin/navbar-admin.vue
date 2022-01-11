@@ -9,16 +9,16 @@
       <ul class="list-unstyled components">
         <p>Administration</p>
         <li>
-          <router-link to="/admin"><f-icon :icon="'tachometer-alt'" style="margin-right: 10px"></f-icon>Tableau de bord</router-link>
-        </li>
-        <li>
           <router-link to="/admin/clients"><f-icon :icon="'users'" style="margin-right: 10px"></f-icon>Clients</router-link>
         </li>
         <li>
-          <router-link to="/admin/produits"><f-icon :icon="'boxes'" style="margin-right: 10px"></f-icon>Produits</router-link>
+          <router-link to="/admin/commentaires"><f-icon :icon="'comments'" style="margin-right: 10px"></f-icon>Commentaires</router-link>
         </li>
         <li>
-          <router-link to="/admin/commentaires"><f-icon :icon="'comments'" style="margin-right: 10px"></f-icon>Commentaires</router-link>
+          <router-link to="/admin/commandes"><f-icon :icon="'file-invoice'" style="margin-right: 10px"></f-icon>Commandes</router-link>
+        </li>
+        <li>
+          <router-link to="/admin/produits"><f-icon :icon="'boxes'" style="margin-right: 10px"></f-icon>Produits</router-link>
         </li>
       </ul>
     </nav>
