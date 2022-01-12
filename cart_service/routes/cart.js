@@ -7,7 +7,7 @@ module.exports = (app) => {
     // find one
   /**
    * @openapi
-   * /api/cart:
+   * /api/cart/:idUser:
    *   get:
    *     security:
    *       - jwt: []
@@ -17,8 +17,13 @@ module.exports = (app) => {
    *     parameters:
    *       - in: path
    *         name : idUser
+   *         required: true
    *         schema: 
    *           type: integer
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *     responses:
    *       200:
    *         description: succesful operation
@@ -42,6 +47,7 @@ module.exports = (app) => {
    *     parameters:
    *       - in: body
    *         name : body
+   *         required: true
    *         schema: 
    *           type: objet
    *           required:
@@ -55,6 +61,10 @@ module.exports = (app) => {
    *              type: integer 
    *            quantity:     
    *              type: integer 
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *     responses:
    *       200:
    *         description: succesful operation
@@ -80,6 +90,7 @@ module.exports = (app) => {
    *     parameters:
    *       - in: body
    *         name : body
+   *         required: true
    *         schema: 
    *           type: objet
    *           required:
@@ -93,6 +104,10 @@ module.exports = (app) => {
    *              type: integer 
    *            quantity:     
    *              type: integer 
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *     responses:
    *       200:
    *         description: succesful operation
@@ -115,8 +130,13 @@ module.exports = (app) => {
    *     parameters:
    *       - in: path
    *         name : idUser
+   *         required: true
    *         schema: 
    *           type: integer
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *     responses:
    *       200:
    *         description: succesful operation

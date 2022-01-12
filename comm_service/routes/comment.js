@@ -3,15 +3,13 @@ module.exports = (app) => {
     const comment = require("../controllers/comment.js");
     const auth = require("../middlewares/auth.js")
 
-   /**
+    /**
    * @openapi
    * /api/comment/all:
    *   get:
-   *     security:
-   *       - jwt: []
    *     tags:
    *       - comment
-   *     description: search all comments
+   *     description: create a comment header
    *     parameters:
    *      - in: query
    *        name : page
@@ -33,7 +31,7 @@ module.exports = (app) => {
    *         content:
    *           application/json:
    *            schema: 
-   *             $ref: '#/definitions/ListComment' 
+   *             $ref: '#/definitions/Comment' 
    *     
   */
     router.get("/all", comment.findAllComment);
@@ -52,9 +50,11 @@ module.exports = (app) => {
    *         name : body
    *         schema: 
    *          $ref: '#/definitions/NewComment' 
+   *         required: true
    *       - in: header
    *         name: Authorization
    *         type: string
+   *         required: true
    *     responses:
    *       200:
    *         description: succesful operation
@@ -70,8 +70,6 @@ module.exports = (app) => {
    * @openapi
    * /api/comment/product/:idProduit:
    *   get:
-   *     security:
-   *       - jwt: []
    *     tags:
    *       - comment
    *     description: searches all reviews for a product based on its id
@@ -93,6 +91,7 @@ module.exports = (app) => {
    *       - in: path
    *         name: idProduit
    *         type: integer
+   *         required: true
    *     responses:
    *       200:
    *         description: succesful operation
@@ -108,8 +107,6 @@ module.exports = (app) => {
    * @openapi
    * /api/comment/:id:
    *   get:
-   *     security:
-   *       - jwt: []
    *     tags:
    *       - comment
    *     description: search for a comment
@@ -117,6 +114,7 @@ module.exports = (app) => {
    *       - in: path
    *         name: id
    *         type: integer
+   *         required: true
    *     responses:
    *       200:
    *         description: succesful operation
@@ -130,7 +128,7 @@ module.exports = (app) => {
 
   /**
    * @openapi
-   * /api/comment:
+   * /api/comment/:id:
    *   delete:
    *     security:
    *       - jwt: []
@@ -141,6 +139,11 @@ module.exports = (app) => {
    *       - in: path
    *         name: id
    *         type: integer
+   *         required: true
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *     responses:
    *       200:
    *         description: succesful operation
@@ -156,8 +159,6 @@ module.exports = (app) => {
    * @openapi
    * /api/comment/user/:idUser:
    *   get:
-   *     security:
-   *       - jwt: []
    *     tags:
    *       - comment
    *     description: searches all comments for a user based on their id
@@ -165,6 +166,7 @@ module.exports = (app) => {
    *       - in: path
    *         name: idUser
    *         type: integer
+   *         required: true
    *       - in: query
    *         name : page
    *         schema:
