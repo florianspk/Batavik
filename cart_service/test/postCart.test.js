@@ -9,7 +9,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
     it('valide test', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         
@@ -40,7 +40,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
     it('no valide test 1', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         
@@ -70,7 +70,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
     it('no valide test 1', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         
@@ -101,7 +101,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
     it('no valide test 2', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         

@@ -6,7 +6,7 @@ module.exports = (app) => {
   
   /**
    * @openapi
-   * /api/order/allByUser:
+   * /api/order/allByUser/:idUser:
    *   get:
    *     security:
    *       - jwt: []
@@ -14,7 +14,12 @@ module.exports = (app) => {
    *       - order
    *     description: searches all the commands of a user according to his id
    *     parameters:
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *       - in: path
+   *         required: true
    *         name : idUser
    *         schema: 
    *           type: integer
@@ -52,6 +57,10 @@ module.exports = (app) => {
    *       - order
    *     description: search all commands
    *     parameters:
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *       - in: query
    *         name : page
    *         schema:
@@ -86,7 +95,12 @@ module.exports = (app) => {
    *       - order
    *     description: validate the basket, record the prices in the lines in product cart and create an order linen and enter it in product cart
    *     parameters:
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *       - in: body
+   *         required: true
    *         name : body
    *         schema:
    *          $ref: '#/definitions/ValidateInfo'
@@ -111,11 +125,17 @@ module.exports = (app) => {
    *       - order
    *     description: change the status of a command to "cancel" if it is not "finish", depending on the command id
    *     parameters:
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *       - in: path
+   *         required: true
    *         name : id
    *         schema: 
    *           type: integer
    *       - in: body
+   *         required: true
    *         name : body
    *         schema: 
    *           type: objet
@@ -145,12 +165,18 @@ module.exports = (app) => {
    *       - order
    *     description: change the status of a command to "return" if it is not "finish", depending on the command id
    *     parameters:
+   *       - in: header
+   *         name: Authorization
+   *         type: string
+   *         required: true
    *       - in: path
    *         name : id
+   *         required: true
    *         schema: 
    *           type: integer
    *       - in: body
    *         name : body
+   *         required: true
    *         schema: 
    *           type: objet
    *           required:

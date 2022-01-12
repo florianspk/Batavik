@@ -13,7 +13,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
 
       //connexion
       var data = qs.stringify({
-      'email': 'test4',
+      'email': 'benoit57250@hotmail.fr',
       'password': 'test' 
       });
       
@@ -40,7 +40,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
 
       //connexion
       var data = qs.stringify({
-      'email': 'test4',
+      'email': 'benoit57250@hotmail.fr',
       'password': 'test' 
       });
       
@@ -69,7 +69,7 @@ describe("search for a user's unvalidated basket, if it does not exist, create i
 
       //connexion
       var data = qs.stringify({
-      'email': 'test4',
+      'email': 'benoit57250@hotmail.fr',
       'password': 'test' 
       });
       

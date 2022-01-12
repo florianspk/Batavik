@@ -9,7 +9,7 @@ describe("Change the quantity of a product in product cart if the quantity is =>
     it('valide test', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         
@@ -40,7 +40,7 @@ describe("Change the quantity of a product in product cart if the quantity is =>
     it('valide test', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         
@@ -71,7 +71,7 @@ describe("Change the quantity of a product in product cart if the quantity is =>
     it('no valide test 1', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         
@@ -101,7 +101,7 @@ describe("Change the quantity of a product in product cart if the quantity is =>
     it('no valide test 1', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         
@@ -132,7 +132,7 @@ describe("Change the quantity of a product in product cart if the quantity is =>
     it('no valide test 2', async() => {
       //connexion
       var data = qs.stringify({
-        'email': 'test4',
+        'email': 'benoit57250@hotmail.fr',
         'password': 'test' 
         });
         
