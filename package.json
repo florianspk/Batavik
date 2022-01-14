@@ -3,12 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^3.0.0-4",
+    "@types/node": "^15.12.2"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "nyc": "^15.1.0"
+  },
   "scripts": {
     "install": "cd auth_service && npm i && cd ../cart_service && npm i && cd ../comm_service && npm i && cd ../order_service && npm i && cd ../order_withdraw_service && npm i && cd ../product_service && npm i && cd ../stat_service && npm i && cd ../top_product_service && npm i && cd ../user_management_service && npm i && cd ../user_service && npm i",
     "stack": "stack-monitor ./config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --testPathPattern=auth_service/test",
+    "test:unit": "cd front && npm run test:unit",
+    "test-with-coverage": "nyc --reporter=text mocha"
   },
   "author": "",
   "license": "ISC"

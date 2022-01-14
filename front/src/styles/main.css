@@ -1,0 +1,13 @@
+:root{
+    --main-color: #FFFFFF;
+    --background: rgb(204, 204, 204);
+    --accent-color-1: #FFFF00;
+    
+    --font-color-main: #2C3E50;
+
+    --main-color: #cccccc;
+    --green-accent: #D4E157;
+    
+
+    --btn-corner: 15% / 50%;
+}

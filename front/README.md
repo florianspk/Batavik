@@ -1,24 +1,22 @@
-# front
+# VERRE-TECH - Frontend
 
-## Project setup
-```
-npm install
-```
+Réalisation du frontend confié à l'entreprise BATAVIK.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Sommaire
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Composition du projet
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Couleurs Admin
+
+>2C5970
+
+>A7D9F2
+
+>5DC0F0
+
+>4D6570
+
+>4A96BD
+
+![](src/assets/colors.png)

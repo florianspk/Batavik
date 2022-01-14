@@ -1,13 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const connection = require('../connect');
-
+var express = require('express');
+var router = express.Router();
 
 /* GET users listing. */
-router.get('/', (req,res,next)=> {
-  connection.query('SELECT * FROM User', (err,results,fields) => {
-      !err ?res.json(results) : res.json({err});
-  });
+router.get('/', function(req, res, next) {
+  res.send('respond with a resource');
 });
 
 module.exports = router;

@@ -12,16 +12,47 @@
  *   type: array
  *   items: 
  *    $ref: '#/definitions/User'
- *  User:
+ *  MessageResponse:
  *   type: object
  *   properties:
- *    _id: 
- *     type: string    
- *    name:
+ *    message: 
  *     type: string
- *    mail: 
- *     type: string    
- *    address:
+ * 
+ *  Comment:
+ *   type: object
+ *   properties:
+ *    text: 
  *     type: string
+ *    rate: 
+ *     type: integer
+ *    idProduct: 
+ *     type: integer
+ *    idUser: 
+ *     type: integer
+ * 
+ *  ListComment:
+ *   type: array
+ *   items:
+ *    type: object
+ *    properties:
+ *      text: 
+ *          type: string
+ *      rate: 
+ *          type: integer
+ *      idProduct: 
+ *          type: integer
+ *      idUser: 
+ *          type: integer
+ * 
+ *  NewComment:
+ *   type: object
+ *   properties:
+ *    text: 
+ *     type: string
+ *    rate: 
+ *     type: integer
+ *    idProduct: 
+ *     type: integer
+ * 
  */
 module.exports = {}
