@@ -36,6 +36,23 @@ export default {
       return (this.$route.path.includes('/admin'));
     },
   },
+  methods: {
+    setConfig() {
+      return {
+        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
+    },
+    async getLoggined() {
+      const response = await this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig());
+      if (response.status === 200) this.$isLogged = true;
+      else this.$isLogged = false;
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.getLoggined();
+    });
+  },
 };
 </script>
 
