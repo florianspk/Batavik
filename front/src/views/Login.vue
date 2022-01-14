@@ -68,6 +68,7 @@ export default {
           console.log(error);
         });
     },
+    
     validateRegister() {
       if (this.userRegister.password === this.validatePassword) {
         this.$axios.post(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/register`, this.userRegister)
