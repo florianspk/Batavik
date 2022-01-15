@@ -66,7 +66,6 @@ export default {
       try {
         const { data: cartContent } = await CartService.get(`/cart/${this.user.id}`);
         if (cartContent.length !== 0) {
-          console.log(cartContent);
           this.cartList = cartContent;
           this.haveProduct = true;
         }
@@ -87,7 +86,7 @@ export default {
       }
     },
 
-    calculatePrice(price) { console.log('ici'); this.price += price; },
+    calculatePrice(price) { this.price += price; },
 
     updateCart() {
       // this.haveProduct = false;

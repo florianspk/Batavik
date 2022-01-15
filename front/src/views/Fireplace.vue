@@ -1,6 +1,6 @@
 <template>
   <div class="shower-page">
-    <item-filter />
+    <item-filter v-model:filter="filter" />
     <section-product :nbProduct="products.length" :type="'bestsellers'" :products="products" />
     <paginator 
       v-if="productLoaded"
@@ -33,17 +33,37 @@ export default {
 
       // Filter settings
       pageSize: 6,
+      filter: {
+        q: null,
+        minPrice: null,
+        maxPrice: null,  
+      },
 
     };
   },
+  watch: {
+    filter: {
+      handler() { this.getProducts() },
+      deep: true,
+    },
+  },
   methods: {
     async getProducts() {
-      const { data: products } = await ProductService.get(`/categ/3/products?size=${this.pageSize}&page=${this.currentPage}`);
+      const params = {
+        ...this.filter,
+        size: this.pageSize,
+        page: this.currentPage,
+      }
+      const query = Object
+        .keys(params)
+        .map((key) => (params[key] != null ? `${key}=${params[key]}` : null))
+        .filter((a) => a != null)
+        .join('&')
+      const { data: products } = await ProductService.get(`/categ/3/products?${query}`);
       this.products = products.products;
       this.totalItems = products.totalItems;
       this.totalPage = products.totalPages;
       this.productLoaded = true;
-      console.log(products);
     },
     changeCurentPage(page) {
       this.currentPage = page;
