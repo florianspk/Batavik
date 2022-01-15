@@ -23,6 +23,7 @@ module.exports = {
     'max-len': 'off',
     'import/no-cycle': 'off',
     'no-param-reassign': 'off',
+    'semi': 'off'
   },
   overrides: [
     {

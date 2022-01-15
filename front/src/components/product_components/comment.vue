@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import UserService from '../../services/UserService';
+
 export default {
   name: 'comment',
   props: ['data'],
@@ -68,7 +70,7 @@ export default {
   methods: {
     async getUserName() {
       this.userLoaded = true;
-      const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.USER_SERVICE}/api/user/${this.data.userId}`);
+      const { data: user } = await UserService.get(`/user/${this.data.userId}`);
       this.user = user;
     },
   },

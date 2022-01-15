@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import ProductService from '../../services/ProductService'
+
 export default {
   name: 'cart-item',
   props: {
@@ -42,7 +44,7 @@ export default {
     },
     async getProductInormations() {
       try {
-        const { data: product } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.data.idProduct}`);
+        const { data: product } = await ProductService.get(`/product/${this.data.idProduct}`);
         this.productList = product;
         this.calculatedPrice = product.price * this.data.quantity;
         this.$emit('cost', this.calculatedPrice);

@@ -42,6 +42,7 @@ import {
   ElBreadcrumb,
   ElBreadcrumbItem,
 } from 'element-plus';
+import CommService from '../../services/CommService';
 
 export default {
   name: 'Comments',
@@ -60,14 +61,9 @@ export default {
     };
   },
   methods: {
-    setConfig() {
-      return {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-      };
-    },
     async getComments(val = 1) {
       try {
-        const { data: comment } = await this.$axios.get(`${this.$baseURL}:${this.$port.COMM_SERVICE}/api/comment/all?size=10&page=${val}`, this.setConfig());
+        const { data: comment } = await CommService.get(`/comment/all?size=10&page=${val}`);
         this.totalItems = comment.totalItems;
         this.comments = comment.comments;
       } catch (e) {
@@ -75,10 +71,7 @@ export default {
       }
     },
     deleteComment(commentIndex) {
-      this.$axios.delete(
-        `${this.$baseURL}:${this.$port.COMM_SERVICE}/api/comment/${this.comments[commentIndex].id}`, this.setConfig(),
-        this.comment,
-      );
+      CommService.delete(`/comment/${this.comments[commentIndex].id}`, {}, this.comment);
       this.comments.splice(commentIndex, 1);
     },
     formatDate(dateToFormat) {

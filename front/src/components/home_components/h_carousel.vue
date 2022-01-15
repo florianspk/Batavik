@@ -17,6 +17,7 @@
 
 <script>
 import Slide from './h_slide.vue';
+import ProductService from '../../services/ProductService'
 
 export default {
   name: 'carrousel',
@@ -39,7 +40,7 @@ export default {
       }
     },
     async getSlidesProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/best?size=${this.nbSlide}`);
+      const { data: products } = await ProductService.get(`/products/best?size=${this.nbSlide}`);
       this.slides = products.products;
     },
   },

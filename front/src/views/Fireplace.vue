@@ -17,6 +17,7 @@
 import ItemFilter from '../components/item_filter.vue';
 import SectionProduct from '../components/global/g_section.vue';
 import paginator from '../components/global/g_paginator.vue';
+import ProductService from '../services/ProductService';
 
 export default {
   name: 'douche',
@@ -37,7 +38,7 @@ export default {
   },
   methods: {
     async getProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/categ/3/products?size=${this.pageSize}&page=${this.currentPage}`);
+      const { data: products } = await ProductService.get(`/categ/3/products?size=${this.pageSize}&page=${this.currentPage}`);
       this.products = products.products;
       this.totalItems = products.totalItems;
       this.totalPage = products.totalPages;
