@@ -83,6 +83,7 @@ export default {
       try {
         const response = await this.$axios.delete(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/clean/${this.cartList.id}`, this.setConfig());
         this.getCartContent();
+        this.haveProduct = false;
       } catch (error) {
         console.log(error);
         this.haveError = true;
