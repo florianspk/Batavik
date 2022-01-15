@@ -41,7 +41,7 @@
 import {
   ElForm, ElInput, ElFormItem, ElButton, ElInputNumber,
 } from 'element-plus';
-import ProductService from '../../../services/ProductService'
+import ProductService from '../../../services/ProductService';
 
 export default {
   name: 'form',

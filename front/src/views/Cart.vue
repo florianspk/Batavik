@@ -12,7 +12,6 @@
         :forcedHeight="12" 
         :canEditQte="true" 
         @cost="calculatePrice" 
-        @qteChange="updateCart"
       />
     </div>
 
@@ -44,6 +43,7 @@ export default {
       user: null,
       cartList: null,
       haveProduct: false,
+      costList: [],
       price: 0,
     };
   },
@@ -69,6 +69,7 @@ export default {
           console.log(cartContent);
           this.cartList = cartContent;
           this.haveProduct = true;
+          this.calculatePrice();
         }
       } catch (error) {
         console.log(error);
@@ -87,10 +88,9 @@ export default {
       }
     },
 
-    calculatePrice(price) { console.log('ici'); this.price += price; },
-
-    updateCart() {
-      // this.haveProduct = false;
+    calculatePrice(price, idProduct) { 
+      this.costList[idProduct] = price;
+      this.price = this.costList.reduce((a, b) => a + b, 0);
     },
   },
   mounted() {

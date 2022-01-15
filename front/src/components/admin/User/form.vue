@@ -22,7 +22,7 @@
 import {
   ElForm, ElInput, ElFormItem, ElButton,
 } from 'element-plus';
-import UserService from '../../../services/UserService'
+import UserService from '../../../services/UserService';
 
 export default {
   name: 'form',

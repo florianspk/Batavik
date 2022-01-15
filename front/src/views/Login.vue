@@ -66,7 +66,7 @@ export default {
           console.log(user);
           this.setToken(user.token);
           this.$router.push('/user');
-          return Auth.getLoggined()
+          return Auth.getLoggined();
         })
         .catch((error) => {
           console.log(error);
@@ -78,7 +78,7 @@ export default {
         AuthService.post('/auth/register', this.userRegister)
           .then((response) => {
             console.log(response);
-            return Auth.getLoggined()
+            return Auth.getLoggined();
           })
           .catch((error) => {
             console.log(error);

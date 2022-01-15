@@ -31,8 +31,8 @@
 
 <script>
 import cartItem from './cart_item.vue';
-import AuthService from '../../services/AuthService'
-import CartService from '../../services/CartService'
+import AuthService from '../../services/AuthService';
+import CartService from '../../services/CartService';
 
 export default {
   name: 'cart',

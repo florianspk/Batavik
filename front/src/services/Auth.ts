@@ -1,12 +1,12 @@
-import { ref } from 'vue'
-import AuthService from './AuthService'
+import { ref } from 'vue';
+import AuthService from './AuthService';
 
-const isLogged = ref()
+const isLogged = ref();
 export default {
   isLogged,
   async getLoggined() {
     isLogged.value = await AuthService.get('/auth/validateToken')
       .then(() => true)
-      .catch(() => false)
+      .catch(() => false);
   },
-}
+};
