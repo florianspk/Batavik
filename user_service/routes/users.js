@@ -8,9 +8,10 @@ const auth = require('../middlewares/auth')
 // GET all Users
 router.get("/users",[auth.validateToken],userController.getAllUser)
 
+// GET specific username
+router.get("/user/username/:idUser", userController.getUserByUsername)
 
 // GET one user
-
 router.get("/user/:idUser" , [auth.validateToken],userController.getOneUser)
 
 // DELETE one user
