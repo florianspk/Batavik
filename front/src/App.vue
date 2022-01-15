@@ -93,4 +93,10 @@ export default {
 #admin {
   display: flex;
 }
+
+#user {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 </style>
