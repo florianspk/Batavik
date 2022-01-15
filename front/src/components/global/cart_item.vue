@@ -13,7 +13,7 @@
       </div>
 
       <div class="item-price">
-        {{ calculatedPrice }} €
+        {{ new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(calculatedPrice) }}
       </div>
     </div>
   

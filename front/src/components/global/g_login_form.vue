@@ -5,9 +5,9 @@
     
     <div id="form">
       <label for="username">Nom d'utilisateur</label> <br>
-      <input name="username" type="text"> <br>
+      <input name="username" type="text" v-model="userLogin.email"> <br>
       <label for="username" class="password">Mot de passe</label> <br>
-      <input name="username" type="password"> <br>
+      <input name="username" type="password" v-model="userLogin.password"> <br>
       <span class="info">Mot de passe oublié ?</span>
     </div>
 
@@ -20,21 +20,61 @@
 </template>
 
 <script>
+import { ElNotification } from 'element-plus';
+
 export default {
   name: 'login',
+  data() {
+    return {
+      userLogin: {
+        email: '',
+        password: '',
+      },
+    };
+  },
   methods: {
+    setToken(token) {
+      localStorage.setItem('token', token);
+    },
+
     validate() {
-      if (this.$route.name !== 'user') {
-        console.log(this.$route.name);
-        this.$router.push({ path: '/user' });
-      }
-      this.$emit('validate');
+      if (this.userLogin.email !== '' && this.userLogin.password !== '') this.validateLogin();
+      else this.notifError('Erreur', 'Veuillez remplir tous les champs');
+    },
+
+    validateLogin() {
+      this.$axios.post(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/login`, this.userLogin)
+        .then(({ data: user }) => {
+          this.setToken(user.token);
+          this.$emit('hide');
+          this.$router.push('/user');
+        })
+        .catch((error) => {
+          console.log(error);
+          this.notifError('Erreur', 'Veuillez vérifier vos identifiants');
+        });
+    },
+
+    notifError(title, message) {
+      ElNotification({
+        title: title,
+        message: message,
+        position: 'bottom-right',
+        type: 'warning',
+      });
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
+input { 
+  border-radius: 2rem;
+  border: none;
+  border: 1px black solid;
+  width: 100%;
+  padding: 1% 1rem;
+}
 #login{
   position: absolute;
   width: 25vw;

@@ -13,7 +13,8 @@
           :key="i"
           @click="info.text == 'S\'identifier' ? loginForm = true : info.text == 'Panier' ? cart = true : '' "
         >
-        {{ info.text }}
+        <span v-if="(info.text == 'S\'identifier' && !$isLogged) || info.text !== 'S\'identifier'">{{ info.text }}</span>
+        <span v-else>Déconnexion</span>
         </p>
       </div>
 
@@ -25,7 +26,7 @@
       </div>
 
     <transition-group name="fade">
-      <login-form v-if="loginForm" />
+      <login-form v-if="loginForm" @hide="loginForm = !loginForm" />
       <div class="black" v-if="loginForm" @click="loginForm = !loginForm" ></div>
     </transition-group>
 
@@ -116,6 +117,9 @@ export default {
   methods: {
     travel(path) {
       this.$router.push(path);
+    },
+    log() {
+      console.log('ici');
     },
   },
 };
