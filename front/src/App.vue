@@ -22,6 +22,7 @@
 import navbar from './components/global/g_navbar.vue';
 import navbarAdmin from './components/admin/navbar-admin.vue';
 import vFooter from './components/global/g_footer.vue';
+import Auth from './services/Auth'
 
 export default {
   name: 'App',
@@ -42,16 +43,10 @@ export default {
         headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
       };
     },
-    async getLoggined() {
-      const response = await this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig());
-      if (response.status === 200) this.$isLogged = true;
-      else this.$isLogged = false;
-    },
+    
   },
   mounted() {
-    this.$nextTick(() => {
-      this.getLoggined();
-    });
+    Auth.getLoggined();
   },
 };
 </script>

@@ -22,6 +22,7 @@
 import {
   ElForm, ElInput, ElFormItem, ElButton,
 } from 'element-plus';
+import UserService from '../../../services/UserService'
 
 export default {
   name: 'form',
@@ -66,20 +67,11 @@ export default {
     };
   },
   methods: {
-    setConfig() {
-      return {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-      };
-    },
     async onSubmit() {
       if (!this.edit) {
-        await this.$axios.post(
-          `${this.$baseURL}:${this.$port.USER_SERVICE}/api/user`, this.user, this.setConfig(),
-        );
+        await UserService.post('/user', this.user);
       } else {
-        await this.$axios.patch(
-          `${this.$baseURL}:${this.$port.USER_SERVICE}/api/user/${this.user.id}`, this.user, this.setConfig(),
-        );
+        await UserService.patch(`/user/${this.user.id}`, this.user);
       }
       this.close();
     },

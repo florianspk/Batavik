@@ -33,6 +33,8 @@
 
 <script>
 import cartItem from '../components/global/cart_item.vue';
+import AuthService from '../services/AuthService';
+import CartService from '../services/CartService';
 
 export default {
   name: 'Cart View',
@@ -46,17 +48,12 @@ export default {
     };
   },
   methods: {
-    setFontSize() { this.itemFontSize = window.innerHeight > window.innerWidth ? 1.1 : 1.7; },
-
-    setConfig() {
-      return {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-      };
+    setFontSize() {
+      this.itemFontSize = window.innerHeight > window.innerWidth ? 1.1 : 1.7;
     },
-
     async getIdentity() {
       try {
-        const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig());
+        const { data: user } = await AuthService.get('/auth/validateToken');
         this.user = user;
         this.getCartContent();
       } catch (error) {
@@ -67,7 +64,7 @@ export default {
 
     async getCartContent() {
       try {
-        const { data: cartContent } = await this.$axios.get(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/${this.user.id}`, this.setConfig());
+        const { data: cartContent } = await CartService.get(`/cart/${this.user.id}`);
         if (cartContent.length !== 0) {
           console.log(cartContent);
           this.cartList = cartContent;
@@ -81,7 +78,7 @@ export default {
 
     async cleanCart() {
       try {
-        const response = await this.$axios.delete(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/clean/${this.cartList.id}`, this.setConfig());
+        const response = await CartService.delete(`/cart/clean/${this.cartList.id}`);
         this.getCartContent();
         this.haveProduct = false;
       } catch (error) {

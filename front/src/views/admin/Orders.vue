@@ -60,6 +60,7 @@ import {
 } from 'vue';
 
 import orderShow from '../../components/admin/Order/show.vue';
+import OrderService from '../../services/OrderService';
 
 export default {
   name: 'Orders',
@@ -87,14 +88,9 @@ export default {
     };
   },
   methods: {
-    setConfig() {
-      return {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-      };
-    },
     async getOrders(val = 1) {
       try {
-        const { data: order } = await this.$axios.get(`${this.$baseURL}:${this.$port.ORDER_SERVICE}/api/order/all?size=10&page=${val}`, this.setConfig());
+        const { data: order } = await OrderService.get(`/order/all?size=10&page=${val}`);
         this.totalItems = order.totalItems;
         this.orders = order.orders;
         console.log(this.orders);

@@ -83,6 +83,7 @@ import {
 
 import productForm from '../../components/admin/Product/form.vue';
 import productShow from '../../components/admin/Product/show.vue';
+import ProductService from '../../services/ProductService';
 
 export default {
   name: 'Products',
@@ -125,7 +126,7 @@ export default {
     },
     async getProducts(val = 1) {
       try {
-        const { data: product } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products?size=10&page=${val}`, this.setConfig());
+        const { data: product } = await ProductService.get(`/products?size=10&page=${val}`, this.setConfig());
         this.totalItems = product.totalItems;
         this.products = product.products;
       } catch (e) {
@@ -141,10 +142,7 @@ export default {
       this.editVisible = true;
     },
     deleteProduct(productIndex) {
-      this.$axios.delete(
-        `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.products[productIndex].id}`, this.setConfig(),
-        this.product,
-      );
+      ProductService.delete(`/product/${this.products[productIndex].id}`, {}, this.product);
       this.products.splice(productIndex, 1);
     },
     formatDate(dateToFormat) {

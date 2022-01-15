@@ -39,6 +39,9 @@
 </template>
 
 <script>
+import Auth from '../services/Auth';
+import AuthService from '../services/AuthService';
+
 export default {
   name: 'Login',
   data() {
@@ -58,11 +61,12 @@ export default {
   },
   methods: {
     validateLogin() {
-      this.$axios.post(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/login`, this.userLogin)
+      AuthService.post('/auth/login', this.userLogin)
         .then(({ data: user }) => {
           console.log(user);
           this.setToken(user.token);
           this.$router.push('/user');
+          return Auth.getLoggined()
         })
         .catch((error) => {
           console.log(error);
@@ -71,9 +75,10 @@ export default {
     
     validateRegister() {
       if (this.userRegister.password === this.validatePassword) {
-        this.$axios.post(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/register`, this.userRegister)
+        AuthService.post('/auth/register', this.userRegister)
           .then((response) => {
             console.log(response);
+            return Auth.getLoggined()
           })
           .catch((error) => {
             console.log(error);

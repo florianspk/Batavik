@@ -21,6 +21,8 @@
 
 <script>
 import { ElNotification } from 'element-plus';
+import Auth from '../../services/Auth';
+import AuthService from '../../services/AuthService'
 
 export default {
   name: 'login',
@@ -43,11 +45,12 @@ export default {
     },
 
     validateLogin() {
-      this.$axios.post(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/login`, this.userLogin)
+      AuthService.post('/auth/login', this.userLogin)
         .then(({ data: user }) => {
           this.setToken(user.token);
           this.$emit('hide');
           this.$router.push('/user');
+          return Auth.getLoggined()
         })
         .catch((error) => {
           console.log(error);

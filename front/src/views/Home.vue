@@ -9,6 +9,7 @@
 <script>
 import Carrousel from '../components/home_components/h_carousel.vue';
 import SectionProduct from '../components/global/g_section.vue';
+import ProductService from '../services/ProductService';
 
 export default {
   name: 'Home',
@@ -22,11 +23,11 @@ export default {
   },
   methods: {
     async getBestSales() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/best?size=${this.sizeProduct}`);
+      const { data: products } = await ProductService.get(`/products/best?size=${this.sizeProduct}`);
       this.bestSales = products.products;
     },
     async getTopProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/top?size=${this.sizeProduct}`);
+      const { data: products } = await ProductService.get(`/products/top?size=${this.sizeProduct}`);
       this.topProducts = products.products;
     },
   },
