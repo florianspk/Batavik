@@ -16,6 +16,21 @@ describe("Try to login user", () => {
             'password': 'test'
         });
 
+        await request(app).post("/api/auth/login").send(data).expect(200)
+
+
+    })
+
+    it('test wrong email', async() => {
+
+        //connexion
+        const data = qs.stringify({
+            'email': 'tata',
+            'password': 'test'
+        });
+
+        await request(app).post("/api/auth/login").send(data).expect(401)
+
 
     })
 
