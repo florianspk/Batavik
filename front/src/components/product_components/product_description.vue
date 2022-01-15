@@ -22,7 +22,7 @@
         </select>
       </div>
 
-      <h2 id="price">Prix : {{data.price}}€</h2>
+      <h2 id="price">Prix : {{ new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(data.price) }}</h2>
 
       <div class="add">
         <button @click="addToCart">
