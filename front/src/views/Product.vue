@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { ElNotification } from 'element-plus';
 import productDescription from '../components/product_components/product_description.vue';
 import sameProduct from '../components/product_components/same_product.vue';
 import commentSection from '../components/product_components/comment_section.vue';
@@ -36,9 +37,14 @@ export default {
   },
   methods: {
     async getProductInfo() {
-      const { data: product } = await ProductService.get(`/product/${this.$route.params.id}`);
-      this.productData = product;
-      if (product != null) this.dataLoaded = true;
+      try {
+        const { data: product } = await ProductService.get(`/product/${this.$route.params.id}`);
+        this.productData = product;
+        if (product != null) this.dataLoaded = true;
+        else this.notify();
+      } catch (err) {
+        this.notify();
+      }
     },
     async getSimilaire() {
       const { data: products } = await ProductService.get('/products/best');
@@ -47,6 +53,14 @@ export default {
     async getComments() {
       const { data: comments } = await CommService.get(`/comment/product/${this.$route.params.id}`);
       this.comments = comments;
+    },
+    notify() {
+      ElNotification({
+        title: 'Erreur',
+        message: 'Impossible de récupéré le produit demandé',
+        position: 'bottom-right',
+        type: 'warning',
+      });
     },
   },
   mounted() {
