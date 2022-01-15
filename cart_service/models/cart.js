@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
 
     validation:{
         type: DataTypes.TINYINT(1),
-        allowNull:false
+        allowNull: true,
+        defaultValue: 0
     },
 
     cartPrice:{

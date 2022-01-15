@@ -1,10 +1,13 @@
 const path = __dirname
-
+const groups = {
+  common: 'Common'
+}
 module.exports = [
   {
     label: 'auth_service',
     description: 'Permet la connexion, l\'inscription et la récupération de mot de passe',
     url: 'http://localhost:3010',
+    groups: [groups.common],
     spawnCmd: 'npm',
     spawnArgs: ['run', 'start'],
     spawnOptions: {
@@ -23,6 +26,7 @@ module.exports = [
     url: 'http://localhost:3011',
     spawnCmd: 'npm',
     spawnArgs: ['run', 'start'],
+    groups: [groups.common],
     spawnOptions: {
       cwd: `${path}/cart_service`,
       env: Object.assign({
@@ -37,6 +41,7 @@ module.exports = [
     label: 'comm_service',
     description: 'Permet la création, la supression et l\'édition des commentaire',
     url: 'http://localhost:3012',
+    groups: [groups.common],
     spawnCmd: 'npm',
     spawnArgs: ['run', 'start'],
     spawnOptions: {
@@ -53,6 +58,7 @@ module.exports = [
     label: 'order_service',
     description: 'Permet la gestion des commandes suite à la validation des paniers',
     url: 'http://localhost:3013',
+    groups: [groups.common],
     spawnCmd: 'npm',
     spawnArgs: ['run', 'start'],
     spawnOptions: {
@@ -85,6 +91,7 @@ module.exports = [
     label: 'product_service',
     description: 'Permet la gestion des produits',
     url: 'http://localhost:3015',
+    groups: [groups.common],
     spawnCmd: 'npm',
     spawnArgs: ['run', 'start'],
     spawnOptions: {
@@ -150,6 +157,7 @@ module.exports = [
     description: 'Permet la gestion des utilisateurs (modification / supressions des utilisateurs)',
     url: 'http://localhost:3019',
     spawnCmd: 'npm',
+    groups: [groups.common],
     spawnArgs: ['run', 'start'],
     spawnOptions: {
       cwd: `${path}/user_service`,
@@ -165,6 +173,7 @@ module.exports = [
     label: 'front',
     description: 'Site web marchand de Verre-Tech',
     url: 'http://localhost:8080',
+    groups: [groups.common],
     spawnCmd: 'npm',
     spawnArgs: ['run', 'serve'],
     spawnOptions: {

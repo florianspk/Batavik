@@ -30,7 +30,7 @@ describe('searches for the invalid basket of a user with his id', () => {
       .send({
         idUser: 2
       })
-      expect(res.statusCode).toEqual(200);
+      expect(res.statusCode).toEqual(204);
     })
 
     it('not valide test 1', async() => {
