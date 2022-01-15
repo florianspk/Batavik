@@ -19,13 +19,18 @@ exports.upload = multer({
         fileSize: (process.env.MAX_UPLOAD) ? process.env.MAX_UPLOAD : '5000000'
     },
     fileFilter: (req, file, cb) => {
-        const fileTypes = /jpeg|jpg|png|gif/
-        const mimeType = fileTypes.test(file.mimetype)
-        const extname = fileTypes.test(path.extname(file.originalname))
+        try {
+            const fileTypes = /jpeg|jpg|png|gif/
+            const mimeType = fileTypes.test(file.mimetype)
+            const extname = fileTypes.test(path.extname(file.originalname))
 
-        if (mimeType && extname) {
-            return cb(null, true)
+            if (mimeType && extname) {
+                return cb(null, true)
+            }
+            cb("Give proper files formate to upload")
+        }catch (e){
+            cb("test")
         }
-        cb("Give proper files formate to upload")
+
     }
 }).single('image')
