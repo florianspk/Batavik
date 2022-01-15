@@ -66,7 +66,6 @@ export default {
       try {
         const { data: cartContent } = await CartService.get(`/cart/${this.user.id}`);
         if (cartContent.length !== 0) {
-          console.log(cartContent);
           this.cartList = cartContent;
           this.haveProduct = true;
           this.calculatePrice();
