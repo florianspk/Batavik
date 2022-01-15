@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 const db = require("../models");
 const { exit } = require("process");
 const cart = db.cart;
-const productCart = db.productCart;
+const productOrder = db.productOrder;
 const order = db.order;
 const historystatus = db.historystatus;
 
@@ -24,7 +24,7 @@ exports.findAllByUser = (req, res) => {
 
         order.findAll({
             include:[{
-                model: productCart,
+                model: productOrder,
                 required: true
             }],
             where: {
@@ -55,7 +55,7 @@ exports.findAll = (req, res) => {
         const {limit, offset} = order.getPagination(page, size);
         order.findAll({
             include:[{
-                model: productCart,
+                model: productOrder,
                 required: true
             }],
             limit,
@@ -110,7 +110,7 @@ exports.validateOrder = (req, res) => {
             })
 
             const orderPromises = req.body.productList.map(async element => {
-                productcart = await productCart.findOne({
+                productorder = await productOrder.findOne({
                     include: [{
                             model: cart ,
                             required: true,
@@ -123,17 +123,17 @@ exports.validateOrder = (req, res) => {
                     where:{
                         idProduct: element["id"]
                     },
-                }).then(async productcart => {
-                    if(productcart != null){
-                        totalPrices += element["price"] * productcart.quantity;
+                }).then(async productorder => {
+                    if(productorder != null){
+                        totalPrices += element["price"] * productorder.quantity;
     
-                        await productcart.update({
+                        await productorder.update({
                             unitPrice: element["price"],
                             orderId: order.id,
                             cartId: null
                         })
-                        console.log(productcart);
-                        productcart.save();
+                        console.log(productorder);
+                        productorder.save();
                     }else{
                         await order.destroy();
                         order = null;
@@ -198,7 +198,7 @@ exports.cancel = (req, res) => {
         order.findOne(
             {
                 include: [{
-                    model: productCart,
+                    model: productOrder,
                     required: true
                  },
                  {
@@ -261,7 +261,7 @@ exports.cancel = (req, res) => {
         order.findOne(
             {
                 include: [{
-                    model: productCart,
+                    model: productOrder,
                     required: true
                  },
                  {
