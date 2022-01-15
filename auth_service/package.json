@@ -7,6 +7,8 @@
     "seed:auth": "npx sequelize-cli db:seed:all"
   },
   "dependencies": {
+    "@jest/globals": "^27.4.6",
+    "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.1",
@@ -17,13 +19,14 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "fs-extra": "^9.1.0",
+    "jest": "^27.4.7",
     "jsonwebtoken": "^8.5.1",
-    "jwt-redis": "^6.0.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.12",
-    "redis": "^4.0.1",
-    "sequelize": "^6.12.5",
+    "qs": "^6.10.3",
+    "sequelize": "^6.13.0",
+    "supertest": "^6.2.1",
     "swagger": "^0.7.5",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.2.0"

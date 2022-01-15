@@ -18,7 +18,7 @@ exports.signUp = async (req, res) => {
             enabled
         }).then(result => {
             delete result["dataValues"]["password"]
-            res.status(201).json(result)
+            res.status(200).json(result)
         }).catch(error => {
             res.status(401).json({"status": "error", "message": error.message})
         })
