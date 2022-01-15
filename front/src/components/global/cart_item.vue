@@ -27,7 +27,9 @@
 </template>
 
 <script>
-import ProductService from '../../services/ProductService'
+import ProductService from '../../services/ProductService';
+import AuthService from '../../services/AuthService';
+import CartService from '../../services/CartService';
 
 export default {
   name: 'cart-item',
@@ -49,12 +51,6 @@ export default {
     };
   },
   methods: {
-    setConfig() {
-      return {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-      };
-    },
-
     calculatePrice(price, qte) { return price * qte; },
 
     async getProductInformations() {
@@ -71,7 +67,7 @@ export default {
 
     async getIdentity() {
       try {
-        const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig());
+        const { data: user } = await AuthService.get('/auth/validateToken');
         this.user = user;
       } catch (error) {
         console.log(error);
@@ -90,7 +86,7 @@ export default {
 
       this.calculatedPrice = 0;
       this.calculateCost();
-      await this.$axios.post(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/quantityProduct`, postData, this.setConfig());
+      await CartService.post('/cart/quantityProduct', postData);
       window.dispatchEvent(new Event('updateCart'));
       this.$emit('qteChange');
     },

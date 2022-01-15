@@ -22,7 +22,7 @@
 <script>
 import { ElNotification } from 'element-plus';
 import Auth from '../../services/Auth';
-import AuthService from '../../services/AuthService'
+import AuthService from '../../services/AuthService';
 
 export default {
   name: 'login',
@@ -50,7 +50,7 @@ export default {
           this.setToken(user.token);
           this.$emit('hide');
           this.$router.push('/user');
-          return Auth.getLoggined()
+          return Auth.getLoggined();
         })
         .catch((error) => {
           console.log(error);

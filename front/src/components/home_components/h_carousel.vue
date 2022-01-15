@@ -17,7 +17,7 @@
 
 <script>
 import Slide from './h_slide.vue';
-import ProductService from '../../services/ProductService'
+import ProductService from '../../services/ProductService';
 
 export default {
   name: 'carrousel',

@@ -1,7 +1,7 @@
 <template>
   <div id=info-client>
     <side-client :user="user" />
-    <history-client :history="userHistory" />
+    <history-client v-if="userHistoryFetched" :history="userHistory" />
   </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
       idUser: this.$route.params.id,
       user: {},
       userHistory: [],
+      userHistoryFetched: false,
     };
   },
   methods: {
@@ -39,6 +40,7 @@ export default {
       OrderService.get(`/order/allByUser/${this.user.id}`)
         .then(({ data: userHistory }) => {
           this.userHistory = userHistory;
+          this.userHistoryFetched = true;
         })
         .catch((error) => {
           console.log(error);

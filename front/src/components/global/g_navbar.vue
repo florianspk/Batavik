@@ -68,7 +68,7 @@ import { reactive, ref, computed } from 'vue';
 import LoginForm from './g_login_form.vue';
 import Cart from './cart.vue';
 import Auth from '../../services/Auth';
-import router from '../../router/index'
+import router from '../../router/index';
 
 export default {
   name: 'navbar',
@@ -90,9 +90,9 @@ export default {
     function openNavMobile() {
       mobileVisible.value = !mobileVisible.value;
     }
-    const loginForm = ref(false)
-    const cart = ref(false)
-    const travel = (path) => router.push(path)
+    const loginForm = ref(false);
+    const cart = ref(false);
+    const travel = (path) => router.push(path);
     return {
       loginForm,
       cart,
@@ -104,8 +104,8 @@ export default {
         { text: 'Retrait des produits sous 2H', path: '/infos' },
         { text: 'Trouver un point de retrait', path: '/sites' },
         { text: 'Suivis de commandes', path: '/order' },
-        { text: 'Panier', click: () => { cart.value = true }, hidden: !Auth.isLogged.value },
-        { text: 'S\'identifier', click: () => { loginForm.value = true }, hidden: Auth.isLogged.value },
+        { text: 'Panier', click: () => { cart.value = true; }, hidden: !Auth.isLogged.value },
+        { text: 'S\'identifier', click: () => { loginForm.value = true; }, hidden: Auth.isLogged.value },
         { text: 'Mon compte', path: '/user', hidden: !Auth.isLogged.value },
       ].filter((r) => !r.hidden))),
       pages: [
@@ -115,10 +115,10 @@ export default {
       ],
       clickOnItemNavbar(info) {
         if (info?.path) {
-          travel(info.path)
+          travel(info.path);
         }
         if (info?.click) {
-          info.click()
+          info.click();
         }
       },
     };
