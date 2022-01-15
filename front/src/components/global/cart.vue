@@ -80,6 +80,7 @@ export default {
       try {
         await CartService.delete(`/cart/clean/${this.cartList.id}`);
         this.getCartContent();
+        this.haveProduct = false;
       } catch (error) {
         console.log(error);
         this.haveError = true;
