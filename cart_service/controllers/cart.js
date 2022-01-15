@@ -1,135 +1,62 @@
 const db = require("../models");
 const cart = db.cart;
 const productCart = db.productCart;
+const isNotNumber = (number) => Number.isNaN(+number)
 
 //* Find a single with an id
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
+  let { idUser } = req.params
   try {
-    if (typeof req.params.idUser === 'undefined') {
-      throw new Error("Il manque des informations dans notre requete");
-    }
-
-    if (isNaN(parseInt(req.params.idUser))) {
-      throw new Error("Une des valeurs envoyé n'est pas valide");
-    }
-
-    cart.findOne({
-      include: [{
-        model: productCart,
-      }],
-      where: {
-        validation: 0,
-        idUser: req.params.idUser
-      }
+    if (idUser == null) return res.status(400).send('User id must be present in request body')
+    if (isNotNumber(idUser)) return res.status(400).send('User id must be a number')
+    const cartOfUser = await cart.findOne({
+      include: [{ model: productCart }],
+      where: { idUser}
     })
-      .then((data) => {
-        if (data == null) {
-          res.status(204).send({
-            message: "Panier introuvable",
-          });
-        } else {
-          res.send(data);
-        }
-
-      })
-      .catch((err) => {
-        res.status(400).send({
-          message: err.message || "Some error occurred while retrieving .",
-        });
-      });
-
+    if(!cartOfUser) return res.status(204).send({message: "Panier introuvable",});
+    res.json(cartOfUser)
   } catch (error) {
-    res.status(400).send({
-      message: error.message
-    });
+    console.error(error)
+    res.status(500).send({message: error.message});
   }
-
 };
 
+const findOrCreate = async ({model, where, toCreate, postCreate = (instance) => {}}) => {
+  let instance = await model.findOne({ where })
+  if(instance == null) {
+    instance = await model.create(toCreate)
+  }
+  if (postCreate) await postCreate(instance)
+  return instance
+}
 //* create and add new cart and new cproduct cart 
 exports.addcart = async (req, res) => {
-  console.log(req.body);
-  let dataCart;
+  const {idUser, idProduct, quantity} = req.body
+  if (idUser == null) return res.status(400).send('User id must be present in request body')
+  if (idProduct == null) return res.status(400).send('The product id must be present in request body')
+  if (quantity == null) return res.status(400).send('Quantity must be present in the request body')
+  if (isNotNumber(idUser)) return res.status(400).send('User id must be a number')
+  if (isNotNumber(idProduct)) return res.status(400).send('The product id must be a number')
+  if (isNotNumber(quantity)) return res.status(400).send('Quantity must be a number')
   try {
-    if (typeof req.body.idUser === 'undefined' || typeof req.body.idProduct === 'undefined' || typeof req.body.quantity === 'undefined') {
-      throw new Error("Il manque des informations dans notre requete");
-    }
-
-    if (isNaN(parseInt(req.body.idUser)) || isNaN(parseInt(req.body.idProduct)) || isNaN(parseInt(req.body.quantity))) {
-      throw new Error("Une des valeurs envoyé n'est pas valide");
-    }
-
-    await cart.findOne({
-      where: {
-        validation: 0,
-        idUser: req.body.idUser
-      },
+    let cartForUser = await findOrCreate({
+      model: cart,
+      where: { idUser },
+      toCreate: { idUser, cartPrice: 0, },
     })
-      .then(async (data) => {
-        if (data == null || data == []) {
-          await cart.create({
-            idUser: req.body.idUser,
-            validation: 0,
-            cartPrice: 0,
-
-          })
-            .then((data) => {
-              dataCart = data
-            })
-            .catch((err) => {
-              res.status(500).json({ message: 'un probleme est survenue' });
-            });
-        } else {
-          dataCart = data
-        }
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: err.message || "Some error occurred while retrieving .",
-        });
-      });
-
-
-    await productCart.findOne({
-      include: [{
-        model: cart,
-        attributes: [],
-        where: {
-          validation: 0,
-          idUser: req.body.idUser
-        }
-      }],
-      where: { idProduct: req.body.idProduct },
-      logging: true,
+    const id_cart = cartForUser.id
+    
+    let productToAdd = await findOrCreate({
+      model: productCart,
+      where: { idProduct, id_cart },
+      toCreate: { idProduct, quantity: 0, id_cart, },
+      postCreate: async (productCartForUser) => await cartForUser.addProductCart(productCartForUser)
     })
-      .then(async (data) => {
-        if (data == null || data == []) {
-          await productCart.create({
-            idProduct: req.body.idProduct,
-            quantity: req.body.quantity,
-            id_cart: dataCart.id
-          })
-            .then((data) => {
-              dataProductCart = data
-            })
-            .catch((err) => {
-              res.status(500).json({ message: 'un probleme est survenue' });
-            });
-        } else {
-          dataProductCart = data
-        }
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: err.message || "Some error occurred while retrieving .",
-        });
-      });
-
-    res.send({ message: "Produit ajouter" });
+    await productToAdd.increment('quantity', {by: +quantity})
+    res.send({ message: "Product add" });
   } catch (error) {
-    res.status(400).send({
-      message: error.message
-    });
+    console.error(error)
+    res.status(500).send({message: error.message});
   }
 };
 
@@ -149,7 +76,6 @@ exports.quantityProduct = async (req, res) => {
         model: cart,
         attributes: [],
         where: {
-          validation: 0,
           idUser: req.body.idUser
         }
       }],

@@ -26,17 +26,17 @@ db.Sequelize = Sequelize;
 
 db.cart = require("./cart.js")(sequelize, Sequelize);
 db.order = require("./order.js")(sequelize, Sequelize);
-db.productCart = require("./productCart.js")(sequelize, Sequelize);
+db.productOrder = require("./productOrder.js")(sequelize, Sequelize);
 db.status = require("./status.js")(sequelize, Sequelize);
 db.historystatus = require("./historystatus.js")(sequelize, Sequelize);
 
 /* relation */
 
-db.productCart.belongsTo(db.order, {foreignKey: {field: "id_order", allowNull: true}});//
-db.order.hasMany(db.productCart, {foreignKey: {field: "id_order", allowNull: true}});//
+db.productOrder.belongsTo(db.order, {foreignKey: {field: "id_order", allowNull: true}});//
+db.order.hasMany(db.productOrder, {foreignKey: {field: "id_order", allowNull: true}});//
 
-db.productCart.belongsTo(db.cart, {foreignKey: {field: "id_cart", allowNull: true }});//
-db.cart.hasMany(db.productCart, {foreignKey: {field: "id_cart", allowNull: true }});
+db.productOrder.belongsTo(db.cart, {foreignKey: {field: "id_cart", allowNull: true }});//
+db.cart.hasMany(db.productOrder, {foreignKey: {field: "id_cart", allowNull: true }});
 
 db.historystatus.belongsTo(db.order, {foreignKey: "id_order"});//
 db.order.hasMany(db.historystatus, {foreignKey: "id_order"});

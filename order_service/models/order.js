@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     };
     
     static associate(models) {
-      order.productCart = order.hasMany(models.cart)
+      order.productOrder = order.hasMany(models.cart)
     }
   };
   order.init({
