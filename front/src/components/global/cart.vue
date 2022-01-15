@@ -9,7 +9,7 @@
       </div>
 
       <div id="cost">
-        Coût total de la commande: <span id="cost-price">{{price}} €</span>
+        Coût total de la commande: <span id="cost-price">{{ new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price) }}</span>
       </div>
 
       <div id="button">
