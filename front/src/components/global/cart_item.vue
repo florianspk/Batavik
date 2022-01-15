@@ -47,7 +47,7 @@ export default {
       calculatedPrice: 0,
       user: null,
       maxqte: 10,
-      qte: 1,
+      qte: this.data.quantity,
     };
   },
   methods: {
@@ -88,12 +88,11 @@ export default {
       this.calculateCost();
       await CartService.post('/cart/quantityProduct', postData);
       window.dispatchEvent(new Event('updateCart'));
-      this.$emit('qteChange');
     },
 
     calculateCost() {
       this.calculatedPrice = this.productList.price * this.qte;
-      this.$emit('cost', this.calculatedPrice);
+      this.$emit('cost', this.calculatedPrice, this.data.idProduct);
     },
 
   },
