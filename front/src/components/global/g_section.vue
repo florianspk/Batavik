@@ -2,7 +2,7 @@
   <div class="section">
     <h1 class="title" v-if="title"> {{title}} </h1>
     <div class="product-list">
-      <products v-for="(product, i) in products" :key="i" :index="i" :data="product" />
+      <products v-for="(product) in products" :key="product.id" :data="product" />
     </div>
   </div>
 </template>

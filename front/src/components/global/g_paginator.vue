@@ -45,6 +45,12 @@ export default {
     currentPage() {
       this.setPageToDisplay();
     },
+    totalPage() {
+      this.setPageToDisplay();
+    },
+    numberPage() {
+      this.setPageToDisplay();
+    },
   },
   mounted() {
     this.setPageToDisplay();
