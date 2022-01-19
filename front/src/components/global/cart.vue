@@ -31,8 +31,8 @@
 
 <script>
 import cartItem from './cart_item.vue';
-import AuthService from '../../services/AuthService'
-import CartService from '../../services/CartService'
+import AuthService from '../../services/AuthService';
+import CartService from '../../services/CartService';
 
 export default {
   name: 'cart',
@@ -117,7 +117,7 @@ export default {
   #triangle{
     position: absolute;
     top: -5%;
-    right: 17%;
+    right: 38%;
     width: 0;
     height: 0;
     border-left: 2vh solid transparent; 

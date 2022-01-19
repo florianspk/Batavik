@@ -1,7 +1,9 @@
-const model = require("../models")
-const Sequelize = require("sequelize")
+const model = require("../models");
+const Sequelize = require("sequelize");
 const User = model.User;
-const axios = require("axios")
+const axios = require("axios");
+
+const isNotNumber = (number) => Number.isNaN(+number);
 
 module.exports = {
     getAllUser(req, res, next) {
@@ -135,6 +137,22 @@ module.exports = {
             })
         } catch (e) {
             res.status(401).json(e.message)
+        }
+    },
+    async getUserByUsername(req, res, next) {
+        let { idUser: id } = req.params
+        try {
+            if (id == null) return res.status(400).send('User id must be present in request body');
+            if (isNotNumber(id)) return res.status(400).send('User id must be a number');
+            const user = await User.findOne({
+                where: { id },
+                attributes:["firstname"],
+            });
+            if(!user) return res.status(204).send({message: "Utilisateur introuvable",});
+            res.json(user);
+        } catch (error) {
+            console.error(error)
+            res.status(500).send({message: error.message});
         }
     },
     editOneUser(req, res, next) {

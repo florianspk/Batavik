@@ -3,30 +3,26 @@
 
     <div class="title">Recherche avancé:</div>
   
-  <div id="filter-group">
+  <div id="filter-group" v-if="localFilter.hasOwnProperty('q')">
     <div class="block">
       <label for="search">Rechercher dans cette catégorie</label>
-      <input type="text" name="search" placeholder="Ex: douche">
+      <input type="text" name="search" placeholder="Ex: douche" v-model="localFilter.q">
     </div>  
 
-    <div class="block bg-red">
+    <div class="block bg-red" v-if="localFilter.hasOwnProperty('minPrice') ||localFilter.hasOwnProperty('maxPrice')">
       <label for="price">Prix</label>
-      <div>
-        <input class="input-number" type="number" name="price" placeholder="0 €"> 
-        - 
-        <input class="input-number" type="number" name="price" placeholder="2000 €">
+      <div class="price-input-container">
+        <input class="input-number" type="number" name="price" placeholder="0" v-model="localFilter.minPrice">€
+        <div class="separator">-</div>
+        <input class="input-number" type="number" name="price" placeholder="2000" v-model="localFilter.maxPrice">€
       </div>
     </div>
 
-    <div class="block validate">
+    <div class="block validate" v-if="localFilter.hasOwnProperty('availableOnlyInput')">
       <div class="center">
         <label for="avaible">Produits disponibles uniquement</label>
         <input type="checkbox" name="avaible">
       </div>
-    </div>
-
-    <div class="block validate">
-      <button class="btn">Valider les critères</button>
     </div>
   </div>
   
@@ -34,17 +30,21 @@
 </template>
 
 <script>
+import { ref, watch } from 'vue'
+
 export default {
-  name: 'item-filter',
-  data() {
-    return {
-      searchInput: '',
-      priceMinInput: '',
-      priceMaxInput: '',
-      availableOnlyInput: false,
-    };
+  props: {
+    filter: { required: true },
   },
-};
+  setup(props, { emit }) {
+    const localFilter = ref(props.filter)
+    watch(() => props.filter, () => { localFilter.value = props.filter })
+    watch(() => localFilter.value, () => { emit('update:filter', localFilter.value) })
+    return {
+      localFilter,
+    }
+  },
+}
 </script>
 
 <style scoped lang="scss">
@@ -66,7 +66,7 @@ export default {
   }
   #filter-group{
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     .block{
       padding: 0 2%;
       width: 33%;
@@ -77,11 +77,22 @@ export default {
       label{
         margin-bottom: 1%;
         margin-right: 2%;
+        font-weight: bold;
+        color: #777;
       }
       input{
         border-radius: 1rem;
         border: #a1a1a1 1px solid;
         padding: 0 3%;
+      }
+      .price-input-container {
+        display: flex;
+        .separator {
+          margin: 0 10px;
+        }
+        input {
+          max-width: 100px;
+        }
       }
       &:last-of-type{
         border: none;
@@ -90,22 +101,6 @@ export default {
     .validate{
       width: 20%;
     }
-  }
-}
-.btn {
-  background: #ddd;
-  height: 100%;
-  border-radius: 10% / 50%;
-  border: none;
-  transition-duration: 0.3s;
-  &:hover {
-    background: #d4e157;
-  }
-  &:active {
-    background: #beca4e;
-  }
-  &:focus{
-    outline: none;
   }
 }
 
