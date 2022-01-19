@@ -5,7 +5,7 @@
         <div class="sub-title">{{createDate(history[0]?.createdAt)}}  <button class="btn">Voir la facture</button></div>
         
         <div class="last-checkout"> 
-          <card class="card" v-for="(item, i) in history[0]?.productCarts" :key="i" :data="item" fontSize="1.5" :background="true" :margin='0' />
+          <card class="card" v-for="(item, i) in history[0]?.productOrders" :key="i" :data="item" fontSize="1.5" :background="true" :margin='0' />
         </div>
 
         <div class="total-cost">Total de la commande: <b>{{history[0]?.orderPrice}}€</b></div>
@@ -17,9 +17,8 @@
         <div class="title">Vos anciennes commandes</div>
         <div class="content" v-for="(item, i) in history" :key="i" :style="i == 0 ? 'margin-top:1%' : ''" >
           <div class="sub-title" v-if="i != 0">{{createDate(history[i]?.createdAt)}} <button class="btn">Voir la facture</button></div>
-          
-          <div class="last-checkout" v-if="i != 0"> 
-            <card class="card" v-for="(item, i) in history[i]?.productCarts" :key="i" :data="item" fontSize="150%" :background="true" :margin='0' />
+          <div class="last-checkout" v-if="i != 0 || history.lenght === 1"> 
+            <card class="card" v-for="(item, i) in history[i]?.productOrders" :key="i" :data="item" fontSize="150%" :background="true" :margin='0' />
           </div>
           
           <div class="total-cost" v-if="i != 0">Total de la commande: <b>{{history[i]?.orderPrice}}€</b></div>
@@ -43,6 +42,9 @@ export default {
       const date = this.$date.fromISO(isoDate, { locale: 'fr-FR' });
       return date.setZone('Europe/Paris').toFormat('dd MMMM yyyy à HH:mm');
     },
+  },
+  mounted() {
+    console.log(this.history);
   },
 };
 </script>

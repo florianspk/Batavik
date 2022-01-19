@@ -3,7 +3,7 @@ import Axios, { AxiosInstance } from 'axios';
 export default (baseURL: string) : AxiosInstance => {
   const axios = Axios.create({
     baseURL,
-  })
+  });
 
   axios.interceptors.request.use((config) => {
     if (config.headers) {
@@ -11,5 +11,5 @@ export default (baseURL: string) : AxiosInstance => {
     }
     return config;
   });
-  return axios
-}
+  return axios;
+};

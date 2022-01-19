@@ -1,7 +1,7 @@
 <template>
-  <div class="product">
+  <div class="product" :key="data?.id">
     <div class="img">
-      <img :src="data.image" alt="" :class="loadImage ? 'hide' : ''"  @load="loadImage = false" @error="loadImage = false">
+      <img ref="img" :key="data.id" :src="data.image" alt="" :class="loadImage ? 'hide' : ''"  @load="loadImage = false" @error="loadImage = false">
       <spinner v-if="loadImage" class="center"></spinner>
     </div>
     <div class="infos">
@@ -22,7 +22,7 @@ import spinner from './spinner.vue';
 
 export default {
   name: 'product',
-  props: ['index', 'data'],
+  props: ['data'],
   components: { spinner },
   data() {
     return {
@@ -31,7 +31,7 @@ export default {
   },
   watch: {
     data() {
-      this.loadImage = true;
+      this.loadImage = !this.$refs.img?.naturalWidth;
     },
   },
 };

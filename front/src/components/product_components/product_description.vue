@@ -101,7 +101,7 @@ export default {
     #info-container {
       display: inline-block;
       position: absolute;
-      top: 1%;
+      top: 5%;
       right: 2%;
       width: 50%;
       #qte-zone{

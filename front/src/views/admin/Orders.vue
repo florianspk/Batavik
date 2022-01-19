@@ -93,7 +93,6 @@ export default {
         const { data: order } = await OrderService.get(`/order/all?size=10&page=${val}`);
         this.totalItems = order.totalItems;
         this.orders = order.orders;
-        console.log(this.orders);
       } catch (e) {
         console.error(e);
       }
