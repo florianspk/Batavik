@@ -22,7 +22,7 @@
 import navbar from './components/global/g_navbar.vue';
 import navbarAdmin from './components/admin/navbar-admin.vue';
 import vFooter from './components/global/g_footer.vue';
-import Auth from './services/Auth'
+import Auth from './services/Auth';
 
 export default {
   name: 'App',
