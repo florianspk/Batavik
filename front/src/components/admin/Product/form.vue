@@ -41,6 +41,7 @@
 import {
   ElForm, ElInput, ElFormItem, ElButton, ElInputNumber,
 } from 'element-plus';
+import ProductService from '../../../services/ProductService';
 
 export default {
   name: 'form',
@@ -119,20 +120,11 @@ export default {
     };
   },
   methods: {
-    setConfig() {
-      return {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-      };
-    },
     async onSubmit() {
       if (!this.edit) {
-        await this.$axios.post(
-          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product`, this.product, this.setConfig(),
-        );
+        await ProductService.post('/product', this.product);
       } else {
-        await this.$axios.patch(
-          `${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.product.id}`, this.product, this.setConfig(),
-        );
+        await ProductService.patch(`/product/${this.product.id}`, this.product);
       }
       this.close();
     },

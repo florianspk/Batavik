@@ -1,13 +1,15 @@
 <template>
   <div id=info-client>
     <side-client :user="user" />
-    <history-client :history="userHistory" />
+    <history-client v-if="userHistoryFetched" :history="userHistory" />
   </div>
 </template>
 
 <script>
 import sideClient from './side_client.vue';
 import historyClient from './history_client.vue';
+import AuthService from '../../services/AuthService';
+import OrderService from '../../services/OrderService';
 
 export default {
   name: 'clientinfo',
@@ -20,16 +22,12 @@ export default {
       idUser: this.$route.params.id,
       user: {},
       userHistory: [],
-      config: {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      },
+      userHistoryFetched: false,
     };
   },
   methods: {
     getUser() {
-      this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/user`, this.config)
+      AuthService.get('/auth/user')
         .then(({ data: user }) => {
           this.user = user;
           this.getUserHistory();
@@ -39,9 +37,10 @@ export default {
         });
     },
     getUserHistory() {
-      this.$axios.get(`${this.$baseURL}:${this.$port.ORDER_SERVICE}/api/order/allByUser/${this.user.id}`, this.config)
+      OrderService.get(`/order/allByUser/${this.user.id}`)
         .then(({ data: userHistory }) => {
           this.userHistory = userHistory;
+          this.userHistoryFetched = true;
         })
         .catch((error) => {
           console.log(error);

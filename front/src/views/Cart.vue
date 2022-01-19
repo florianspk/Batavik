@@ -4,22 +4,36 @@
     <h1 id="title">Panier</h1>
 
     <div id="cart-items" v-if="haveProduct">
-      <cart-item v-for="(item, i) in cartList.productCarts" :key="i" :data="item" :fontSize="itemFontSize" :forcedHeight="12" />
+      <cart-item 
+        v-for="(item, i) in cartList.productCarts" 
+        :key="i" 
+        :data="item" 
+        :fontSize="itemFontSize" 
+        :forcedHeight="12" 
+        :canEditQte="true" 
+        @cost="calculatePrice" 
+      />
     </div>
 
     <div id="total" v-if="haveProduct">
-      <h2 id="line">Total du panier: {{cartList.cartPrice}}€</h2>
+      <h2 id="line">Total du panier: {{ new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price) }}</h2>
     </div>
 
-    <div id="buttons">
+    <div id="buttons" v-if="haveProduct">
       <button class="btn" id="validate" @click="validate()">Valider</button>
       <button class="btn" id="clear" @click="cleanCart()">Vider le panier</button>
+    </div>
+
+    <div v-else>
+      <h2 id="no_product">Votre panier est vide</h2>
     </div>
   </div>
 </template>
 
 <script>
 import cartItem from '../components/global/cart_item.vue';
+import AuthService from '../services/AuthService';
+import CartService from '../services/CartService';
 
 export default {
   name: 'Cart View',
@@ -29,20 +43,17 @@ export default {
       user: null,
       cartList: null,
       haveProduct: false,
+      costList: [],
+      price: 0,
     };
   },
   methods: {
     setFontSize() {
       this.itemFontSize = window.innerHeight > window.innerWidth ? 1.1 : 1.7;
     },
-    setConfig() {
-      return {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-      };
-    },
     async getIdentity() {
       try {
-        const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig());
+        const { data: user } = await AuthService.get('/auth/validateToken');
         this.user = user;
         this.getCartContent();
       } catch (error) {
@@ -50,26 +61,35 @@ export default {
         this.haveError = true;
       }
     },
+
     async getCartContent() {
       try {
-        const { data: cartContent } = await this.$axios.get(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/${this.user.id}`, this.setConfig());
+        const { data: cartContent } = await CartService.get(`/cart/${this.user.id}`);
         if (cartContent.length !== 0) {
           this.cartList = cartContent;
           this.haveProduct = true;
+          this.calculatePrice();
         }
       } catch (error) {
         console.log(error);
         this.haveError = true;
       }
     },
+
     async cleanCart() {
       try {
-        const response = await this.$axios.delete(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart/clean/${this.cartList.id}`, this.setConfig());
+        const response = await CartService.delete(`/cart/clean/${this.cartList.id}`);
         this.getCartContent();
+        this.haveProduct = false;
       } catch (error) {
         console.log(error);
         this.haveError = true;
       }
+    },
+
+    calculatePrice(price, idProduct) { 
+      this.costList[idProduct] = price;
+      this.price = this.costList.reduce((a, b) => a + b, 0);
     },
   },
   mounted() {
@@ -123,6 +143,13 @@ export default {
       black, 
       rgba(0, 0, 0, 0)
     ) 1 0 0 0;
+  }
+
+  #no_product {
+    margin-top: 5vh;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
   }
 
   #validate{

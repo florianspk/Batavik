@@ -11,9 +11,9 @@
           class="click"
           v-for="(info, i) in infos"
           :key="i"
-          @click="info.text == 'S\'identifier' ? loginForm = true : info.text == 'Panier' ? cart = true : '' "
+          @click="clickOnItemNavbar(info)"
         >
-        {{ info.text }}
+        <span>{{ info.text }}</span>
         </p>
       </div>
 
@@ -25,7 +25,7 @@
       </div>
 
     <transition-group name="fade">
-      <login-form v-if="loginForm" />
+      <login-form v-if="loginForm" @hide="loginForm = !loginForm" />
       <div class="black" v-if="loginForm" @click="loginForm = !loginForm" ></div>
     </transition-group>
 
@@ -64,13 +64,15 @@
 </template>
 
 <script lang="js">
-import { reactive, ref } from 'vue';
-import loginForm from './g_login_form.vue';
-import cart from './cart.vue';
+import { reactive, ref, computed } from 'vue';
+import LoginForm from './g_login_form.vue';
+import Cart from './cart.vue';
+import Auth from '../../services/Auth';
+import router from '../../router/index';
 
 export default {
   name: 'navbar',
-  components: { loginForm, cart },
+  components: { LoginForm, Cart },
   setup() {
     const winSize = reactive({ height: window.innerHeight, width: window.innerWidth });
 
@@ -88,35 +90,39 @@ export default {
     function openNavMobile() {
       mobileVisible.value = !mobileVisible.value;
     }
-
+    const loginForm = ref(false);
+    const cart = ref(false);
+    const travel = (path) => router.push(path);
     return {
+      loginForm,
+      cart,
       mobileVisible,
       winSize,
       openNavMobile,
-      infos: [
+      travel,
+      infos: computed(() => ([
         { text: 'Retrait des produits sous 2H', path: '/infos' },
         { text: 'Trouver un point de retrait', path: '/sites' },
         { text: 'Suivis de commandes', path: '/order' },
-        { text: 'Panier', path: '/cart' },
-        { text: 'S\'identifier', path: '/login' },
-      ],
+        { text: 'Panier', click: () => { cart.value = true; }, hidden: !Auth.isLogged.value },
+        { text: 'S\'identifier', click: () => { loginForm.value = true; }, hidden: Auth.isLogged.value },
+        { text: 'Mon compte', path: '/user', hidden: !Auth.isLogged.value },
+        { text: 'Déconexion', click: () => { localStorage.removeItem('token'); Auth.getLoggined(); router.push('/'); }, hidden: !Auth.isLogged.value },
+      ].filter((r) => !r.hidden))),
       pages: [
         { text: 'Pare-douche', path: '/pare-douche' },
         { text: 'Cloison et parois', path: '/cloison' },
         { text: 'Cheminée', path: '/cheminee' },
       ],
+      clickOnItemNavbar(info) {
+        if (info?.path) {
+          travel(info.path);
+        }
+        if (info?.click) {
+          info.click();
+        }
+      },
     };
-  },
-  data() {
-    return {
-      loginForm: false,
-      cart: false,
-    };
-  },
-  methods: {
-    travel(path) {
-      this.$router.push(path);
-    },
   },
 };
 </script>

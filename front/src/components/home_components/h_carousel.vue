@@ -16,7 +16,9 @@
 </template>
 
 <script>
+import { ElNotification } from 'element-plus';
 import Slide from './h_slide.vue';
+import ProductService from '../../services/ProductService';
 
 export default {
   name: 'carrousel',
@@ -39,8 +41,21 @@ export default {
       }
     },
     async getSlidesProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/best?size=${this.nbSlide}`);
-      this.slides = products.products;
+      try {
+        const { data: products } = await ProductService.get(`/products/best?size=${this.nbSlide}`);
+        this.slides = products.products;
+      } catch (err) {
+        this.notify('Impossible de charger les produits mis en avant');
+        console.error(err);
+      }
+    },
+    notify(message = '') {
+      ElNotification({
+        title: 'Erreur',
+        message: message !== '' ? message : 'Impossible de récupérer les produits',
+        position: 'bottom-right',
+        type: 'warning',
+      });
     },
   },
   mounted() {

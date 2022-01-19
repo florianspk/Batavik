@@ -12,10 +12,13 @@
 </template>
 
 <script>
+import { ElNotification } from 'element-plus';
 import productDescription from '../components/product_components/product_description.vue';
 import sameProduct from '../components/product_components/same_product.vue';
 import commentSection from '../components/product_components/comment_section.vue';
 import spinner from '../components/global/spinner.vue';
+import ProductService from '../services/ProductService';
+import CommService from '../services/CommService';
 
 export default {
   components: { 
@@ -34,17 +37,30 @@ export default {
   },
   methods: {
     async getProductInfo() {
-      const { data: product } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.$route.params.id}`);
-      this.productData = product;
-      if (product != null) this.dataLoaded = true;
+      try {
+        const { data: product } = await ProductService.get(`/product/${this.$route.params.id}`);
+        this.productData = product;
+        if (product != null) this.dataLoaded = true;
+        else this.notify();
+      } catch (err) {
+        this.notify();
+      }
     },
     async getSimilaire() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/best`);
+      const { data: products } = await ProductService.get('/products/best');
       this.simiProduct = products.products;
     },
     async getComments() {
-      const { data: comments } = await this.$axios.get(`${this.$baseURL}:${this.$port.COMM_SERVICE}/api/comment/product/${this.$route.params.id}`);
+      const { data: comments } = await CommService.get(`/comment/product/${this.$route.params.id}`);
       this.comments = comments;
+    },
+    notify() {
+      ElNotification({
+        title: 'Erreur',
+        message: 'Impossible de récupéré le produit demandé',
+        position: 'bottom-right',
+        type: 'warning',
+      });
     },
   },
   mounted() {

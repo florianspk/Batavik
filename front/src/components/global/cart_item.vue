@@ -8,12 +8,18 @@
         {{productList.name}}
       </div>
 
-      <div class="item-quantity">
+      <div class="item-quantity" v-if="!canEditQte">
         X{{data.quantity}}
       </div>
 
+      <div v-else>
+        <select name="qte" id="qte" v-model="qte" @change="changeQte">
+          <option v-for="i in maxqte" :key="i" :value="i">{{i}}</option>
+        </select>
+      </div>
+
       <div class="item-price">
-        {{ calculatedPrice }} €
+        {{ new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(calculatedPrice) }}
       </div>
     </div>
   
@@ -21,6 +27,10 @@
 </template>
 
 <script>
+import ProductService from '../../services/ProductService';
+import AuthService from '../../services/AuthService';
+import CartService from '../../services/CartService';
+
 export default {
   name: 'cart-item',
   props: {
@@ -29,36 +39,70 @@ export default {
     background: Boolean,
     margin: Number,
     forcedHeight: Number,
+    canEditQte: Boolean,
   },
   data() {
     return {
       productList: {},
       calculatedPrice: 0,
+      user: null,
+      maxqte: 10,
+      qte: this.data.quantity,
     };
   },
   methods: {
-    calculatePrice(price, qte) {
-      return price * qte;
-    },
-    async getProductInormations() {
+    calculatePrice(price, qte) { return price * qte; },
+
+    async getProductInformations() {
       try {
-        const { data: product } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/product/${this.data.idProduct}`);
+        const { data: product } = await ProductService.get(`/product/${this.data.idProduct}`);
         this.productList = product;
-        this.calculatedPrice = product.price * this.data.quantity;
-        this.$emit('cost', this.calculatedPrice);
+        this.calculateCost();
+        this.qte = this.data.quantity;
       } catch (error) {
         console.log(error);
         this.haveError = true;
       }
     },
+
+    async getIdentity() {
+      try {
+        const { data: user } = await AuthService.get('/auth/validateToken');
+        this.user = user;
+      } catch (error) {
+        console.log(error);
+        this.haveError = true;
+      }
+    },
+
+    async changeQte() {
+      await this.getIdentity();
+
+      const postData = {
+        idUser: this.user.id,
+        idProduct: this.data.idProduct,
+        quantity: this.qte,
+      };
+
+      this.calculatedPrice = 0;
+      this.calculateCost();
+      await CartService.post('/cart/quantityProduct', postData);
+      window.dispatchEvent(new Event('updateCart'));
+    },
+
+    calculateCost() {
+      this.calculatedPrice = this.productList.price * this.qte;
+      this.$emit('cost', this.calculatedPrice, this.data.idProduct);
+    },
+
   },
   watch: {
-    fontSize: function () {
+    fontSize() {
       this.$refs.cartItem.style.fontSize = `${this.fontSize}rem`;
     },
   },
-  mounted: function () {
-    this.getProductInormations();
+  mounted() {
+    this.getProductInformations();
     if (this.forcedHeight) this.$refs.cartItem.style.height = `${this.forcedHeight}vh`;
     else this.$refs.cartItem.style.height = `${this.$refs.cartImg.clientWidth}px`;
 
@@ -95,6 +139,23 @@ export default {
       margin-right: 2%;
       border-top-left-radius: 1rem;
       border-bottom-left-radius: 1rem;
+    }
+    #qte {
+      width: 125%;
+      text-align: center;
+      border-radius: 2rem;
+      border:#a1a1a1 1px solid;
+      padding: 0.5% 2%;
+      option {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        border:#a1a1a1 1px solid;
+        border-radius: 2rem;
+        box-sizing: border-box;
+      }
     }
     .item-name{
       width: 55%;

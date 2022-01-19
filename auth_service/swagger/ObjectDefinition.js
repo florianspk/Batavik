@@ -17,11 +17,19 @@
  *   properties:
  *    _id: 
  *     type: string    
- *    name:
+ *    firstname:
  *     type: string
- *    mail: 
+ *    lastname:
  *     type: string    
- *    address:
+ *    email:
+ *     type: string
+ *    password:
+ *     type: string
+ *    enabled:
+ *     type: integer
+ *    image:
+ *     type: string
+ *    lastLogin:
  *     type: string
  */
 module.exports = {}

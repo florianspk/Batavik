@@ -73,6 +73,7 @@ import { ref } from 'vue';
 
 import userForm from '../../components/admin/User/form.vue';
 import userShow from '../../components/admin/User/show.vue';
+import UserService from '../../services/UserService';
 
 export default {
   name: 'Users',
@@ -107,14 +108,9 @@ export default {
     };
   },
   methods: {
-    setConfig() {
-      return {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-      };
-    },
     async getUsers(val = 1) {
       try {
-        const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.USER_SERVICE}/api/users?size=10&page=${val}`, this.setConfig());
+        const { data: user } = await UserService.get(`/users?size=10&page=${val}`);
         this.totalItems = user.totalItems;
         this.users = user.users;
       } catch (e) {
@@ -130,10 +126,7 @@ export default {
       this.editVisible = true;
     },
     deleteUser(userIndex) {
-      this.$axios.delete(
-        `${this.$baseURL}:${this.$port.USER_SERVICE}/api/user/${this.users[userIndex].id}`, this.setConfig(),
-        this.user,
-      );
+      UserService.delete(`/user/${this.users[userIndex].id}`, {}, this.user);
       this.users.splice(userIndex, 1);
     },
     formatDate(dateToFormat) {

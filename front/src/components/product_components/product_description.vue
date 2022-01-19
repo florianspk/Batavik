@@ -22,7 +22,7 @@
         </select>
       </div>
 
-      <h2 id="price">Prix : {{data.price}}€</h2>
+      <h2 id="price">Prix : {{ new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(data.price) }}</h2>
 
       <div class="add">
         <button @click="addToCart">
@@ -35,6 +35,9 @@
 </template>
 
 <script>
+import AuthService from '../../services/AuthService';
+import CartService from '../../services/CartService';
+
 export default {
   name: 'description-product',
   props: ['data'],
@@ -48,14 +51,9 @@ export default {
     };
   },
   methods: {
-    setConfig() {
-      return {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-      };
-    },
     async getIdentity() {
       try {
-        const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.AUTH_SERVICE}/api/auth/validateToken`, this.setConfig());
+        const { data: user } = await AuthService.get('/auth/validateToken');
         this.user = user;
       } catch (error) {
         console.log(error);
@@ -69,7 +67,7 @@ export default {
           idProduct: this.$route.params.id,
           quantity: this.qte,
         };
-        const { data: user } = await this.$axios.post(`${this.$baseURL}:${this.$port.CART_SERVICE}/api/cart`, postData, this.setConfig());
+        await CartService.post('/cart', postData);
         window.dispatchEvent(new Event('updateCart'));
       } catch (error) {
         console.log(error);
@@ -103,7 +101,7 @@ export default {
     #info-container {
       display: inline-block;
       position: absolute;
-      top: 1%;
+      top: 5%;
       right: 2%;
       width: 50%;
       #qte-zone{

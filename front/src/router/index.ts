@@ -1,8 +1,6 @@
 /* istanbul ignore file */
 import { createRouter, createWebHistory } from 'vue-router';
-import { baseurl, port } from '@/main';
-import Axios from 'axios';
-
+import AuthService from '@/services/AuthService';
 // User
 import Home from '../views/Home.vue';
 import Shower from '../views/Shower.vue';
@@ -18,12 +16,6 @@ import Users from '../views/admin/Users.vue';
 import Products from '../views/admin/Products.vue';
 import Comments from '../views/admin/Comments.vue';
 import Orders from '../views/admin/Orders.vue';
-
-function setConfig() {
-  return {
-    headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-  };
-}
 
 const routes = [
   {
@@ -66,7 +58,7 @@ const routes = [
     name: 'User',
     component: User,
     beforeEnter(to: any, from: any, next: any) {
-      Axios.get(`${baseurl}:${port.AUTH_SERVICE}/api/auth/validateToken`, setConfig())
+      AuthService.get('/auth/validateToken')
         .then(() => {
           next((vm: any) => {
             vm.$isLogged = true;

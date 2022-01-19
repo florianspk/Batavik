@@ -22,6 +22,7 @@
 import navbar from './components/global/g_navbar.vue';
 import navbarAdmin from './components/admin/navbar-admin.vue';
 import vFooter from './components/global/g_footer.vue';
+import Auth from './services/Auth';
 
 export default {
   name: 'App',
@@ -35,6 +36,17 @@ export default {
     isAdmin() {
       return (this.$route.path.includes('/admin'));
     },
+  },
+  methods: {
+    setConfig() {
+      return {
+        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
+    },
+    
+  },
+  mounted() {
+    Auth.getLoggined();
   },
 };
 </script>
@@ -80,5 +92,11 @@ export default {
 
 #admin {
   display: flex;
+}
+
+#user {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 </style>

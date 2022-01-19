@@ -7,8 +7,10 @@
 </template>
 
 <script>
+import { ElNotification } from 'element-plus';
 import Carrousel from '../components/home_components/h_carousel.vue';
 import SectionProduct from '../components/global/g_section.vue';
+import ProductService from '../services/ProductService';
 
 export default {
   name: 'Home',
@@ -22,12 +24,30 @@ export default {
   },
   methods: {
     async getBestSales() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/best?size=${this.sizeProduct}`);
-      this.bestSales = products.products;
+      try {
+        const { data: products } = await ProductService.get(`/products/best?size=${this.sizeProduct}`);
+        this.bestSales = products.products;
+      } catch (err) {
+        this.notify('La catégorie "Nos meilleures ventes" n\'est pas disponible');
+        console.error(err);
+      }
     },
     async getTopProducts() {
-      const { data: products } = await this.$axios.get(`${this.$baseURL}:${this.$port.PRODUCT_SERVICE}/api/products/top?size=${this.sizeProduct}`);
-      this.topProducts = products.products;
+      try {
+        const { data: products } = await ProductService.get(`/products/top?size=${this.sizeProduct}`);
+        this.topProducts = products.products;
+      } catch (err) {
+        this.notify('La catégorie "Nos produits phares" n\'est pas disponible');
+        console.error(err);
+      }
+    },
+    notify(message = '') {
+      ElNotification({
+        title: 'Erreur',
+        message: message !== '' ? message : 'Impossible de récupérer les produits',
+        position: 'bottom-right',
+        type: 'warning',
+      });
     },
   },
   mounted() {

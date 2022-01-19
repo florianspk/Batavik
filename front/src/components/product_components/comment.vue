@@ -1,6 +1,6 @@
 <template>
   <div class="comm" v-if="userLoaded">
-    <div class="from">De temp</div> 
+    <div class="from">De {{ user.firstname }}</div> 
     <div class="message">
         {{data.text}}
     </div>
@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import UserService from '../../services/UserService';
+
 export default {
   name: 'comment',
   props: ['data'],
@@ -67,9 +69,11 @@ export default {
   },
   methods: {
     async getUserName() {
-      this.userLoaded = true;
-      const { data: user } = await this.$axios.get(`${this.$baseURL}:${this.$port.USER_SERVICE}/api/user/${this.data.userId}`);
+      const { data: user } = await UserService.get(`/user/username/${this.data.idUser}`);
       this.user = user;
+      if (this.user) console.log(this.user);
+      else (console.log(user));
+      this.userLoaded = true;
     },
   },
   mounted() {
