@@ -117,7 +117,7 @@ export default {
   #triangle{
     position: absolute;
     top: -5%;
-    right: 17%;
+    right: 38%;
     width: 0;
     height: 0;
     border-left: 2vh solid transparent; 
