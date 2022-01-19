@@ -15,7 +15,6 @@
     ]
   },
   "dependencies": {
-    "@jest/globals": "^27.4.6",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
@@ -34,7 +33,7 @@
     "nodemon": "^2.0.12",
     "qs": "^6.10.3",
     "sequelize": "^6.13.0",
-    "supertest": "^6.2.1",
+    "supertest": "^6.2.2",
     "swagger": "^0.7.5",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.2.0"
