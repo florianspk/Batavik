@@ -260,7 +260,51 @@ router.get("/products/top",productController.topProducts);
  */
 router.get("/products/best",productController.bestProducts);
 
-
+/**
+ * @openapi
+ * /api/products/search:
+ *   get:
+ *     tags:
+ *       - Products
+ *     description: get best product
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               maxprice:
+ *                 type: number
+ *               minprice:
+ *                 type: number
+ *     parameters:
+ *       - in: query
+ *         name : page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         required: false
+ *         description: The number of page
+ *       - in: query
+ *         name : size
+ *         schema:
+ *           type: integer
+ *           default: 3
+ *         required: false
+ *         description: The number of items to skip before starting to collect the result set
+ *     responses:
+ *       200:
+ *         description: Operation summary
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ProductList'
+ *       500:
+ *         description: An error occured when get best product
+ */
 router.get("/products/search",mu.fields([]),productController.searchProduct)
 
 module.exports = router;
