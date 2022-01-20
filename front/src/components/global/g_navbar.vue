@@ -107,7 +107,7 @@ export default {
         { text: 'Panier', click: () => { cart.value = true; }, hidden: !Auth.isLogged.value },
         { text: 'S\'identifier', click: () => { loginForm.value = true; }, hidden: Auth.isLogged.value },
         { text: 'Mon compte', path: '/user', hidden: !Auth.isLogged.value },
-        { text: 'Déconexion', click: () => { localStorage.removeItem('token'); Auth.getLoggined(); router.push('/'); }, hidden: !Auth.isLogged.value },
+        { text: 'Déconnexion', click: () => { localStorage.removeItem('token'); Auth.getLoggined(); router.push('/'); }, hidden: !Auth.isLogged.value },
       ].filter((r) => !r.hidden))),
       pages: [
         { text: 'Pare-douche', path: '/pare-douche' },

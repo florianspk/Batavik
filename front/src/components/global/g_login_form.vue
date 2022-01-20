@@ -4,7 +4,7 @@
     <div id="title">{{"Identification"}}</div>
     
     <div id="form">
-      <label for="username">Nom d'utilisateur</label> <br>
+      <label for="username">Email</label> <br>
       <input name="username" type="text" v-model="userLogin.email"> <br>
       <label for="username" class="password">Mot de passe</label> <br>
       <input name="username" type="password" v-model="userLogin.password"> <br>

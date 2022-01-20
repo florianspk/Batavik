@@ -1,5 +1,5 @@
 <template>
-  <div id="commentaire">
+  <div id="commentaire" v-if="commentList.length > 0">
     <h1>Commentaires produits</h1>
     <div id="container-comm" v-if="commentList.length >= 1">
       <comment v-for="(comment, i) in commentList" :key="i" :data="comment" />
