@@ -17,6 +17,7 @@ jobs:
         run: npm install
       - name: Run test
         run: npm test
+
   deploy:
     runs-on: ubuntu-latest
     steps:
