@@ -1,5 +1,4 @@
 const { create } = require("domain");
-const { findOne } = require("../../cart_service/controllers/cart");
 const { Op } = require("sequelize");
 const db = require("../models");
 const { exit } = require("process");
