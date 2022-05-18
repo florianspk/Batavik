@@ -39,7 +39,7 @@ app.component('f-icon', FontAwesomeIcon);
 app.mount('#app');
 
 // Define global var
-const baseurl = process.env.NODE_ENV === 'development' ? 'http://localhost' : 'https://julienkeiff.fr';
+const baseurl = process.env.NODE_ENV === 'development' ? 'http://localhost' : 'http://localhost';
 const port = Port;
 
 app.config.globalProperties.$env = process.env.NODE_ENV;

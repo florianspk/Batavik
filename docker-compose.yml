@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  front:
+    build: ./front
+    ports: 
+      - "8080:8080"
+  apiauth:
+    build: ./auth_service
+    ports: 
+      - "3010:3000"
+  apicart:
+    build: ./cart_service
+    ports: 
+      - "3011:3000"
+  apicomm:
+    build: ./comm_service
+    ports: 
+      - "3012:3000"
+  apiproduct:
+    build: ./product_service
+    ports: 
+      - "3015:3000"
+  apiorder:
+    build: ./order_service
+    ports: 
+      - "3013:3000"
+  apiuser:
+    build: ./user_service
+    ports: 
+      - "3019:3000"
+  bdd:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ROOT_PASSWORD

@@ -96,6 +96,8 @@ export default {
       img {
         width: 100%;
         border-radius: 2rem;
+        max-height: 70vh;
+        object-fit: cover;
       }
     }
     #info-container {
