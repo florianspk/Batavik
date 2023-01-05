@@ -21,7 +21,7 @@
     "bootstrap": "^5.1.3",
     "core-js": "^3.6.5",
     "element-plus": "^1.1.0-beta.20",
-    "luxon": "^2.2.0",
+    "luxon": "^2.5.2",
     "moxios": "^0.4.0",
     "sass": "^1.48.0",
     "vue": "^3.0.0",
