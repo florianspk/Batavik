@@ -29,7 +29,7 @@
     "morgan": "~1.9.1",
     "multer": "^1.4.4",
     "mysql2": "^2.3.3",
-    "nodemon": "^2.0.12",
+    "nodemon": "^3.0.0",
     "sequelize": "^6.13.0",
     "supertest": "^6.1.6",
     "swagger": "^0.7.5",
